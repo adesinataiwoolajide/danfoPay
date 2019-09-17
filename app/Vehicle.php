@@ -1,0 +1,73 @@
+<?php
+
+namespace App;
+
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
+class Vehicle extends Model
+{
+    use SoftDeletes;
+
+    protected $table = 'vehicles';
+    protected $primaryKey = 'vehicle_id';
+    protected $fillable = [
+        'plate_number', 'brand', 'type_id', 'owner_id'
+    ];
+
+    public function getBrandAttribute($value){
+        return strtoupper($value);
+    }
+
+    public function setBrandAttribute($value){
+        return $this->attributes['brand'] = strtoupper($value);
+    }
+
+    public function getPlateNumberAttribute($value){
+        return strtoupper($value);
+    }
+
+    public function setPlateNumberAttribute($value){
+        return $this->attributes['plate_number'] = strtoupper($value);
+    }
+
+    public function getTypeIdAttribute($value){
+        return ($value);
+    }
+
+    public function setTypeIdAttribute($value){
+        return $this->attributes['type_id'] = ($value);
+    }
+    public function getOwnerIdAttribute($value){
+        return ($value);
+    }
+
+    public function setOwnerIdAttribute($value){
+        return $this->attributes['owner_id'] = ($value);
+    }
+
+    public function getCreatedAtAttribute($value){
+        return \Carbon\Carbon::parse($value)->format('d-m-Y');
+    }
+
+    public function getDeletedAtAttribute($value){
+        return \Carbon\Carbon::parse($value)->format('d-m-Y');
+    }
+
+    public function getUpdatedAtAttribute($value){
+        return \Carbon\Carbon::parse($value)->format('d-m-Y');
+    }
+
+    public function type(){
+        return $this->belongsTo('App\VehicleType', 'type_id');
+    }
+    public function owner(){
+        return $this->belongsTo('App\VehicleOwner', 'owner_id');
+    }
+
+    public function operator(){
+        return $this->hasMany('App\VehicleOperator', 'operator_id', 'vehicle_id');
+    }
+    // public function operator(){
+    //     return $this->hasMany('App\VehicleOperator', 'operator_id', 'vehicle_id');
+    // }
+}
