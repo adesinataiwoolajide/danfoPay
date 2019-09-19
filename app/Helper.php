@@ -9,4 +9,10 @@
             "email" => $email
         ])->get();
     }
+
+    function usersList($user_id){
+        return \DB::table('users')->where([
+            "user_id" => $user_id
+        ])->get();
+    }
 ?>

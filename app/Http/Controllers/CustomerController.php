@@ -119,7 +119,7 @@ class CustomerController extends Controller
             {
                 return strtoupper(substr(md5(uniqid(rand())), 0, (-32 + $length)));
             }
-            $customer_number = strtoupper(generateCustomerNumber(5));
+            $customer_number = strtoupper(generateCustomerNumber(10));
             $role = 'Customer';
 
             $data = ([

@@ -28,14 +28,23 @@ class FundTransferController extends Controller
     public function index()
     {
         if(Gate::allows('Administrator', auth()->user())){
-            $balance =$this->model->all();
+            $balance =Balances::orderBy('balance_id', 'desc')->get();
+            $transfer = FundTransfer::orderBy('fund_id', 'desc')->get();
             return view("administrator.fund_transfer.initiate")->with( [
                 "balance" => $balance,
+                "transfer" => $transfer,
             ]);
         }elseif(auth()->user()->hasRole('Customer')){
             $balance =Balances::where('user_id', Auth::user()->user_id)->get();
+            $customer =Customer::where('email', Auth::user()->email)->first();
+            $phone_number = $customer->phone_number;
+            $transfer = FundTransfer::where('sender', $phone_number)->orWhere('reciever', $phone_number)->get();
+            $single =Balances::where('user_id', Auth::user()->user_id)->first();
             return view("administrator.fund_transfer.initiate")->with( [
                 "balance" => $balance,
+                "transfer" => $transfer,
+                "single" => $single,
+                "customer" => $customer,
             ]);
         }else{
             return redirect()->back()->with([
@@ -120,8 +129,13 @@ class FundTransferController extends Controller
                         "total_amount" => $myBal + $debit,
                         "user_id" => $cost_id,
                     ]);
+                    $fund = new FundTransfer ([
+                        "sender" => $phone,
+                        'reciever' => $recipient,
+                        'amount' => $debit,
+                    ]);
 
-                    if($updat){
+                    if(($updat) AND ($fund->save())){
                         return redirect()->route("fund.transfer.index")->with("success", "You Have Credited $recipient with $debit Successfully");
                     }else{
                         return redirect()->back()->with("error", "Network Failure");
@@ -133,12 +147,17 @@ class FundTransferController extends Controller
                         "user_id" => Auth::user()->user_id,
                     ]);
 
+                    $fund = new FundTransfer ([
+                        "sender" => $phone,
+                        'reciever' => $recipient,
+                        'amount' => $debit,
+                    ]);
                     $adding = new Balances ([
                         "user_id" => $cost_id,
                         'total_amount' => $debit,
                         'customer_code' => $number,
                     ]);
-                    if($adding->save()){
+                    if($adding->save() AND ($fund->save())){
                         return redirect()->route("fund.transfer.index")->with("success", "You Have Credited Your Wallet Successfully");
                      }else{
                         return redirect()->back()->with("error", "Network Failure, Please Try Again Later");

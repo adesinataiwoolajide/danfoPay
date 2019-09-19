@@ -12,9 +12,9 @@
                     <li class="breadcrumb-item">
                         <a href="{{route('balance.index')}}">
                             @if(auth()->user()->hasRole('Administrator'))
-                                Customer Balances
+                                Customer Accounts
                             @else
-                                My Balance
+                                My Account
                             @endif
                         </a>
                     </li>
@@ -37,49 +37,138 @@
                 </ol>
             </div>
         </div>
-        <div class="row">
-            <div class="col-lg-12">
+        @if(auth()->user()->hasRole('Customer'))
+            <div class="row">
+                <div class="col-lg-12">
+                    @include('partials._message')
+                </div>
+                <div class="col-lg-4">
 
-                <div class="card">
-                    <div class="card-header"><i class="fa fa-table"></i> Please Fill The Below Form To Fund Your Wallet</div>
-                    <div class="card-body">
-                        @include('partials._message')
-                        <form action="{{route('fund.pay')}}" method="POST" enctype="multipart/form-data">
-                            {{ csrf_field() }}
+                    <div class="card">
+                        <div class="card-header"><i class="fa fa-table"></i> Please Fill The Below Form To Fund Your Wallet Throught ATM</div>
+                        <div class="card-body">
 
-                            <div class="form-group row ">
-                                <div class="col-sm-6">
+                            <form action="{{route('fund.pay')}}" method="POST" enctype="multipart/form-data">
+                                {{ csrf_field() }}
 
-                                    <input type="number" name="amount" class="form-control form-control-rounded" required
-                                    placeholder="Enter The The Amount To Fund" value="{{old('amount')}}">
-                                    <span style="color: red">** This Field is Required **</span>
-                                    @if ($errors->has('name'))
-                                        <div class="alert alert-danger alert-dismissible" role="alert">
-                                            <button type="button" class="close" data-dismiss="alert">&times;</button>
-                                            <div class="alert-icon contrast-alert">
-                                                <i class="fa fa-check"></i>
+                                <div class="form-group row ">
+                                    <div class="col-sm-12">
+
+                                        <input type="number" name="amount" class="form-control form-control-rounded" required
+                                        placeholder="Enter The The Amount To Fund" value="">
+                                        <span style="color: red">** This Field is Required **</span>
+                                        @if ($errors->has('amount'))
+                                            <div class="alert alert-danger alert-dismissible" role="alert">
+                                                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                                                <div class="alert-icon contrast-alert">
+                                                    <i class="fa fa-check"></i>
+                                                </div>
+                                                <div class="alert-message">
+                                                    <span><strong>Error!</strong> {{ $errors->first('amount') }} !</span>
+                                                </div>
                                             </div>
-                                            <div class="alert-message">
-                                                <span><strong>Error!</strong> {{ $errors->first('name') }} !</span>
-                                            </div>
-                                        </div>
-                                    @endif
+                                        @endif
+                                    </div>
+                                    <input type="hidden" name="email" value="{{Auth::user()->email}}">
+                                    <input type="hidden" name="reference" value="{{ Paystack::genTranxRef() }}">
+                                    <input type="hidden" name="key" value="{{ config('paystack.secretKey') }}">
+                                    <div class="col-sm-12">
+                                        <button type="submit" class="btn btn-success btn-lg btn-block" style="border:none">
+                                            FUND WALLET
+                                        </button>
+                                    </div>
+
                                 </div>
-                                <input type="hidden" name="email" value="{{Auth::user()->email}}">
-                                <input type="hidden" name="reference" value="{{ Paystack::genTranxRef() }}">
-                                <input type="hidden" name="key" value="{{ config('paystack.secretKey') }}">
-                                <div class="col-sm-6">
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-8">
+
+                    <div class="card">
+                        <div class="card-header"><i class="fa fa-table"></i> Please Fill The Below Form To Fund Your Wallet Recharge Card</div>
+                        <div class="card-body">
+
+                            <form action="{{route('fund.card')}}" method="POST" enctype="multipart/form-data">
+                                {{ csrf_field() }}
+
+                                <div class="form-group row ">
+                                    <div class="col-sm-4">
+
+                                        <input type="number" name="card" class="form-control form-control-rounded" required
+                                        placeholder="Enter The The Card Number" value="{{old('card')}}">
+                                        <span style="color: red">** This Field is Required **</span>
+                                        @if ($errors->has('card'))
+                                            <div class="alert alert-danger alert-dismissible" role="alert">
+                                                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                                                <div class="alert-icon contrast-alert">
+                                                    <i class="fa fa-check"></i>
+                                                </div>
+                                                <div class="alert-message">
+                                                    <span><strong>Error!</strong> {{ $errors->first('card') }} !</span>
+                                                </div>
+                                            </div>
+                                        @endif
+                                    </div>
+                                    <div class="col-sm-4">
+
+                                        <input type="number" name="card_amount" class="form-control form-control-rounded" required
+                                        placeholder="Enter The The Amount" value="{{old('card_amount')}}">
+                                        <span style="color: red">** This Field is Required **</span>
+                                        @if ($errors->has('card'))
+                                            <div class="alert alert-danger alert-dismissible" role="alert">
+                                                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                                                <div class="alert-icon contrast-alert">
+                                                    <i class="fa fa-check"></i>
+                                                </div>
+                                                <div class="alert-message">
+                                                    <span><strong>Error!</strong> {{ $errors->first('card_amount') }} !</span>
+                                                </div>
+                                            </div>
+                                        @endif
+                                    </div>
+                                    <div class="col-sm-4">
+
+                                        <select class="form-control form-control-rounded" required name="network">
+                                            <option value=""> -- Select Provider -- </option>
+                                            <option value=""> </option>
+                                            <option value="AIRTEL"> AIRTEL </option>
+                                            <option value="9 MOBILE"> E9 MOBILE </option>
+                                            <option value="GLO"> GLO </option>
+                                            <option value="MTN"> MTN </option>
+                                            <option value="MTN TRANSFER"> MTN TRANSFER </option>
+
+
+                                        </select>
+                                        <span style="color: red">** This Field is Required **</span>
+                                        @if ($errors->has('network'))
+                                            <div class="alert alert-danger alert-dismissible" role="alert">
+                                                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                                                <div class="alert-icon contrast-alert">
+                                                    <i class="fa fa-check"></i>
+                                                </div>
+                                                <div class="alert-message">
+                                                    <span><strong>Error!</strong> {{ $errors->first('network') }} !</span>
+                                                </div>
+                                            </div>
+                                        @endif
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-12">
                                     <button type="submit" class="btn btn-success btn-lg btn-block" style="border:none">
                                         FUND WALLET
                                     </button>
                                 </div>
 
-                            </div>
-                        </form>
+
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
+        @endif
         <div class="row">
             <div class="col-lg-12">
                 <div class="card">

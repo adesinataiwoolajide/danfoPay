@@ -109,6 +109,7 @@ Route::group(["prefix" => "administrator", "middleware" => "verified"], function
     Route::group(["prefix" => "balances"], function(){
         Route::get('/index', 'BalanceController@index')->name('balance.index');
         Route::get('/payment/callback', 'PaymentController@handleGatewayCallback')->name('fund.wallet');
+        Route::post('/card/callback', 'PaymentController@card')->name('fund.card');
     });
     Route::group(["prefix" => "transactions"], function(){
         Route::get('/index', 'BalanceController@singleTransaction')->name('payment.index');
@@ -120,4 +121,5 @@ Route::group(["prefix" => "administrator", "middleware" => "verified"], function
         Route::post('/save', 'FundTransferController@store')->name('fund.transfer.save');
 
     });
+
 });

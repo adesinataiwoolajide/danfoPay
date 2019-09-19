@@ -42,13 +42,20 @@
             "database/seeds",
             "database/factories"
         ],
-        "files" : ["app/Helper.php"]
+        "files" : [
+            "app/Helper.php",
+            "app/CheetahPay.php"
+        ]
     },
     "autoload-dev": {
         "psr-4": {
             "Tests\\": "tests/"
         },
-        "files" : ["app/Helper.php"]
+        "files" : [
+            "app/Helper.php",
+            "app/CheetahPay.php"
+
+        ]
     },
     "minimum-stability": "dev",
     "prefer-stable": true,

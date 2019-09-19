@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Unicodeveloper\Paystack\Paystack;
-use App\{User, Payments, Balances};
+use App\{User, Payments, Balances, CheetahPay};
 use DB;
 use Illuminate\Support\Facades\Auth;
 use App\Repositories\PaymentRepository;
@@ -18,6 +18,7 @@ class PaymentController extends Controller
        // set the model
        $this->paystack = new Paystack();
        $this->model = new PaymentRepository($pay);
+       //$this->cheetahPay = new CheetahPay(XQKWNGWKFKhKfUAtgZIU, 5710139023);
     }
      /**
      * Redirect the User to Paystack Payment Page
@@ -90,6 +91,8 @@ class PaymentController extends Controller
     }
 
 
+
+
     /**
      * Display a listing of the resource.
      *
@@ -120,6 +123,34 @@ class PaymentController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function card(Request $request)
+    {
+        $this->validate($request, [
+            'pin' => 'required|min:1|max:255|',
+            'card_amount' => 'required|min:1|max:255',
+            'network' => 'required|min:1|max:255',
+
+        ]);
+        $cheetahPay = new CheetahPay(XQKWNGWKFKhKfUAtgZIU, 5710139023);
+        $pin = $request->input('pin');
+        $amount = $request->input('card_amount');
+        $depositorsPhoneNo = '08138139333';
+        $network = $request->input('network');;
+        $orderId = 123;
+
+
+        $response = $cheetahPay->pinDeposit($pin, $amount, $network, $orderID, $depositorsPhoneNo);
+         dd($response);
+        if($response['success'] == true){
+            echo  "Airtime has been received, now awaiting validation";
+        }else{
+        // Deposit failed, See print out message
+            print($response['message']);
+        }
+
+    }
+
+
     public function create()
     {
         return view('administrator.wallet.index');

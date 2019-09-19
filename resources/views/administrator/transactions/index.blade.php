@@ -21,12 +21,13 @@
                     <li class="breadcrumb-item">
                         <a href="{{route('balance.index')}}">
                             @if(auth()->user()->hasRole('Administrator'))
-                            Customer Balance
+                            Customer Accounts
                             @else
-                            My Balance
+                            My Account
                             @endif
                         </a>
                     </li>
+
                     <li class="breadcrumb-item">
                         <a href="{{route('fund.transfer.index')}}">
                            Fund Transfer

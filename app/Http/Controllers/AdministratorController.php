@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
-use App\{User};
+use App\{User, Balances, Customer, FundTransfer,Payments, Vehicle, VehicleOperator, VehicleOwner, VehicleType};
 use Spatie\Activitylog\Models\Activity;
 use Illuminate\Support\Facades\Gate;
 class AdministratorController extends Controller
@@ -80,7 +80,51 @@ class AdministratorController extends Controller
     }
     public function index()
     {
-        return view("administrator.dashboard");
+        if(Gate::allows('Administrator', auth()->user())){
+            $balance = Balances::orderBy('balance_id', 'asc')->get();
+            $customer = Customer::all();
+            $fundTransfer = FundTransfer::all();
+            $payment = Payments::all();
+            $user = User::all();
+            $vehicle = Vehicle::all();
+            $operator = VehicleOperator::all();
+            $type = Vehicletype::orderBy('type_id', 'asc')->get();
+            $owner = VehicleOwner::all();
+
+            return view("administrator.dashboard")->with([
+                "balance" => $balance,
+                "customer" => $customer,
+                "fundTransfer" => $fundTransfer,
+                "payment" => $payment,
+                "user" => $user,
+                "vehicle" => $vehicle,
+                "operator" => $operator,
+                "type" => $type,
+                "owner" => $owner,
+
+            ]);
+        }elseif(auth()->user()->hasRole('Customer')){
+            $balance =Balances::where('user_id', Auth::user()->user_id)->get();
+            $customer =Customer::where('email', Auth::user()->email)->first();
+            $phone_number = $customer->phone_number;
+            $fundTransfer = FundTransfer::where('sender', $phone_number)->orWhere('reciever', $phone_number)->get();
+            $payment = Payments::where('user_id', Auth::user()->user_id)->get();
+            $user = User::where('user_id', Auth::user()->user_id)->first();
+            $single =Balances::where('user_id', Auth::user()->user_id)->first();
+            return view("administrator.dashboard")->with([
+                "single" => $single,
+                "balance" => $balance,
+                "customer" => $customer,
+                "fundTransfer" => $fundTransfer,
+                "payment" => $payment,
+                "user" => $user,
+            ]);
+        }else{
+            return redirect()->back()->with([
+                "error" => "Ooops!! Please Login with a valid details",
+            ]);
+        }
+
     }
 
     /**
