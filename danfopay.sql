@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 17, 2019 at 04:54 PM
+-- Generation Time: Sep 19, 2019 at 03:24 PM
 -- Server version: 10.1.38-MariaDB
 -- PHP Version: 7.2.17
 
@@ -78,7 +78,10 @@ INSERT INTO `activity_log` (`id`, `log_name`, `description`, `subject_id`, `subj
 (30, 'default', 'created', 5, 'App\\User', 1, 'App\\User', '[]', '2019-09-16 10:25:37', '2019-09-16 10:25:37'),
 (31, 'default', 'updated', 2, 'App\\User', 2, 'App\\User', '[]', '2019-09-16 10:50:02', '2019-09-16 10:50:02'),
 (32, 'default', 'updated', 4, 'App\\User', 4, 'App\\User', '[]', '2019-09-16 11:01:09', '2019-09-16 11:01:09'),
-(33, 'default', 'updated', 5, 'App\\User', 5, 'App\\User', '[]', '2019-09-17 08:49:24', '2019-09-17 08:49:24');
+(33, 'default', 'updated', 5, 'App\\User', 5, 'App\\User', '[]', '2019-09-17 08:49:24', '2019-09-17 08:49:24'),
+(34, 'default', 'updated', 3, 'App\\User', 3, 'App\\User', '[]', '2019-09-19 08:46:32', '2019-09-19 08:46:32'),
+(35, 'default', 'created', 6, 'App\\User', 1, 'App\\User', '[]', '2019-09-19 11:19:07', '2019-09-19 11:19:07'),
+(36, 'default', 'updated', 6, 'App\\User', 6, 'App\\User', '[]', '2019-09-19 11:20:21', '2019-09-19 11:20:21');
 
 -- --------------------------------------------------------
 
@@ -101,10 +104,9 @@ CREATE TABLE `balances` (
 --
 
 INSERT INTO `balances` (`balance_id`, `total_amount`, `user_id`, `customer_code`, `updated_at`, `created_at`, `deleted_at`) VALUES
-(4, '20000', 4, 'CUS_ys5ydohrh502fyg', '2019-09-17 12:48:55', '2019-09-17 08:23:54', NULL),
-(5, '620000', 5, 'CUS_l684mk04yncdi80', '2019-09-17 12:47:11', '2019-09-17 09:02:26', NULL),
-(8, '220000', 2, 'CUS_xu9z0gvz3amogud', '2019-09-17 13:26:03', '2019-09-17 12:47:11', NULL),
-(9, '50000', 3, 'AFED8277E2', '2019-09-17 12:53:50', '2019-09-17 12:53:50', NULL);
+(1, '46500', 2, 'CUS_hmo71l43bg2o7lh', '2019-09-19 08:53:38', '2019-09-19 08:42:22', NULL),
+(2, '4000', 3, 'CUS_oxkdjaoub4z9cgo', '2019-09-19 08:53:38', '2019-09-19 08:53:20', NULL),
+(3, '32000', 6, 'CUS_rd03n9rgxjtc5rs', '2019-09-19 11:53:11', '2019-09-19 11:23:39', NULL);
 
 -- --------------------------------------------------------
 
@@ -131,7 +133,8 @@ INSERT INTO `customers` (`customer_id`, `name`, `email`, `phone_number`, `custom
 (1, 'Customer One', 'customer1@gmail.com', '08138139333', '7F3B3', '2019-09-16 10:18:29', '2019-09-16 08:15:36', NULL),
 (2, 'Customer Two', 'customer2@gmail.com', '09072281204', '5CCED', '2019-09-16 10:25:45', '2019-09-16 08:27:24', NULL),
 (3, 'Customer Three', 'customer3@gmail.com', '09072281201', '5AB1B', '2019-09-16 13:56:40', '2019-09-16 10:19:34', NULL),
-(4, 'Customer 4', 'customer4@gmail.com', '09072281207', '00AEC', '2019-09-16 10:25:36', '2019-09-16 10:25:36', NULL);
+(4, 'Customer Four', 'customer4@gmail.com', '09072281207', '00AEC', '2019-09-19 11:19:30', '2019-09-16 10:25:36', NULL),
+(5, 'Customer 5', 'customer5@gmail.com', '09083637366', '532C5C6061', '2019-09-19 11:19:07', '2019-09-19 11:19:07', NULL);
 
 -- --------------------------------------------------------
 
@@ -141,13 +144,20 @@ INSERT INTO `customers` (`customer_id`, `name`, `email`, `phone_number`, `custom
 
 CREATE TABLE `fund_transfers` (
   `fund_id` bigint(20) UNSIGNED NOT NULL,
-  `sender` int(11) NOT NULL,
-  `reciever` int(11) NOT NULL,
+  `sender` varchar(11) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `reciever` varchar(11) COLLATE utf8mb4_unicode_ci NOT NULL,
   `amount` int(11) NOT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `fund_transfers`
+--
+
+INSERT INTO `fund_transfers` (`fund_id`, `sender`, `reciever`, `amount`, `updated_at`, `created_at`, `deleted_at`) VALUES
+(1, '09072281204', '08138139333', 6500, '2019-09-19 08:53:38', '2019-09-19 08:53:38', NULL);
 
 -- --------------------------------------------------------
 
@@ -200,17 +210,25 @@ CREATE TABLE `model_has_permissions` (
 
 INSERT INTO `model_has_permissions` (`permission_id`, `model_type`, `model_id`) VALUES
 (21, 'App\\User', 2),
+(21, 'App\\User', 3),
 (21, 'App\\User', 4),
 (21, 'App\\User', 5),
+(21, 'App\\User', 6),
 (22, 'App\\User', 2),
+(22, 'App\\User', 3),
 (22, 'App\\User', 4),
 (22, 'App\\User', 5),
+(22, 'App\\User', 6),
 (23, 'App\\User', 2),
+(23, 'App\\User', 3),
 (23, 'App\\User', 4),
 (23, 'App\\User', 5),
+(23, 'App\\User', 6),
 (24, 'App\\User', 2),
+(24, 'App\\User', 3),
 (24, 'App\\User', 4),
-(24, 'App\\User', 5);
+(24, 'App\\User', 5),
+(24, 'App\\User', 6);
 
 -- --------------------------------------------------------
 
@@ -233,7 +251,8 @@ INSERT INTO `model_has_roles` (`role_id`, `model_type`, `model_id`) VALUES
 (3, 'App\\User', '2'),
 (3, 'App\\User', '3'),
 (3, 'App\\User', '4'),
-(3, 'App\\User', '5');
+(3, 'App\\User', '5'),
+(3, 'App\\User', '6');
 
 -- --------------------------------------------------------
 
@@ -279,7 +298,16 @@ INSERT INTO `payments` (`payment_id`, `reference`, `amount`, `currency`, `user_i
 (7, '0Fu7Hr742aaUjRJTmUmKR83ZZ', '1000', 'NGN', 5, 'success', '2019-09-17 09:19:33', '2019-09-17 09:19:33', NULL),
 (8, 'whZLcBtDIVYNdkdnIwu7iYptN', '20000', 'NGN', 2, 'success', '2019-09-17 12:50:34', '2019-09-17 12:50:34', NULL),
 (9, 'tnEsSEpa612YI8rgdy4n8z5Ns', '200000', 'NGN', 2, 'success', '2019-09-17 12:55:06', '2019-09-17 12:55:06', NULL),
-(10, 'GKnxq0NPTNa0q7ewGcXUpdyYH', '20000', 'NGN', 2, 'success', '2019-09-17 13:26:03', '2019-09-17 13:26:03', NULL);
+(10, 'GKnxq0NPTNa0q7ewGcXUpdyYH', '20000', 'NGN', 2, 'success', '2019-09-17 13:26:03', '2019-09-17 13:26:03', NULL),
+(11, 'CZjl4eUrHKVauXQqoN40PcdtN', '6500', 'NGN', 5, 'success', '2019-09-17 14:18:21', '2019-09-17 14:18:21', NULL),
+(12, 'seiPqNRYU7rW9VLFLpSFUJG1w', '6500', 'NGN', 5, 'success', '2019-09-17 14:40:52', '2019-09-17 14:40:52', NULL),
+(13, 'T3U66JTfgXYSqVUIEJsqXZSeN', '12000', 'NGN', 5, 'success', '2019-09-17 14:41:52', '2019-09-17 14:41:52', NULL),
+(14, 'TguhdP0CVBoD9WVl5QkJtS8T1', '12000', 'NGN', 5, 'success', '2019-09-17 14:42:37', '2019-09-17 14:42:37', NULL),
+(15, '2bqFgOgAr5vXkxjfKupZBInLj', '20000', 'NGN', 2, 'success', '2019-09-19 08:42:22', '2019-09-19 08:42:22', NULL),
+(16, 'jAlS0I2tYc2nZmYQ7zXKm9Arj', '20000', 'NGN', 2, 'success', '2019-09-19 08:43:45', '2019-09-19 08:43:45', NULL),
+(17, 'bXlWauJuVJc2v4MnM9yU5FiIA', '10500', 'NGN', 3, 'success', '2019-09-19 08:53:20', '2019-09-19 08:53:20', NULL),
+(18, 'JrNh4aOEXouasswjxi7MmmW8a', '20000', 'NGN', 6, 'success', '2019-09-19 11:23:39', '2019-09-19 11:23:39', NULL),
+(19, 'mlsxVbc91hbXyamkP6ScW5xgQ', '12000', 'NGN', 6, 'success', '2019-09-19 11:53:11', '2019-09-19 11:53:11', NULL);
 
 -- --------------------------------------------------------
 
@@ -389,9 +417,10 @@ CREATE TABLE `users` (
 INSERT INTO `users` (`user_id`, `name`, `email`, `email_verified_at`, `password`, `role`, `status`, `remember_token`, `updated_at`, `created_at`, `deleted_at`) VALUES
 (1, 'Adesina Taiwo', 'administrator@gmail.com', '2019-04-10 14:29:39', '$2y$10$pk17qvsG/AavWn2S6Ayx6./42WqKLutbcWjERVTjn.Dhdbjhhmd6C', 'Administrator', '1', '', '2019-08-29 17:05:30', '2019-04-10 14:29:39', NULL),
 (2, 'Customer One', 'customer1@gmail.com', '2019-09-16 10:50:02', '$2y$10$XkQi6a5Jz/eGZRETpxukB.cja7y/J/hbEvm.PHALdOxlNSKG.QII6', 'Customer', '1', NULL, '2019-09-16 10:50:02', '2019-09-16 08:15:36', NULL),
-(3, 'Customer Two', 'customer2@gmail.com', NULL, '$2y$10$tNWh3D0xajfXO0C3eQQRGOOtIjemNriK0KzIfCQ/6IZwIRFW33qM.', 'Customer', '1', NULL, '2019-09-16 10:25:46', '2019-09-16 08:27:24', NULL),
+(3, 'Customer Two', 'customer2@gmail.com', '2019-09-19 08:46:32', '$2y$10$tNWh3D0xajfXO0C3eQQRGOOtIjemNriK0KzIfCQ/6IZwIRFW33qM.', 'Customer', '1', NULL, '2019-09-19 08:46:32', '2019-09-16 08:27:24', NULL),
 (4, 'Customer Three', 'customer3@gmail.com', '2019-09-16 11:01:09', '$2y$10$/jcstmlW0Ju44Lju7beC9.d2VcGkzBP/c25RxtvMB37bt2V70xoc2', 'Customer', '1', NULL, '2019-09-16 13:56:40', '2019-09-16 10:19:34', NULL),
-(5, 'Customer 4', 'customer4@gmail.com', '2019-09-17 08:49:23', '$2y$10$PRznlsS0oiwZGYiLIRdgTuqx1wcppxFPSKBGioar.ghrpxmUKXgim', 'Customer', '1', NULL, '2019-09-17 08:49:23', '2019-09-16 10:25:37', NULL);
+(5, 'Customer Four', 'customer4@gmail.com', '2019-09-17 08:49:23', '$2y$10$PRznlsS0oiwZGYiLIRdgTuqx1wcppxFPSKBGioar.ghrpxmUKXgim', 'Customer', '1', NULL, '2019-09-19 11:19:30', '2019-09-16 10:25:37', NULL),
+(6, 'Customer 5', 'customer5@gmail.com', '2019-09-19 11:20:21', '$2y$10$N8XawlNqegP8eAhcchX/weXZln4vGpYkdJ.zBPxrBQ6QZBHt17y6u', 'Customer', '1', NULL, '2019-09-19 11:20:21', '2019-09-19 11:19:07', NULL);
 
 -- --------------------------------------------------------
 
@@ -617,25 +646,25 @@ ALTER TABLE `vehicle_types`
 -- AUTO_INCREMENT for table `activity_log`
 --
 ALTER TABLE `activity_log`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
 
 --
 -- AUTO_INCREMENT for table `balances`
 --
 ALTER TABLE `balances`
-  MODIFY `balance_id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `balance_id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `customers`
 --
 ALTER TABLE `customers`
-  MODIFY `customer_id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `customer_id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `fund_transfers`
 --
 ALTER TABLE `fund_transfers`
-  MODIFY `fund_id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `fund_id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `migrations`
@@ -647,7 +676,7 @@ ALTER TABLE `migrations`
 -- AUTO_INCREMENT for table `payments`
 --
 ALTER TABLE `payments`
-  MODIFY `payment_id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `payment_id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT for table `permissions`
@@ -665,7 +694,7 @@ ALTER TABLE `roles`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `user_id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `user_id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `vehicles`
