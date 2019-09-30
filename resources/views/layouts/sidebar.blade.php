@@ -32,18 +32,11 @@
 
             @else
                 @if (Gate::allows('Administrator', auth()->user()) OR (auth()->user()->hasRole('Admin')))
-                    <li class="active">
-                        <a href="{{route('administrator.dashboard')}}" class="waves-effect">
-                            <i class="zmdi zmdi-view-dashboard text-success"></i> <span>Dashboard</span>
-                            <small class="badge float-right badge-light">
-                                <i class="zmdi zmdi-long-arrow-right"></i>
-                            </small>
-                        </a>
-                    </li>
 
-                    <li class="active">
+
+                    <li class="">
                         <a href="{{route('user.create')}}" class="waves-effect">
-                            <i class="fa fa-user text-success"></i> <span>Users</span>
+                            <i class="fa fa-user text-success"></i> <span>Administrators</span>
                             <small class="badge float-right badge-success">
                                 {{-- @if(count($user) == 0)
                                     0
@@ -53,7 +46,7 @@
                             </small>
                         </a>
                     </li>
-                    <li class="active">
+                    <li class="">
                         <a href="javaScript:void();" class="waves-effect">
                             <i class="fa fa-car text-success"></i>
                             <span>Vehicle Mgt</span>
@@ -99,7 +92,7 @@
 
                         </ul>
                     </li>
-                    <li class="active">
+                    <li class="">
                         <a href="javaScript:void();" class="waves-effect">
                             <i class="fa fa-users text-success"></i>
                             <span>Customer Mgt</span>
@@ -108,7 +101,7 @@
                         <ul class="sidebar-submenu">
                             <li><a href="{{route('customer.index')}}"><i class="fa fa-plus"></i> Registration
                                 <small class="badge float-right badge-success">
-                                    {{-- {{count($customer)}} --}}
+
                                 </small>
                             </a></li>
                             <li><a href="{{route('payment.index')}}"><i class="fa fa-credit-card"></i> Transaction
@@ -121,7 +114,7 @@
                                     {{-- {{count($balance)}} --}}
                                 </small>
                             </a></li>
-                            <li><a href="{{route('balance.index')}}"><i class="fa fa-bank"></i> Fund Transfer
+                            <li><a href="{{route('fund.transfer.index')}}"><i class="fa fa-bank"></i> Fund Transfer
                                 <small class="badge float-right badge-success">
                                     {{-- {{count($fundTransfer)}} --}}
                                 </small>
@@ -131,14 +124,15 @@
                     </li>
 
 
-                    <li class="active">
-                        <a href="{{ route('admin.logout') }}" class="waves-effect">
-                            <i class="zmdi zmdi-lock text-success"></i> <span>Log Out</span>
+                    <li class="">
+                        <a href="{{ route('bulk-sms-index') }}" class="waves-effect">
+                            <i class="fa fa-envelope text-success"></i> <span>Builk SMS</span>
                             <small class="badge float-right badge-light"><i class="fa fa-lock" align="center"></i></small>
                         </a>
                     </li>
+
                 @elseif (auth()->user()->hasRole('Customer'))
-                    <li class="active">
+                    <li class="">
                         <a href="{{route('customer.index')}}" class="waves-effect">
                             <i class="fa fa-user text-success"></i> <span>My Details</span>
                             <small class="badge float-right badge-light">
@@ -147,13 +141,13 @@
                         </a>
                     </li>
 
-                    <li class="active">
+                    <li class="">
                         <a href="{{route('balance.index')}}" class="waves-effect">
                             <i class="fa fa-money text-success"></i> <span>Add Money </span>
                             <small class="badge float-right badge-success">1</small>
                         </a>
                     </li >
-                    <li class="active">
+                    <li class="">
                         <a href="{{route('payment.index')}}" class="waves-effect">
                             <i class="fa fa-credit-card text-success"></i> <span>Transactions</span>
                             <small class="badge float-right badge-success">
@@ -167,7 +161,7 @@
                         </a>
                     </li>
 
-                    <li class="active">
+                    <li class="">
                         <a href="{{route('fund.transfer.index')}}" class="waves-effect">
                             <i class="fa fa-bank text-success"></i> <span>Fund Transfer</span>
                             <small class="badge float-right badge-success">
@@ -182,31 +176,38 @@
                     </li>
 
 
-                    <li class="active">
+                    <li class="">
                         <a href="{{route('customer.index')}}" class="waves-effect">
                             <i class="fa fa-car text-success"></i> <span>My Trip</span>
                             <small class="badge float-right badge-success">0</small>
                         </a>
                     </li>
-
-                    <li class="active">
-                        <a href="{{ route('admin.logout') }}" class="waves-effect">
-                            <i class="zmdi zmdi-lock text-danger"></i> <span>Log Out</span>
-                            <small class="badge float-right badge-light"><i class="fa fa-lock" align="center"></i></small>
+                    <li class="">
+                        <a href="{{ route('bulk-sms-index') }}" class="waves-effect">
+                            <i class="fa fa-envelope text-success"></i> <span>SMS</span>
+                            <small class="badge float-right badge-success">0</small>
                         </a>
                     </li>
 
 
 
+
+
                 @else
-                <li class="active">
-                    <a href="{{ route('admin.logout') }}" class="waves-effect">
-                        <i class="zmdi zmdi-lock text-danger"></i> <span>Log Out</span>
-                        <small class="badge float-right badge-light"><i class="zmdi zmdi-long-arrow-right"></i></small>
-                    </a>
-                </li>
+                    <li class="">
+                        <a href="{{ route('admin.logout') }}" class="waves-effect">
+                            <i class="zmdi zmdi-lock text-danger"></i> <span>Log Out</span>
+                            <small class="badge float-right badge-light"><i class="zmdi zmdi-long-arrow-right"></i></small>
+                        </a>
+                    </li>
 
                 @endif
+                    <li class="">
+                        <a href="{{ route('admin.logout') }}" class="waves-effect">
+                            <i class="zmdi zmdi-lock text-danger"></i> <span>Log Out</span>
+                            <small class="badge float-right badge-light"><i class="fa fa-lock" align="center"></i></small>
+                        </a>
+                    </li>
 
             @endif
 

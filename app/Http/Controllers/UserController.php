@@ -26,7 +26,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        $user =$this->model->all();
+        $user =User::where('role', 'Administrator')->orderBy('email', 'asc')->get();
         $user_roles = Role::all();
         return view('administrator.users.create')->with([
             'user' => $user,
@@ -243,7 +243,7 @@ class UserController extends Controller
     public function edit($user_id)
     {
         if (Gate::allows('Administrator', auth()->user())) {
-            $user = $this->model->all();
+            $user =User::where('role', 'Administrator')->orderBy('email', 'asc')->get();
             $use = $this->model->show($user_id);
             $roles = Role::pluck('name','name')->all();
             $userRole = $use->roles->pluck('name','name')->all();

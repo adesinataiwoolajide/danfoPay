@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
-use App\{User, Balances, Customer, FundTransfer,Payments, Vehicle, VehicleOperator, VehicleOwner, VehicleType};
+use App\{User, Balances, Customer, FundTransfer,Payments, Vehicle, VehicleOperator, VehicleOwner, VehicleType, BulkSms};
 use Spatie\Activitylog\Models\Activity;
 use Illuminate\Support\Facades\Gate;
 class AdministratorController extends Controller
@@ -90,6 +90,7 @@ class AdministratorController extends Controller
             $operator = VehicleOperator::all();
             $type = Vehicletype::orderBy('type_id', 'asc')->get();
             $owner = VehicleOwner::all();
+            $bulksms = BulkSms::all();
 
             return view("administrator.dashboard")->with([
                 "balance" => $balance,
@@ -101,6 +102,7 @@ class AdministratorController extends Controller
                 "operator" => $operator,
                 "type" => $type,
                 "owner" => $owner,
+                "bulksms" => $bulksms
 
             ]);
         }elseif(auth()->user()->hasRole('Customer')){

@@ -15,7 +15,7 @@
                         </a>
                     </div>
 
-                    <div class="card-title text-uppercase text-center py-3">Sign In</div>
+                    <div class="card-title text-uppercase text-center py-3" style="color: red"><b>DANFO PAY <i class="fa fa-car"></i> </b></div>
                     <form method="POST" action="{{ route('admin.login') }}">
                         @csrf
                         <div class="form-group">
@@ -58,10 +58,10 @@
                             <div class="form-group col-6">
                                 <div class="icheck-material-primary">
                                 <input type="checkbox" id="user-checkbox" checked="" />
-                                <label for="user-checkbox">Remember me</label>
+                                <label for="user-checkbox" style="color: red">Remember me</label>
 
                                 @if (Route::has('password.request'))
-                                    <a class="btn btn-link" href="{{ route('password.request') }}">
+                                    <a class="btn btn-link" href="{{ route('password.request') }}" style="color: red">
                                         {{ __('Forgot Your Password?') }}
                                     </a>
                                 @endif
@@ -71,7 +71,7 @@
                                 <a href="{{route('guest.reset')}}">Reset Password</a>
                             </div> --}}
                         </div>
-                        <button type="submit" class="btn btn-primary btn-block waves-effect waves-light">Sign In</button><hr>
+                        <button type="submit" class="btn btn-danger btn-block waves-effect waves-light">Sign In</button><hr>
                         </div>
                     </form>
                 </div>

@@ -1,27 +1,38 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Reset Password') }}</div>
+    <div id="wrapper">
 
-                <div class="card-body">
+        <div class="card card-authentication1 mx-auto my-5">
+            {{-- @include('partials._message') --}}
+
+            <div class="card-body">
+                <div class="card-content p-2">
+
+                    <div class="text-center">
+                        <a href="{{route('admin.logout')}}">
+                            <img src="{{asset('styling/assets/logo.png')}}" style="height: 100px;" alt="logo icon">
+                        </a>
+                    </div>
                     @if (session('status'))
                         <div class="alert alert-success" role="alert">
                             {{ session('status') }}
                         </div>
                     @endif
+                    <div class="card-header" align="center">{{ __('Reset Password') }}</div>
+                    <div class="card-title text-uppercase text-center py-3" style="color: red"><b>DANFO PAY <i class="fa fa-car"></i> </b></div>
 
                     <form method="POST" action="{{ route('password.email') }}">
                         @csrf
-
-                        <div class="form-group row">
-                            <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('E-Mail Address') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="email" type="email" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email" value="{{ old('email') }}" required>
+                        <div class="form-group">
+                            <div class="position-relative has-icon-left">
+                                <label for="exampleInputUsername" class="sr-only">Username</label>
+                                <input type="email" id="exampleInputUsername"
+                                class="form-control form-control-rounded {{ $errors->has('email') ? ' is-invalid' : '' }}" name="email" value="{{ old('email') }}"
+                                name="email"" required autofocus placeholder="Enter Your E-Mail">
+                                <div class="form-control-position">
+                                    <i class="icon-user"></i>
+                                </div>
 
                                 @if ($errors->has('email'))
                                     <span class="invalid-feedback" role="alert">
@@ -31,17 +42,17 @@
                             </div>
                         </div>
 
-                        <div class="form-group row mb-0">
-                            <div class="col-md-6 offset-md-4">
-                                <button type="submit" class="btn btn-primary">
-                                    {{ __('Send Password Reset Link') }}
-                                </button>
-                            </div>
+
+                        <button type="submit" class="btn btn-danger btn-block waves-effect waves-light">
+                           {{ __('Send Password Reset Link') }}</button><hr>
+
                         </div>
                     </form>
                 </div>
             </div>
         </div>
+        <!--Start Back To Top Button-->
+        <a href="javaScript:void();" class="back-to-top"><i class="fa fa-angle-double-up"></i> </a>
     </div>
-</div>
+
 @endsection

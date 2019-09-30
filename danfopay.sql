@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 19, 2019 at 03:24 PM
+-- Generation Time: Sep 30, 2019 at 04:51 PM
 -- Server version: 10.1.38-MariaDB
 -- PHP Version: 7.2.17
 
@@ -81,7 +81,12 @@ INSERT INTO `activity_log` (`id`, `log_name`, `description`, `subject_id`, `subj
 (33, 'default', 'updated', 5, 'App\\User', 5, 'App\\User', '[]', '2019-09-17 08:49:24', '2019-09-17 08:49:24'),
 (34, 'default', 'updated', 3, 'App\\User', 3, 'App\\User', '[]', '2019-09-19 08:46:32', '2019-09-19 08:46:32'),
 (35, 'default', 'created', 6, 'App\\User', 1, 'App\\User', '[]', '2019-09-19 11:19:07', '2019-09-19 11:19:07'),
-(36, 'default', 'updated', 6, 'App\\User', 6, 'App\\User', '[]', '2019-09-19 11:20:21', '2019-09-19 11:20:21');
+(36, 'default', 'updated', 6, 'App\\User', 6, 'App\\User', '[]', '2019-09-19 11:20:21', '2019-09-19 11:20:21'),
+(37, 'default', 'created', 7, 'App\\User', 1, 'App\\User', '[]', '2019-09-30 06:44:54', '2019-09-30 06:44:54'),
+(38, 'default', 'updated', 1, 'App\\User', 1, 'App\\User', '[]', '2019-09-30 06:47:15', '2019-09-30 06:47:15'),
+(39, 'default', 'updated', 1, 'App\\User', 1, 'App\\User', '[]', '2019-09-30 06:47:30', '2019-09-30 06:47:30'),
+(40, 'default', 'deleted', 7, 'App\\User', 1, 'App\\User', '[]', '2019-09-30 06:47:48', '2019-09-30 06:47:48'),
+(41, 'default', 'restored', 7, 'App\\User', 1, 'App\\User', '{\"name\":\"Adesina Taiwo Olajide\",\"email\":\"tolajide74@gmail.com\"}', '2019-09-30 06:47:56', '2019-09-30 06:47:56');
 
 -- --------------------------------------------------------
 
@@ -104,9 +109,24 @@ CREATE TABLE `balances` (
 --
 
 INSERT INTO `balances` (`balance_id`, `total_amount`, `user_id`, `customer_code`, `updated_at`, `created_at`, `deleted_at`) VALUES
-(1, '46500', 2, 'CUS_hmo71l43bg2o7lh', '2019-09-19 08:53:38', '2019-09-19 08:42:22', NULL),
-(2, '4000', 3, 'CUS_oxkdjaoub4z9cgo', '2019-09-19 08:53:38', '2019-09-19 08:53:20', NULL),
-(3, '32000', 6, 'CUS_rd03n9rgxjtc5rs', '2019-09-19 11:53:11', '2019-09-19 11:23:39', NULL);
+(1, '150', 4, 'CUS_2g3d67ut0hylj52', '2019-09-30 07:37:16', '2019-09-30 07:33:32', NULL),
+(2, '50', 2, 'AF5A04FF83', '2019-09-30 07:37:16', '2019-09-30 07:37:16', NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `bulk_sms`
+--
+
+CREATE TABLE `bulk_sms` (
+  `sms_id` bigint(20) UNSIGNED NOT NULL,
+  `message` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `phone_number` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `subject` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `deleted_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -157,7 +177,7 @@ CREATE TABLE `fund_transfers` (
 --
 
 INSERT INTO `fund_transfers` (`fund_id`, `sender`, `reciever`, `amount`, `updated_at`, `created_at`, `deleted_at`) VALUES
-(1, '09072281204', '08138139333', 6500, '2019-09-19 08:53:38', '2019-09-19 08:53:38', NULL);
+(1, '09072281201', '08138139333', 50, '2019-09-30 07:37:16', '2019-09-30 07:37:16', NULL);
 
 -- --------------------------------------------------------
 
@@ -190,7 +210,9 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (12, '2019_09_16_125156_create_balances_table', 7),
 (13, '2019_09_16_131303_add_user_id_to_balances', 8),
 (14, '2019_09_16_131341_add_user_id_to_payments', 8),
-(15, '2019_09_17_111120_create_fund_transfers_table', 9);
+(15, '2019_09_17_111120_create_fund_transfers_table', 9),
+(16, '2019_09_30_091333_create_bulk_sms_table', 10),
+(17, '2019_09_30_091558_add_subject_to_bulk_sms', 11);
 
 -- --------------------------------------------------------
 
@@ -266,6 +288,17 @@ CREATE TABLE `password_resets` (
   `created_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+--
+-- Dumping data for table `password_resets`
+--
+
+INSERT INTO `password_resets` (`email`, `token`, `created_at`) VALUES
+('administrator@gmail.com', '$2y$10$x6owNEs0Qz72Qb9SSIALRu637R3ZnrnY8G53LX253XzVDURWFnjeW', '2019-09-30 12:09:04'),
+('customer2@gmail.com', '$2y$10$KDWFkVuPR4ij/e/L3.XhAOj8Juza3Fw3iwAvebJcgI/P4aMLLntDC', '2019-09-30 12:13:40'),
+('customer1@gmail.com', '$2y$10$HLtuPatCy3B/cTQEbA9TF.sJUipX6tpzGq1RMcYT60B5idJIWvan2', '2019-09-30 12:41:06'),
+('customer4@gmail.com', '$2y$10$XQTHY2E4A.KBrebVgYQqyOkgIsVFMdR8RH085SjPmMDDrBMdDUEuq', '2019-09-30 12:45:47'),
+('customer3@gmail.com', '$2y$10$A3Gv.7/fSu8F7wvj09HmK.sZo4uZJ0GD3vIQxRfcUfeK5BOwROXPO', '2019-09-30 13:17:49');
+
 -- --------------------------------------------------------
 
 --
@@ -289,25 +322,8 @@ CREATE TABLE `payments` (
 --
 
 INSERT INTO `payments` (`payment_id`, `reference`, `amount`, `currency`, `user_id`, `status`, `updated_at`, `created_at`, `deleted_at`) VALUES
-(1, 'acmBBNDZrC2zaOALv4GWVs3j8', '6500', 'NGN', 4, 'success', '2019-09-17 08:38:43', '2019-09-17 08:38:43', NULL),
-(2, 'EPkwZtaV15X14po5qldrhiYFO', '20000', 'NGN', 4, 'success', '2019-09-17 08:40:01', '2019-09-17 08:40:01', NULL),
-(3, 'vOruToK9ukT5rsh4Oiiu6ZGyc', '9000', 'NGN', 4, 'success', '2019-09-17 08:41:06', '2019-09-17 08:41:06', NULL),
-(4, 'QatLY3mqgdQJFRKGj09uFESVs', '10500', 'NGN', 4, 'success', '2019-09-17 08:41:59', '2019-09-17 08:41:59', NULL),
-(5, 'PF94CpAatJq7PMDdBQgSEov5J', '1000', 'NGN', 5, 'success', '2019-09-17 09:02:26', '2019-09-17 09:02:26', NULL),
-(6, 'nR6qQYVgWXadgSdKvNh9D3qdy', '650000', 'NGN', 5, 'success', '2019-09-17 09:07:30', '2019-09-17 09:07:30', NULL),
-(7, '0Fu7Hr742aaUjRJTmUmKR83ZZ', '1000', 'NGN', 5, 'success', '2019-09-17 09:19:33', '2019-09-17 09:19:33', NULL),
-(8, 'whZLcBtDIVYNdkdnIwu7iYptN', '20000', 'NGN', 2, 'success', '2019-09-17 12:50:34', '2019-09-17 12:50:34', NULL),
-(9, 'tnEsSEpa612YI8rgdy4n8z5Ns', '200000', 'NGN', 2, 'success', '2019-09-17 12:55:06', '2019-09-17 12:55:06', NULL),
-(10, 'GKnxq0NPTNa0q7ewGcXUpdyYH', '20000', 'NGN', 2, 'success', '2019-09-17 13:26:03', '2019-09-17 13:26:03', NULL),
-(11, 'CZjl4eUrHKVauXQqoN40PcdtN', '6500', 'NGN', 5, 'success', '2019-09-17 14:18:21', '2019-09-17 14:18:21', NULL),
-(12, 'seiPqNRYU7rW9VLFLpSFUJG1w', '6500', 'NGN', 5, 'success', '2019-09-17 14:40:52', '2019-09-17 14:40:52', NULL),
-(13, 'T3U66JTfgXYSqVUIEJsqXZSeN', '12000', 'NGN', 5, 'success', '2019-09-17 14:41:52', '2019-09-17 14:41:52', NULL),
-(14, 'TguhdP0CVBoD9WVl5QkJtS8T1', '12000', 'NGN', 5, 'success', '2019-09-17 14:42:37', '2019-09-17 14:42:37', NULL),
-(15, '2bqFgOgAr5vXkxjfKupZBInLj', '20000', 'NGN', 2, 'success', '2019-09-19 08:42:22', '2019-09-19 08:42:22', NULL),
-(16, 'jAlS0I2tYc2nZmYQ7zXKm9Arj', '20000', 'NGN', 2, 'success', '2019-09-19 08:43:45', '2019-09-19 08:43:45', NULL),
-(17, 'bXlWauJuVJc2v4MnM9yU5FiIA', '10500', 'NGN', 3, 'success', '2019-09-19 08:53:20', '2019-09-19 08:53:20', NULL),
-(18, 'JrNh4aOEXouasswjxi7MmmW8a', '20000', 'NGN', 6, 'success', '2019-09-19 11:23:39', '2019-09-19 11:23:39', NULL),
-(19, 'mlsxVbc91hbXyamkP6ScW5xgQ', '12000', 'NGN', 6, 'success', '2019-09-19 11:53:11', '2019-09-19 11:53:11', NULL);
+(1, 'TkfdEsfpwxpZBEDI4eRQ54lrP', '50', 'NGN', 4, 'success', '2019-09-30 07:33:32', '2019-09-30 07:33:32', NULL),
+(2, 'hXxUZMlmVnF7MpMu3FrgLqvYv', '150', 'NGN', 4, 'success', '2019-09-30 07:36:13', '2019-09-30 07:36:13', NULL);
 
 -- --------------------------------------------------------
 
@@ -376,7 +392,7 @@ INSERT INTO `roles` (`id`, `name`, `guard_name`, `created_at`, `updated_at`) VAL
 (1, 'Administrator', 'web', '2019-08-29 16:16:06', '2019-08-29 16:16:06'),
 (2, 'Owner', 'web', '2019-08-29 16:16:15', '2019-08-29 16:16:15'),
 (3, 'Customer', 'web', '2019-08-29 16:16:23', '2019-08-29 16:16:23'),
-(4, 'Driver', 'web', '2019-08-29 16:16:28', '2019-08-29 16:16:28'),
+(4, 'Operator', 'web', '2019-08-29 16:16:28', '2019-08-29 16:16:28'),
 (5, 'Admin', 'web', NULL, NULL);
 
 -- --------------------------------------------------------
@@ -415,12 +431,13 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`user_id`, `name`, `email`, `email_verified_at`, `password`, `role`, `status`, `remember_token`, `updated_at`, `created_at`, `deleted_at`) VALUES
-(1, 'Adesina Taiwo', 'administrator@gmail.com', '2019-04-10 14:29:39', '$2y$10$pk17qvsG/AavWn2S6Ayx6./42WqKLutbcWjERVTjn.Dhdbjhhmd6C', 'Administrator', '1', '', '2019-08-29 17:05:30', '2019-04-10 14:29:39', NULL),
+(1, 'Adesina Taiwo Victor', 'administrator@gmail.com', '2019-04-10 14:29:39', '$2y$10$pk17qvsG/AavWn2S6Ayx6./42WqKLutbcWjERVTjn.Dhdbjhhmd6C', 'Administrator', '1', '', '2019-09-30 06:47:30', '2019-04-10 14:29:39', NULL),
 (2, 'Customer One', 'customer1@gmail.com', '2019-09-16 10:50:02', '$2y$10$XkQi6a5Jz/eGZRETpxukB.cja7y/J/hbEvm.PHALdOxlNSKG.QII6', 'Customer', '1', NULL, '2019-09-16 10:50:02', '2019-09-16 08:15:36', NULL),
 (3, 'Customer Two', 'customer2@gmail.com', '2019-09-19 08:46:32', '$2y$10$tNWh3D0xajfXO0C3eQQRGOOtIjemNriK0KzIfCQ/6IZwIRFW33qM.', 'Customer', '1', NULL, '2019-09-19 08:46:32', '2019-09-16 08:27:24', NULL),
 (4, 'Customer Three', 'customer3@gmail.com', '2019-09-16 11:01:09', '$2y$10$/jcstmlW0Ju44Lju7beC9.d2VcGkzBP/c25RxtvMB37bt2V70xoc2', 'Customer', '1', NULL, '2019-09-16 13:56:40', '2019-09-16 10:19:34', NULL),
 (5, 'Customer Four', 'customer4@gmail.com', '2019-09-17 08:49:23', '$2y$10$PRznlsS0oiwZGYiLIRdgTuqx1wcppxFPSKBGioar.ghrpxmUKXgim', 'Customer', '1', NULL, '2019-09-19 11:19:30', '2019-09-16 10:25:37', NULL),
-(6, 'Customer 5', 'customer5@gmail.com', '2019-09-19 11:20:21', '$2y$10$N8XawlNqegP8eAhcchX/weXZln4vGpYkdJ.zBPxrBQ6QZBHt17y6u', 'Customer', '1', NULL, '2019-09-19 11:20:21', '2019-09-19 11:19:07', NULL);
+(6, 'Customer 5', 'customer5@gmail.com', '2019-09-19 11:20:21', '$2y$10$N8XawlNqegP8eAhcchX/weXZln4vGpYkdJ.zBPxrBQ6QZBHt17y6u', 'Customer', '1', NULL, '2019-09-19 11:20:21', '2019-09-19 11:19:07', NULL),
+(7, 'Adesina Taiwo Olajide', 'tolajide74@gmail.com', NULL, '$2y$10$e8inzRq9hdWdX1ADiOCUhe7QS0EL4iKUY.gVAeHNQ0PExFyHeFNDW', 'Administrator', '1', NULL, '2019-09-30 06:47:56', '2019-09-30 06:44:54', NULL);
 
 -- --------------------------------------------------------
 
@@ -501,7 +518,8 @@ INSERT INTO `vehicle_owner` (`owner_id`, `name`, `phone_number`, `address`, `pas
 (1, 'Adebola Kemisola', '09073646383', 'Favors Building Bodija Ibadan', '$2y$10$dOuUTl1X4cW.etWTX0QkTOzOF5AjKB6hNJ2G/zahp95ivP5OdUPze', '12S34F', '2019-09-10 11:06:12', '2019-09-10 11:06:12', NULL),
 (2, 'Owner One', '09083636366', 'Alakija Estate Ibadan', '$2y$10$pwbdnNMROfQ23XbaA8qYc.o0lLMycc7RLM.wW8NZtdjfjbyGvSbuu', '2', '2019-09-10 12:05:04', '2019-09-10 13:05:04', NULL),
 (3, 'Owner Two', '09085757442', 'Bodija Estate', '$2y$10$uVQki5PBT3DU35kyVt87Vu9mLbu/eyz927u8prRpMbLsUbKxflbOC', '341014', '2019-09-10 10:05:04', '2019-09-10 10:05:04', NULL),
-(4, 'Owner Three', '08047473832', 'Kolade Avenue', '$2y$10$BF6WnhiLpl.KBVphCqs7euSzda85tBGTixC7kxAh.Pc620ti.AD6S', '4', '2019-09-10 11:52:29', '2019-09-10 12:52:29', NULL);
+(4, 'Owner Three', '08047473832', 'Kolade Avenue', '$2y$10$BF6WnhiLpl.KBVphCqs7euSzda85tBGTixC7kxAh.Pc620ti.AD6S', '4', '2019-09-10 11:52:29', '2019-09-10 12:52:29', NULL),
+(5, 'Test Owner', '09072281200', 'Ladoke Akintola', '$2y$10$5y5EA6.NXvMSUxodLgM0MusPu355Z.W/iseaheED4MpHdZJBUb5JW', 'BEA90F', '2019-09-30 06:51:05', '2019-09-30 06:51:05', NULL);
 
 -- --------------------------------------------------------
 
@@ -522,7 +540,7 @@ CREATE TABLE `vehicle_types` (
 --
 
 INSERT INTO `vehicle_types` (`type_id`, `type_name`, `deleted_at`, `updated_at`, `created_at`) VALUES
-(1, 'Bus', NULL, '2019-09-10 09:44:36', '2019-08-30 08:56:46'),
+(1, 'Bus', NULL, '2019-09-30 06:49:09', '2019-08-30 08:56:46'),
 (2, 'Cab', NULL, '2019-08-30 08:56:55', '2019-08-30 08:56:55'),
 (3, 'Mini Bus', NULL, '2019-08-30 09:43:11', '2019-08-30 09:34:36'),
 (4, 'Tricycle', NULL, '2019-09-10 09:59:22', '2019-09-10 09:59:22');
@@ -543,6 +561,12 @@ ALTER TABLE `activity_log`
 --
 ALTER TABLE `balances`
   ADD PRIMARY KEY (`balance_id`);
+
+--
+-- Indexes for table `bulk_sms`
+--
+ALTER TABLE `bulk_sms`
+  ADD PRIMARY KEY (`sms_id`);
 
 --
 -- Indexes for table `customers`
@@ -646,13 +670,19 @@ ALTER TABLE `vehicle_types`
 -- AUTO_INCREMENT for table `activity_log`
 --
 ALTER TABLE `activity_log`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=42;
 
 --
 -- AUTO_INCREMENT for table `balances`
 --
 ALTER TABLE `balances`
-  MODIFY `balance_id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `balance_id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `bulk_sms`
+--
+ALTER TABLE `bulk_sms`
+  MODIFY `sms_id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `customers`
@@ -670,13 +700,13 @@ ALTER TABLE `fund_transfers`
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT for table `payments`
 --
 ALTER TABLE `payments`
-  MODIFY `payment_id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `payment_id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `permissions`
@@ -694,7 +724,7 @@ ALTER TABLE `roles`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `user_id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `user_id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `vehicles`
@@ -712,7 +742,7 @@ ALTER TABLE `vehicle_operators`
 -- AUTO_INCREMENT for table `vehicle_owner`
 --
 ALTER TABLE `vehicle_owner`
-  MODIFY `owner_id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `owner_id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `vehicle_types`

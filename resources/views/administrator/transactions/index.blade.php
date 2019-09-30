@@ -55,6 +55,7 @@
                                     <thead>
                                         <tr>
                                             <th>S/N</th>
+                                            <th>Customer</th>
                                             <th>Refrence</th>
                                             <th>Amount</th>
                                             <th>Currency</th>
@@ -66,6 +67,7 @@
                                     <tfoot>
                                         <tr>
                                             <th>S/N</th>
+                                            <th>Customer</th>
                                             <th>Refrence</th>
                                             <th>Amount</th>
                                             <th>Currency</th>
@@ -80,6 +82,10 @@
                                             <tr>
 
                                                 <td>{{$y}}</td>
+                                                <td>@foreach (usersList($lists->user_id) as $details)
+                                                        {{$details->email}}
+                                                    @endforeach
+                                                </td>
                                                 <td>{{$lists->reference}}</td>
                                                 <td>&#8358;{{number_format($lists->amount)}}</td>
                                                 <td>{{$lists->currency}}</td>

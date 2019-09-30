@@ -60,7 +60,7 @@ class PaymentController extends Controller
                 'currency' => data_get($paymentDetails, 'data.currency'),
             ]);
 
-            $newAmount = data_get($paymentDetails, 'data.amount');
+            $newAmount = data_get($paymentDetails, 'data.amount')/100;
             if(Balances::where('user_id', Auth::user()->user_id)->exists()){
                 $former = Balances::where('user_id', Auth::user()->user_id)->first();
                 $amount = $former->total_amount;
@@ -71,18 +71,18 @@ class PaymentController extends Controller
                     'customer_code' => data_get($paymentDetails, 'data.customer.customer_code'),
                 ]);
                 if($this->model->create($insert)){
-                    return redirect()->route("balance.index")->with("success", "You Have Updated Your Balance Successfully");
+                    return redirect()->route("balance.index")->with("success", "You Have Updated Your Balance with $newAmount Successfully");
                 }else{
                     return redirect()->route("balance.index")->with("eoor", "Network Failure");
                 }
             }else{
                 $adding = new Balances ([
                     "user_id" => Auth::user()->user_id,
-                    'total_amount' => data_get($paymentDetails, 'data.amount'),
+                    'total_amount' => $newAmount,
                     'customer_code' => data_get($paymentDetails, 'data.customer.customer_code'),
                 ]);
                 if($this->model->create($insert) AND ($adding->save())){
-                    return redirect()->route("balance.index")->with("success", "You Have Credited Your Wallet Successfully");
+                    return redirect()->route("balance.index")->with("success", "You Have Credited Your Wallet with $newAmount Successfully");
                  }else{
                     return redirect()->route("balance.index")->with("eoor", "Network Failure, Please Try Again Later");
                  }

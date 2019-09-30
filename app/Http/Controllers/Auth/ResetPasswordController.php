@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ResetsPasswords;
 
+
 class ResetPasswordController extends Controller
 {
     /*
@@ -25,7 +26,20 @@ class ResetPasswordController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+
+    // public function sendPasswordResetNotification($token)
+    // {
+    //     $this->notify(new Notifications\MailResetPasswordNotification($token));
+    // }
+    protected $redirectTo = '/administrator/dashboard';
+
+    public function showResetForm($token)
+    {
+       // $this->notify(new Notifications\MailResetPasswordNotification($token));
+        return view('auth.passwords.reset')->with([
+            "token" => $token
+        ]);
+    }
 
     /**
      * Create a new controller instance.

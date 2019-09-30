@@ -19,6 +19,8 @@ Route::post("/index", "AdministratorController@userlogin")->name("admin.login");
 Route::get("/logout", "AdministratorController@logout")->name("admin.logout");
 Route::get("/administrator", "AdministratorController@index")->name("admin.index");
 
+Route::get('/password/reset/{token}', 'Auth\ResetPasswordController@showResetFor');
+
 Auth::routes(['verify' => true]);
 
 Route::group(["prefix" => "administrator", "middleware" => "verified"], function(){
@@ -122,4 +124,11 @@ Route::group(["prefix" => "administrator", "middleware" => "verified"], function
 
     });
 
+    Route::group(["prefix" => "bulk_sms"], function(){
+
+        Route::get('/create/', 'BulkSmsController@create')->name('bulk-sms');
+        Route::get('/index/', 'BulkSmsController@index')->name('bulk-sms-index');
+        Route::post('/send-bulksms/', 'BulkSmsController@save')->name('send-sms');
+        Route::post('/bulksms/', 'BulkSmsController@save')->name('send-sms-restore');
+    });
 });

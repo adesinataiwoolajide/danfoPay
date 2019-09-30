@@ -188,7 +188,7 @@
                 </div>
             </div>
         </div>
-        @if(auth()->user()->hasRole('Administrator'))
+        @if(auth()->user()->hasRole('Admin'))
             <div class="row">
                 <div class="col-lg-12">
                     <div class="card">

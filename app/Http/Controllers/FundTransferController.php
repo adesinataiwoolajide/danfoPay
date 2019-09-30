@@ -158,7 +158,7 @@ class FundTransferController extends Controller
                         'customer_code' => $number,
                     ]);
                     if($adding->save() AND ($fund->save())){
-                        return redirect()->route("fund.transfer.index")->with("success", "You Have Credited Your Wallet Successfully");
+                        return redirect()->route("fund.transfer.index")->with("success", "You Have Credited $recipient Wallet  with $debit Successfully");
                      }else{
                         return redirect()->back()->with("error", "Network Failure, Please Try Again Later");
                      }

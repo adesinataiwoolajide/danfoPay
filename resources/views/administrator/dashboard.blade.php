@@ -19,11 +19,11 @@
                     <div class="card mt-3 gradient-dusk">
                         <div class="card-content">
                             <div class="row row-group m-0"  style="cursor: pointer">
-                                <div class="col-12 col-lg-6 col-xl-3 border-white-2" onclick="location.href=''">
+                                <div class="col-12 col-lg-6 col-xl-3 border-white-2" onclick="location.href='{{route('user.create')}}'">
                                     <div class="card-body">
                                         <div class="media align-items-center">
                                             <div class="media-body text-left">
-                                                <h4 class="mb-0 text-white">0</h4>
+                                                <h4 class="mb-0 text-white">{{count($user) }}</h4>
                                                 <span class="text-white">System <br>Users</span>
                                             </div>
                                             <div class="align-self-center w-icon">
@@ -36,11 +36,11 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-12 col-lg-6 col-xl-3 border-white-2" onclick="location.href=''">
+                                <div class="col-12 col-lg-6 col-xl-3 border-white-2" onclick="location.href='{{route('vehicle.index')}}'">
                                     <div class="card-body">
                                         <div class="media align-items-center">
                                             <div class="media-body text-left">
-                                                <h4 class="mb-0 text-white">0</h4>
+                                                <h4 class="mb-0 text-white">{{count($vehicle) }}</h4>
                                                 <span class="text-white">Vehicle<br> MGT</span>
                                             </div>
                                             <div class="align-self-center w-icon">
@@ -53,11 +53,11 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-12 col-lg-6 col-xl-3 border-white-2" onclick="location.href=''">
+                                <div class="col-12 col-lg-6 col-xl-3 border-white-2" onclick="location.href='{{route('owner.create')}}'">
                                     <div class="card-body">
                                         <div class="media align-items-center">
                                             <div class="media-body text-left">
-                                                <h4 class="mb-0 text-white">0</h4>
+                                                <h4 class="mb-0 text-white">{{count($owner) }}</h4>
                                                 <span class="text-white">Owners  <br>MGT</span>
                                             </div>
                                             <div class="align-self-center w-icon">
@@ -70,11 +70,11 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-12 col-lg-6 col-xl-3 border-white-2" onclick="location.href=''">
+                                <div class="col-12 col-lg-6 col-xl-3 border-white-2" onclick="location.href='{{route('operator.index')}}'">
                                     <div class="card-body">
                                         <div class="media align-items-center">
                                             <div class="media-body text-left">
-                                                <h4 class="mb-0 text-white">0</h4>
+                                                <h4 class="mb-0 text-white">{{count($operator) }}</h4>
                                                 <span class="text-white">Operators <br> MGT</span>
                                             </div>
                                             <div class="align-self-center w-icon">
@@ -94,12 +94,12 @@
                     <div class="card mt-3 gradient-army">
                         <div class="card-content">
                             <div class="row row-group m-0"  style="cursor: pointer">
-                                <div class="col-12 col-lg-6 col-xl-3 border-white-2" onclick="location.href=''">
+                                <div class="col-12 col-lg-6 col-xl-3 border-white-2" onclick="location.href='{{route('vehicle.type.create')}}'">
                                     <div class="card-body">
                                         <div class="media align-items-center">
                                             <div class="media-body text-left">
-                                                <h4 class="mb-0 text-white">0</h4>
-                                                <span class="text-white">Total <br>Revenue</span>
+                                                <h4 class="mb-0 text-white">{{count($type) }}</h4>
+                                                <span class="text-white">Vehicle <br>Types</span>
                                             </div>
                                             <div class="align-self-center w-icon">
                                                 <i class="icon-basket-loaded text-white"></i></div>
@@ -111,11 +111,11 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-12 col-lg-6 col-xl-3 border-white-2" onclick="location.href=''">
+                                <div class="col-12 col-lg-6 col-xl-3 border-white-2" onclick="location.href='{{route('customer.index')}}'">
                                     <div class="card-body">
                                         <div class="media align-items-center">
                                             <div class="media-body text-left">
-                                                <h4 class="mb-0 text-white">0</h4>
+                                                <h4 class="mb-0 text-white">{{count($customer) }}</h4>
                                                 <span class="text-white">Total<br> Customers</span>
                                             </div>
                                             <div class="align-self-center w-icon">
@@ -133,7 +133,7 @@
                                         <div class="media align-items-center">
                                             <div class="media-body text-left">
                                                 <h4 class="mb-0 text-white">0</h4>
-                                                <span class="text-white">Offence  <br>Categories</span>
+                                                <span class="text-white">All  <br>Trips</span>
                                             </div>
                                             <div class="align-self-center w-icon">
                                                 <i class="icon-pie-chart text-white"></i></div>
@@ -145,12 +145,12 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-12 col-lg-6 col-xl-3 border-white-2" onclick="location.href=''">
+                                <div class="col-12 col-lg-6 col-xl-3 border-white-2" onclick="location.href='{{route('payment.index')}}'">
                                     <div class="card-body">
                                         <div class="media align-items-center">
                                             <div class="media-body text-left">
-                                                <h4 class="mb-0 text-white">0</h4>
-                                                <span class="text-white">Customer <br> Wallet</span>
+                                                <h4 class="mb-0 text-white">{{count($payment) }}</h4>
+                                                <span class="text-white">Customer <br> Payment</span>
                                             </div>
                                             <div class="align-self-center w-icon">
                                                 <i class="icon-bell text-white"></i></div>
@@ -168,12 +168,12 @@
                     <div class="card mt-3 gradient-forest">
                         <div class="card-content">
                             <div class="row row-group m-0"  style="cursor: pointer">
-                                <div class="col-12 col-lg-6 col-xl-3 border-white-2" onclick="location.href=''">
+                                <div class="col-12 col-lg-6 col-xl-3 border-white-2" onclick="location.href='{{route('fund.transfer.index')}}'">
                                     <div class="card-body">
                                         <div class="media align-items-center">
                                             <div class="media-body text-left">
-                                                <h4 class="mb-0 text-white">0</h4>
-                                                <span class="text-white">Total <br>Revenue</span>
+                                                <h4 class="mb-0 text-white">{{count($fundTransfer) }}</h4>
+                                                <span class="text-white">Fund <br>Transfer</span>
                                             </div>
                                             <div class="align-self-center w-icon">
                                                 <i class="icon-basket-loaded text-white"></i></div>
@@ -202,12 +202,12 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-12 col-lg-6 col-xl-3 border-white-2" onclick="location.href=''">
+                                <div class="col-12 col-lg-6 col-xl-3 border-white-2" onclick="location.href='{{ route('bulk-sms-index') }}'">
                                     <div class="card-body">
                                         <div class="media align-items-center">
                                             <div class="media-body text-left">
-                                                <h4 class="mb-0 text-white">0</h4>
-                                                <span class="text-white">  <br></span>
+                                                <h4 class="mb-0 text-white">{{count($bulksms) }}</h4>
+                                                <span class="text-white"> Bulk <br>SMS</span>
                                             </div>
                                             <div class="align-self-center w-icon">
                                                 <i class="icon-pie-chart text-white"></i></div>
@@ -223,8 +223,8 @@
                                     <div class="card-body">
                                         <div class="media align-items-center">
                                             <div class="media-body text-left">
-                                                <h4 class="mb-0 text-white">0</h4>
-                                                <span class="text-white"> <br> </span>
+                                                <h4 class="mb-0 text-white">{{count($balance) }}</h4>
+                                                <span class="text-white">Customer <br> Balance </span>
                                             </div>
                                             <div class="align-self-center w-icon">
                                                 <i class="icon-bell text-white"></i></div>
