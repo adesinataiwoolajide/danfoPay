@@ -39,6 +39,7 @@
                                         <tr>
                                             <th>S/N</th>
                                             <th>Owner Name</th>
+                                            <th>E-Mail</th>
                                             <th>Phone Number</th>
                                             <th>Address</th>
                                         </tr>
@@ -47,6 +48,7 @@
                                         <tr>
                                             <th>S/N</th>
                                             <th>Owner Name</th>
+                                            <th>E-Mail</th>
                                             <th>Phone Number</th>
                                             <th>Address</th>
                                         </tr>
@@ -57,12 +59,13 @@
                                         <tr>
 
                                             <td>{{$y}}
-                                                <a href="{{route('owner.undelete', $owners->owner_id)}}"
+                                                <a href="{{route('owner.undelete', $owners->email)}}"
                                                     onclick="return(confirmToRestore());" class="btn btn-danger">
-                                                    <i class="fa fa-trash-o"></i>
+                                                    <i class="fa fa-trash-o"></i>Restore
                                                 </a>
                                             </td>
                                             <td>{{$owners->name}}</td>
+                                            <td>{{$owners->email}}</td>
                                             <td>{{$owners->phone_number}}</td>
                                             <td>{{$owners->address}}</td>
 

@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Repositories\OperatorRepository;
 use DB;
-use App\{VehicleOwner, Vehicle, VehicleType, VehicleOperator};
+use App\{VehicleOwner, Vehicle, VehicleType, VehicleOperator, User};
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
@@ -139,7 +139,8 @@ class VehicleOperatorController extends Controller
             OR (Gate::allows('Administrator', auth()->user()))){
             $this->validate($request, [
                 'name' =>'required|min:1|max:255',
-                'phone_number' =>'required|min:1|max:255',
+                'phone_number' =>'required|min:1|max:255|unique:vehicle_operators',
+                'email' =>'required|min:1|max:255|unique:vehicle_operators',
                 'route' =>'required|min:1',
                 'password' =>'required|min:1',
                 'repeat' =>'required|min:1',
@@ -149,6 +150,10 @@ class VehicleOperatorController extends Controller
                 return redirect()->back()->with([
                     'error' => "Ooops!!! Password Does Not Match",
                 ]);
+            }
+
+            if(VehicleOperator::where("email", $request->input("email"))->exists() OR(User::where("email", $request->input("email"))->exists())){
+                return redirect()->back()->with("error", "The E-Mail is In Use By Another Operator");
             }
 
             if(VehicleOperator::where("phone_number", $request->input("phone_number"))->exists()){
@@ -165,10 +170,19 @@ class VehicleOperatorController extends Controller
                     "route" => $request->input("route"),
                     "owner_id" => $request->input("owner_id"),
                     "vehicle_id" => $request->input("vehicle_id"),
+                ]);
+                $role = 'Operator';
+
+                $use = new User([
+                    "email" => $request->input("email"),
+                    "name" => $request->input("name"),
                     "password" => Hash::make($request->input("password")),
+                    "role" => $role,
+                    "status" => 1,
                 ]);
 
-                if($this->model->create($data)){
+                if($this->model->create($data)AND ($use->save())){
+                    $addRoles = $use->assignRole($role);
                     return redirect()->route("operator.index")->with("success", "You Have Added "
                     .$request->input("name"). " To The Operators List Successfully");
                 }

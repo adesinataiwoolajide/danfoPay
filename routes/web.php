@@ -15,9 +15,9 @@ Route::get('/', function () {
     return view('auth.login')->with('error', 'Please Login with Your Details');
 });
 
-Route::post("/index", "AdministratorController@userlogin")->name("admin.login");
+Route::post("/user_login", "AdministratorController@userlogin")->name("admin.login");
 Route::get("/logout", "AdministratorController@logout")->name("admin.logout");
-Route::get("/administrator", "AdministratorController@index")->name("admin.index");
+//Route::get("/administrator", "AdministratorController@index")->name("admin.index");
 
 Route::get('/password/reset/{token}', 'Auth\ResetPasswordController@showResetFor');
 
@@ -59,7 +59,7 @@ Route::group(["prefix" => "administrator", "middleware" => "verified"], function
         Route::get("/delete/{owner_id}", "VehicleOwnerController@destroy")->name("owner.delete");
         Route::post("/update/{owner_id}", "VehicleOwnerController@update")->name("owner.update");
         Route::get("/recyclebin", "VehicleOwnerController@bin")->name("owner.restore");
-        Route::get("/restore/{owner_id}", "VehicleOwnerController@restore")->name("owner.undelete");
+        Route::get("/restore/{email}", "VehicleOwnerController@restore")->name("owner.undelete");
         Route::get("/details/{owner_number}", "VehicleOwnerController@details")->name("owner.details");
 
         Route::get("/vehicle/{owner_number}", "VehicleController@create")->name("owner.vehicle");

@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Repositories\OwnerRepository;
 use DB;
-use App\{VehicleOwner, Vehicle, VehicleOperator};
+use App\{VehicleOwner, Vehicle, VehicleOperator, User};
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -68,12 +68,19 @@ class VehicleOwnerController extends Controller
     }
 
 
-    public function restore($owner_id)
+    public function restore($email)
     {
         if (Gate::allows('Administrator', auth()->user())) {
+
+            $owner =  VehicleOwner::withTrashed()->where('email', $email)->first();
+            $owner_id = $owner->owner_id;
+            $use = User::where('email', $email)->first();
+
             VehicleOwner::withTrashed()
             ->where('owner_id', $owner_id)
             ->restore();
+            $user = User::withTrashed()->where('email', $email)->restore();
+
             $owner= $this->model->show($owner_id);
             $name = $owner->name;
             $email = auth()->user()->email;
@@ -118,6 +125,7 @@ class VehicleOwnerController extends Controller
             $this->validate($request, [
                 'name' =>'required|min:1|max:255',
                 'phone_number' =>'required|min:1|max:255|unique:vehicle_owner',
+                'email' =>'required|min:1|max:255|unique:vehicle_owner',
                 'address' =>'required|min:1',
                 'password' =>'required|min:1',
                 'repeat' =>'required|min:1',
@@ -127,6 +135,10 @@ class VehicleOwnerController extends Controller
                 return redirect()->back()->with([
                     'error' => "Ooops!!! Password Does Not Match",
                 ]);
+            }
+
+            if(VehicleOwner::where("email", $request->input("email"))->exists() OR(User::where("email", $request->input("email"))->exists())){
+                return redirect()->back()->with("error", "The E-Mail is In Use By Another Owner");
             }
 
             if(VehicleOwner::where("phone_number", $request->input("phone_number"))->exists()){
@@ -139,17 +151,28 @@ class VehicleOwnerController extends Controller
             }
 
             $owner_number = strtoupper(generateRandomHash(6));
+            $role = $request->input("role");
             $data = ([
                 "owner" => new VehicleOwner,
                 "name" => $request->input("name"),
+                "email" => $request->input("email"),
                 "phone_number" => $request->input("phone_number"),
                 "address" => $request->input("address"),
                 "owner_number" => $owner_number,
-                "password" => Hash::make($request->input("password")),
+
             ]);
 
-            if($this->model->create($data)){
-                //$addRoles = $data->assignRole("Owner");
+            $use = new User([
+                "email" => $request->input("email"),
+                "name" => $request->input("name"),
+                "password" => Hash::make($request->input("password")),
+                "role" => $role,
+                "status" => 1,
+            ]);
+            $addRoles = $use->assignRole($role);
+
+            if($this->model->create($data) AND ($use->save())){
+
                 return redirect()->route("owner.create")->with("success", "You Have Added "
                 .$request->input("name"). " To The Owners List Successfully");
             }
@@ -208,23 +231,39 @@ class VehicleOwnerController extends Controller
                 $this->validate($request, [
                     'name' =>'required|min:1|max:255',
                     'address' =>'required|min:1',
+                    'email' => 'required||min:1|max:255',
 
                 ]);
 
             $owner_number = $request->input("owner_number");
             $details = VehicleOwner::where("owner_id", $request->input("owner_id"))->first();
-            $password = $details->password;
+            $email = $details->email;
+
+            $user = User::where('email', $email)->first();
+            $owner_id = $details->owner_id;
+            $user_id = $user->user_id;
+
 
             $data = ([
-                "owner" => new VehicleOwner,
+                "owner" =>$this->model->show($owner_id),
                 "name" => $request->input("name"),
                 "phone_number" => $request->input("phone_number"),
                 "address" => $request->input("address"),
                 "owner_number" => $owner_id,
-                "password" =>$password,
+            ]);
+            $role = 'Owner';
+
+            $use = User::where('user_id', $user_id)
+            ->update([
+                "email" => $request->input("email"),
+                "name" => $request->input("name"),
+                "password" => $user->password,
+                "role" => $role,
+                "status" => 1,
             ]);
 
             if($this->model->update($data, $owner_id)){
+                //$addRoles = $use->assignRole($role);
                 if($request->input("details")){
                     return redirect()->back()->with("success", "You Have Updated The Owner Details Successfully");
                 }else{
@@ -249,10 +288,20 @@ class VehicleOwnerController extends Controller
     {
         if(auth()->user()->hasPermissionTo('Delete Owner') OR
             (Gate::allows('Administrator', auth()->user()))){
+            $details = VehicleOwner::where("owner_id", $owner_id)->first();
+            $email = $details->email;
+            $user = User::where('email', $email)->first();
+            $owner_id = $details->owner_id;
+            $user_id = $user->user_id;
             $owner =  $this->model->show($owner_id);
             $details= $owner->name;
 
-            if (($owner->delete($owner_id))AND ($owner->trashed())) {
+            $use = User::where([
+                "email" => $email,
+            ])->first();
+
+
+            if (($owner->delete($owner_id))AND ($owner->trashed()) AND ($use->delete($user_id)) AND ($use->trashed())) {
                 return redirect()->back()->with([
                     'success' => "You Have Deleted $details From The Owner's List Successfully",
                 ]);

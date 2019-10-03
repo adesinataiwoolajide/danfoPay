@@ -11,7 +11,7 @@ class VehicleOperator extends Model
     protected $table = 'vehicle_operators';
     protected $primaryKey = 'operator_id';
     protected $fillable = [
-        'name', 'phone_number', 'route', 'owner_id', 'vehicle_id', 'password'
+        'name', 'phone_number', 'email', 'route', 'owner_id', 'vehicle_id'
     ];
 
     public function getNameAttribute($value){
@@ -21,6 +21,15 @@ class VehicleOperator extends Model
     public function setNameAttribute($value){
         return $this->attributes['name'] = ucwords($value);
     }
+
+    public function getEmailAttribute($value){
+        return $value;
+    }
+
+    public function setEmailAttribute($value){
+        return $this->attributes['email'] = $value;
+    }
+
     public function getRouteAttribute($value){
         return ucwords($value);
     }
@@ -42,14 +51,6 @@ class VehicleOperator extends Model
 
     public function setPhoneNumberAttribute($value){
         return $this->attributes['phone_number'] = ($value);
-    }
-
-    public function getPasswordAttribute($value){
-        return $value;
-    }
-
-    public function setPasswordAttribute($value){
-        return $this->attributes['password'] = $value;
     }
 
     public function getCreatedAtAttribute($value){

@@ -33,7 +33,7 @@
                             {{ csrf_field() }}
 
                             <div class="form-group row ">
-                                <div class="col-sm-4">
+                                <div class="col-sm-3">
                                     <label>Owner Name</label>
                                     <input type="text" name="name" class="form-control form-control-rounded" required
                                     placeholder="Enter The Owner Name" value="{{$own->name}}">
@@ -51,25 +51,22 @@
                                     @endif
                                 </div>
 
-                                <div class="col-sm-4">
+                                <div class="col-sm-3">
+                                    <label>E-Mail</label>
+                                    <input type="email" name="email" class="form-control form-control-rounded" required
+                                    placeholder="Enter The Owner's E-Mail" readonly value="{{$own->email}}">
+                                    <span style="color: red">** This Field is Required **</span>
+
+                                </div>
+                                <div class="col-sm-3">
                                     <label>Phone Number</label>
                                     <input type="text" name="phone_number" class="form-control form-control-rounded" required
                                     placeholder="Enter The Owner's Phone Number" readonly value="{{$own->phone_number}}">
                                     <span style="color: red">** This Field is Required **</span>
-                                    @if ($errors->has('phone_number'))
-                                        <div class="alert alert-danger alert-dismissible" role="alert">
-                                            <button type="button" class="close" data-dismiss="alert">&times;</button>
-                                            <div class="alert-icon contrast-alert">
-                                                <i class="fa fa-check"></i>
-                                            </div>
-                                            <div class="alert-message">
-                                                <span><strong>Error!</strong> {{ $errors->first('phone_number') }} !</span>
-                                            </div>
-                                        </div>
-                                    @endif
+
                                 </div>
 
-                                <div class="col-sm-4">
+                                <div class="col-sm-3">
                                     <label>Address</label>
                                     <textarea name="address" class="form-control form-control-rounded" required
                                     placeholder="Enter The Owner's Address">{{$own->address}}</textarea>
@@ -119,6 +116,7 @@
                                         <tr>
                                             <th>S/N</th>
                                             <th>Owner Name</th>
+                                            <th>E-Mail</th>
                                             <th>Phone Number</th>
                                             <th>Address</th>
                                         </tr>
@@ -127,6 +125,7 @@
                                         <tr>
                                             <th>S/N</th>
                                             <th>Owner Name</th>
+                                            <th>E-Mail</th>
                                             <th>Phone Number</th>
                                             <th>Address</th>
                                         </tr>
@@ -147,6 +146,7 @@
                                                 </a>
                                             </td>
                                             <td>{{$owners->name}}</td>
+                                            <td>{{$owners->email}}</td>
                                             <td>{{$owners->phone_number}}</td>
                                             <td>{{$owners->address}}</td>
 

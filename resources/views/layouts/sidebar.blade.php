@@ -3,12 +3,16 @@
         <div id="sidebar-wrapper" class="bg-theme gradient-forest" data-simplebar="" data-simplebar-auto-hide="true">
     @elseif(auth()->user()->hasRole('Administrator'))
         <div id="sidebar-wrapper" class="bg-theme bg-theme4" data-simplebar="" data-simplebar-auto-hide="true">
+    @elseif(auth()->user()->hasRole('Owner'))
+        <div id="sidebar-wrapper" class="bg-theme gradient-theme4" data-simplebar="" data-simplebar-auto-hide="true">
+    @elseif(auth()->user()->hasRole('Operator'))
+        <div id="sidebar-wrapper" class="bg-theme gradient-success" data-simplebar="" data-simplebar-auto-hide="true">
     @else
-        <div id="sidebar-wrapper" class="bg-theme bg-theme4" data-simplebar="" data-simplebar-auto-hide="true">
+        <div id="sidebar-wrapper" class="bg-theme bg-theme5" data-simplebar="" data-simplebar-auto-hide="true">
     @endif
         <div class="brand-logo">
             <a href="{{route('administrator.dashboard')}}">
-                <h5 class="logo-text">DanfoPay <i class="fa fa-car"></i></h5>
+                <h5 class="logo-text"><b>DanfoPay </b><i class="fa fa-car"></i></h5>
             </a>
         </div>
 
@@ -38,11 +42,7 @@
                         <a href="{{route('user.create')}}" class="waves-effect">
                             <i class="fa fa-user text-success"></i> <span>Administrators</span>
                             <small class="badge float-right badge-success">
-                                {{-- @if(count($user) == 0)
-                                    0
-                                @else
-                                    {{count($user)}}
-                                @endif --}}
+
                             </small>
                         </a>
                     </li>
@@ -55,42 +55,33 @@
                         <ul class="sidebar-submenu">
                             <li><a href="{{route('vehicle.type.create')}}"><i class="zmdi zmdi-long-arrow-right"></i> Types
                                 <small class="badge float-right badge-success">
-                                    {{-- @if(count($type) == 0)
-                                        0
-                                    @else
-                                        {{count($type)}}
-                                    @endif --}}
+
                                 </small></a>
                             </li>
-                            <li><a href="{{route('owner.create')}}">
-                                <i class="zmdi zmdi-long-arrow-right"></i>Owner <small class="badge float-right badge-success">
-                                    {{-- @if(count($owner) == 0)
-                                        0
-                                    @else
-                                        {{count($owner)}}
-                                    @endif --}}
-                                </small>
-                            </a></li>
+
                             <li><a href="{{route('vehicle.index')}}"><i class="zmdi zmdi-long-arrow-right"></i> Cars
                                 <small class="badge float-right badge-success">
-                                    {{-- @if(count($vehicle) == 0)
-                                        0
-                                    @else
-                                        {{count($vehicle)}}
-                                    @endif --}}
-                                </small>
-                            </a></li>
-                            <li><a href="{{route('operator.index')}}"><i class="zmdi zmdi-long-arrow-right"></i> Operators
-                                <small class="badge float-right badge-success">
-                                    {{-- @if(count($operator) == 0)
-                                        0
-                                    @else
-                                        {{count($operator)}}
-                                    @endif --}}
+
                                 </small>
                             </a></li>
 
                         </ul>
+                    </li>
+                    <li class="">
+                        <a href="{{route('owner.create')}}" class="waves-effect">
+                            <i class="fa fa-cog text-success"></i> <span>Owners</span>
+                            <small class="badge float-right badge-success">
+
+                            </small>
+                        </a>
+                    </li>
+                    <li class="">
+                        <a href="{{route('operator.index')}}" class="waves-effect">
+                            <i class="fa fa-cogs text-success"></i> <span>Operators</span>
+                            <small class="badge float-right badge-success">
+
+                            </small>
+                        </a>
                     </li>
                     <li class="">
                         <a href="javaScript:void();" class="waves-effect">
@@ -130,6 +121,34 @@
                             <small class="badge float-right badge-light"><i class="fa fa-lock" align="center"></i></small>
                         </a>
                     </li>
+                @elseif (auth()->user()->hasRole('Owner'))
+                    <li class="">
+                        <a href="{{route('customer.index')}}" class="waves-effect">
+                            <i class="fa fa-user text-success"></i> <span>My Details</span>
+                            <small class="badge float-right badge-light">
+                                <i class="fa fa-address-card-o"></i>
+                            </small>
+                        </a>
+                    </li>
+
+                    <li class="">
+                        <a href="{{ route('bulk-sms-index') }}" class="waves-effect">
+                            <i class="fa fa-envelope text-success"></i> <span>Messages</span>
+                            <small class="badge float-right badge-success">0</small>
+                        </a>
+                    </li>
+                    <li class="">
+                        <a href="{{ route('bulk-sms-index') }}" class="waves-effect">
+                            <i class="fa fa-envelope text-success"></i> <span>Vehicles</span>
+                            <small class="badge float-right badge-success">0</small>
+                        </a>
+                    </li>
+                    <li class="">
+                        <a href="{{ route('bulk-sms-index') }}" class="waves-effect">
+                            <i class="fa fa-envelope text-success"></i> <span>Operators</span>
+                            <small class="badge float-right badge-success">0</small>
+                        </a>
+                    </li>
 
                 @elseif (auth()->user()->hasRole('Customer'))
                     <li class="">
@@ -152,11 +171,6 @@
                             <i class="fa fa-credit-card text-success"></i> <span>Transactions</span>
                             <small class="badge float-right badge-success">
 
-                                {{-- @if(count($payment) == 0)
-                                    0
-                                @else
-                                    {{count($payment)}}
-                                @endif --}}
                             </small>
                         </a>
                     </li>
@@ -166,11 +180,6 @@
                             <i class="fa fa-bank text-success"></i> <span>Fund Transfer</span>
                             <small class="badge float-right badge-success">
 
-                                {{-- @if(count($fundTransfer) == 0)
-                                    0
-                                @else
-                                    {{count($fundTransfer)}}
-                                @endif --}}
                             </small>
                         </a>
                     </li>
@@ -184,7 +193,7 @@
                     </li>
                     <li class="">
                         <a href="{{ route('bulk-sms-index') }}" class="waves-effect">
-                            <i class="fa fa-envelope text-success"></i> <span>SMS</span>
+                            <i class="fa fa-envelope text-success"></i> <span>Messages</span>
                             <small class="badge float-right badge-success">0</small>
                         </a>
                     </li>
@@ -202,12 +211,12 @@
                     </li>
 
                 @endif
-                    <li class="">
-                        <a href="{{ route('admin.logout') }}" class="waves-effect">
-                            <i class="zmdi zmdi-lock text-danger"></i> <span>Log Out</span>
-                            <small class="badge float-right badge-light"><i class="fa fa-lock" align="center"></i></small>
-                        </a>
-                    </li>
+                <li class="">
+                    <a href="{{ route('admin.logout') }}" class="waves-effect">
+                        <i class="zmdi zmdi-lock text-danger"></i> <span>Log Out</span>
+                        <small class="badge float-right badge-light"><i class="fa fa-lock" align="center"></i></small>
+                    </a>
+                </li>
 
             @endif
 

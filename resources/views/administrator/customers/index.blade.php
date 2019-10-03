@@ -21,7 +21,14 @@
                     @if(auth()->user()->hasRole('Administrator'))
                         <li class="breadcrumb-item"><a href="{{route('customer.restore')}}">Restore Deleted Customers</a></li>
                     @endif
-                    <li class="breadcrumb-item active" aria-current="page">List of Saved Customers </li>
+                    <li class="breadcrumb-item active" aria-current="page">
+                        @if(auth()->user()->hasRole('Administrator'))
+                        List of Saved Customers
+                        @else
+                            My Details
+                        @endif
+
+                    </li>
                 </ol>
             </div>
         </div>
@@ -162,7 +169,7 @@
                             </div>
 
                         @else
-                            <div class="card-header"><i class="fa fa-table"></i> List of Saved Users</div>
+                            <div class="card-header"><i class="fa fa-table"></i> List of Saved Customers</div>
                             <div class="card-body">
                                 <div class="table-responsive">
                                     <table id="default-datatable" class="table table-bordered">
@@ -220,7 +227,7 @@
                 <div class="col-lg-12">
                     <div class="card">
 
-                        <div class="card-header"><i class="fa fa-table"></i> List of Saved Users</div>
+                        <div class="card-header"><i class="fa fa-table"></i> MT DETAILS</div>
                         <div class="card-body">
                             <div class="table-responsive">
                                 <table id="default-datatable" class="table table-bordered">

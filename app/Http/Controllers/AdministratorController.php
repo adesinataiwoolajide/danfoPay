@@ -24,8 +24,8 @@ class AdministratorController extends Controller
             "email" => $request->input("email"),
             "password" => $request->input("password"),
         ];
-        $user = User::where('user_id', 1)->first();
-        $user->assignRole('Administrator');
+        // $user = User::where('user_id', 1)->first();
+        // $user->assignRole('Administrator');
         if(Auth::attempt($data)){
             $usertype = Auth::user()->role;
             switch ($usertype){
@@ -36,17 +36,28 @@ class AdministratorController extends Controller
                     }else{
                         $message = "Admin";
                     }
-                    auth()->user()->givePermissionTo([
 
-                    ]);
+                    
                 break;
 
                 case (auth()->user()->hasRole('Customer'));
                     $message = "Customer";
+
                     auth()->user()->givePermissionTo([
                         'Add Customer', 'Edit Customer', 'Update Customer', 'Delete Customer',
 
                     ]);
+                break;
+
+                case (auth()->user()->hasRole('Owner'));
+                    $message = "Owner";
+
+                    auth()->user()->givePermissionTo([
+                        'Add Vehicle', 'Edit Vehicle', 'Update Vehicle',
+                        'Add Operator', 'Edit Operator', 'Update Operator'
+
+                    ]);
+
                 break;
 
                 default:
@@ -58,6 +69,7 @@ class AdministratorController extends Controller
                 return redirect()->route("administrator.dashboard")->with([
                     "success" => Auth::user()->name. " ". "Welcome To $message  Dashboard"
                 ]);
+
             }else{
 
                 return redirect()->back()->with([

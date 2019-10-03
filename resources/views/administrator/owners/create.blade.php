@@ -30,7 +30,7 @@
                             {{ csrf_field() }}
 
                             <div class="form-group row ">
-                                <div class="col-sm-3">
+                                <div class="col-sm-4">
                                     <label>Owner Name</label>
                                     <input type="text" name="name" class="form-control form-control-rounded" required
                                     placeholder="Enter The Owner Name" value="{{old('name')}}">
@@ -47,8 +47,25 @@
                                         </div>
                                     @endif
                                 </div>
+                                <div class="col-sm-4">
+                                    <label>Owner E-Mail</label>
+                                    <input type="email" name="email" class="form-control form-control-rounded" required
+                                    placeholder="Enter The Owner E-Mail" value="{{old('email')}}">
+                                    <span style="color: red">** This Field is Required **</span>
+                                    @if ($errors->has('email'))
+                                        <div class="alert alert-danger alert-dismissible" role="alert">
+                                            <button type="button" class="close" data-dismiss="alert">&times;</button>
+                                            <div class="alert-icon contrast-alert">
+                                                <i class="fa fa-check"></i>
+                                            </div>
+                                            <div class="alert-message">
+                                                <span><strong>Error!</strong> {{ $errors->first('email') }} !</span>
+                                            </div>
+                                        </div>
+                                    @endif
+                                </div>
 
-                                <div class="col-sm-3">
+                                <div class="col-sm-4">
                                     <label>Phone Number</label>
                                     <input type="number" name="phone_number" class="form-control form-control-rounded" required
                                     placeholder="Enter The Owner's Phone Number" value="{{old('phone_number')}}">
@@ -66,7 +83,7 @@
                                     @endif
                                 </div>
 
-                                <div class="col-sm-3">
+                                <div class="col-sm-4">
                                     <label>Password</label>
                                     <input type="password" name="password" class="form-control form-control-rounded" required
                                     placeholder="Enter The Owner's Password" >
@@ -83,7 +100,7 @@
                                         </div>
                                     @endif
                                 </div>
-                                <div class="col-sm-3">
+                                <div class="col-sm-4">
                                     <label>Repeat Password</label>
                                     <input type="password" name="repeat" class="form-control form-control-rounded" required
                                     placeholder="Repeat The Password">
@@ -101,7 +118,7 @@
                                     @endif
                                 </div>
 
-                                <div class="col-sm-12">
+                                <div class="col-sm-4">
                                     <label>Address</label>
                                     <textarea name="address" class="form-control form-control-rounded" required
                                     placeholder="Enter The Owner's Address">{{old('address')}}</textarea>
@@ -118,6 +135,7 @@
                                         </div>
                                     @endif
                                 </div>
+                                <input type="hidden" name="role" value="{{'Owner'}}">
 
 
 
@@ -149,6 +167,7 @@
                                         <tr>
                                             <th>S/N</th>
                                             <th>Owner Name</th>
+                                            <th>E-Mail</th>
                                             <th>Phone Number</th>
                                             <th>Address</th>
                                         </tr>
@@ -157,6 +176,7 @@
                                         <tr>
                                             <th>S/N</th>
                                             <th>Owner Name</th>
+                                            <th>E-Mail</th>
                                             <th>Phone Number</th>
                                             <th>Address</th>
                                         </tr>
@@ -187,6 +207,7 @@
                                                 </a> --}}
                                             </td>
                                             <td>{{$owners->name}}</td>
+                                            <td>{{$owners->email}}</td>
                                             <td>{{$owners->phone_number}}</td>
                                             <td>{{$owners->address}}</td>
 

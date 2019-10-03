@@ -30,7 +30,7 @@
             <div class="col-lg-12">
 
                 <div class="card">
-                    <div class="card-header"><i class="fa fa-table"></i> Please Fill The Below Form To Add A New Owner</div>
+                    <div class="card-header"><i class="fa fa-table"></i> Please Fill The Below Form To Add A New Vehicle</div>
                     <div class="card-body">
                         @include('partials._message')
                         <form action="{{route('vehicle.save')}}" method="POST" enctype="multipart/form-data">

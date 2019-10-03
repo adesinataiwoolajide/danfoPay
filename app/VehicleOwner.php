@@ -11,8 +11,17 @@ class VehicleOwner extends Model
     protected $table = 'vehicle_owner';
     protected $primaryKey = 'owner_id';
     protected $fillable = [
-        'name','phone_number', 'address', 'owner_number', 'password'
+        'name','phone_number', 'email', 'address', 'owner_number',
     ];
+
+    public function getEmailAttribute($value){
+        return $value;
+    }
+
+    public function setEmailAttribute($value){
+        return $this->attributes['email'] = $value;
+    }
+
 
     public function getNameAttribute($value){
         return ucwords($value);
@@ -28,14 +37,6 @@ class VehicleOwner extends Model
 
     public function setPhoneNumberAttribute($value){
         return $this->attributes['phone_number'] = ($value);
-    }
-
-    public function getPasswordAttribute($value){
-        return $value;
-    }
-
-    public function setPasswordAttribute($value){
-        return $this->attributes['password'] = $value;
     }
 
     public function getAddressAttribute($value){
