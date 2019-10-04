@@ -13,12 +13,26 @@
                         <a href="{{route('add.operator', $details->plate_number)}}">Add Oparator</a>
                     </li>
                     <li class="breadcrumb-item">
-                        <a href="{{route('operator.index')}}">View All Oparators</a>
+                        <a href="{{route('operator.index')}}">
+
+                            @if(auth()->user()->hasRole('Administrator'))
+                                View All Oparators
+                            @else
+                                My Operator
+                            @endif
+                        </a>
                     </li>
                     @if(auth()->user()->hasRole('Administrator'))
                         <li class="breadcrumb-item"><a href="{{route('operator.restore')}}">Recycle Bin</a></li>
                     @endif
-                    <li class="breadcrumb-item active" aria-current="page">List of Saved Operators </li>
+                    <li class="breadcrumb-item active" aria-current="page">
+
+                        @if(auth()->user()->hasRole('Administrator'))
+                            List of Saved Operators
+                        @else
+                            My Operators
+                        @endif
+                    </li>
                 </ol>
             </div>
         </div>
@@ -52,9 +66,26 @@
                                 </div>
 
                                 <div class="col-sm-3">
+                                    <label>E-Mail</label>
+                                    <input type="email" name="email" class="form-control form-control-rounded" required
+                                    placeholder="Enter The Operator's E-Maail" value="{{old('email')}}">
+                                    <span style="color: red">** This Field is Required **</span>
+                                    @if ($errors->has('email'))
+                                        <div class="alert alert-danger alert-dismissible" role="alert">
+                                            <button type="button" class="close" data-dismiss="alert">&times;</button>
+                                            <div class="alert-icon contrast-alert">
+                                                <i class="fa fa-check"></i>
+                                            </div>
+                                            <div class="alert-message">
+                                                <span><strong>Error!</strong> {{ $errors->first('email') }} !</span>
+                                            </div>
+                                        </div>
+                                    @endif
+                                </div>
+                                <div class="col-sm-3">
                                     <label>Phone Number</label>
                                     <input type="number" name="phone_number" class="form-control form-control-rounded" required
-                                    placeholder="Enter The Owner's Phone Number" value="{{old('phone_number')}}">
+                                    placeholder="Enter The Operator's Phone Number" value="{{old('phone_number')}}">
                                     <span style="color: red">** This Field is Required **</span>
                                     @if ($errors->has('phone_number'))
                                         <div class="alert alert-danger alert-dismissible" role="alert">
@@ -68,10 +99,10 @@
                                         </div>
                                     @endif
                                 </div>
-                                <div class="col-sm-6">
+                                <div class="col-sm-3">
                                     <label>Car Route</label>
                                     <input type="text" name="route" class="form-control form-control-rounded"
-                                    value="{{old('route')}}" required>
+                                    value="{{old('route')}}" required placeholder="Enter The Car Route">
                                     <span style="color: red">** This Field is Required **</span>
                                     @if ($errors->has('route'))
                                         <div class="alert alert-danger alert-dismissible" role="alert">
@@ -89,7 +120,7 @@
                                 <div class="col-sm-3">
                                     <label>Password</label>
                                     <input type="password" name="password" class="form-control form-control-rounded" required
-                                    placeholder="Enter The Owner's Password" >
+                                    placeholder="Enter The Operator's Password" >
                                     <span style="color: red">** This Field is Required **</span>
                                     @if ($errors->has('password'))
                                         <div class="alert alert-danger alert-dismissible" role="alert">
@@ -162,7 +193,12 @@
                         </div>
 
                     @else
-                        <div class="card-header"><i class="fa fa-table"></i> List of Saved Owner Vehicle</div>
+                        <div class="card-header"><i class="fa fa-table"></i>
+                            @if(auth()->user()->hasRole('Administrator'))
+                            List of Saved Cars
+                            @else
+                                My List of Cars
+                            @endif</div>
                         <div class="card-body">
                             <div class="table-responsive">
                                 <table id="default-datatable" class="table table-bordered">
@@ -202,6 +238,10 @@
                                                     onclick="return(confirmToEdit());">
                                                     <i class="fa fa-car"></i>
                                                 </a> --}}
+                                                <a href="{{route('add.operator',$cars->plate_number)}}"
+                                                     class="btn btn-success">
+                                                    <i class="fa fa-pencil"></i>
+                                                </a>
                                                 <a href="{{route('add.operator',$cars->plate_number)}}"
                                                      class="btn btn-primary">
                                                     <i class="fa fa-user"></i>

@@ -373,7 +373,231 @@
                             </div>
                         </div>
                     </div>
+                @elseif (auth()->user()->hasRole('Owner'))
+                    <div class="card mt-3 gradient-forest">
+                        <div class="card-content">
+                            <div class="row row-group m-0"  style="cursor: pointer">
+                                <div class="col-12 col-lg-6 col-xl-3 border-white-2" onclick="location.href=''">
+                                    <div class="card-body">
+                                        <div class="media align-items-center">
+                                            <div class="media-body text-left">
+                                                <h4 class="mb-0 text-white">{{count($vehicle)}}</h4>
+                                                <span class="text-white">Total Vehicle</span>
+                                            </div>
+                                            <div class="align-self-center w-icon">
+                                                <i class="fa fa-car text-white"></i></div>
+                                        </div>
+                                        <div class="progress-wrapper mt-3">
+                                            <div class="progress" style="height:5px;">
+                                                <div class="progress-bar" style="width:50%"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-lg-6 col-xl-3 border-white-2" onclick="location.href=''">
+                                    <div class="card-body">
+                                        <div class="media align-items-center">
+                                            <div class="media-body text-left">
+                                                <h4 class="mb-0 text-white">0</h4>
+                                                <span class="text-white">My Operators</span>
+                                            </div>
+                                            <div class="align-self-center w-icon">
+                                                <i class="icon-user text-white"></i></div>
+                                        </div>
+                                        <div class="progress-wrapper mt-3">
+                                            <div class="progress" style="height:5px;">
+                                                <div class="progress-bar" style="width:50%"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-lg-6 col-xl-3 border-white-2" onclick="location.href=''">
+                                    <div class="card-body">
+                                        <div class="media align-items-center">
+                                            <div class="media-body text-left">
+                                                <h4 class="mb-0 text-white">0</h4>
+                                                <span class="text-white">My Transactions</span>
+                                            </div>
+                                            <div class="align-self-center w-icon">
+                                                <i class="icon-pie-chart text-white"></i></div>
+                                        </div>
+                                        <div class="progress-wrapper mt-3">
+                                            <div class="progress" style="height:5px;">
+                                                <div class="progress-bar" style="width:50%"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-lg-6 col-xl-3 border-white-2" onclick="location.href=''">
+                                    <div class="card-body">
+                                        <div class="media align-items-center">
+                                            <div class="media-body text-left">
+                                                <h4 class="mb-0 text-white">0</h4>
+                                                <span class="text-white">My Details </span>
+                                            </div>
+                                            <div class="align-self-center w-icon">
+                                                <i class="icon-bell text-white"></i></div>
+                                        </div>
+                                        <div class="progress-wrapper mt-3">
+                                            <div class="progress" style="height:5px;">
+                                                <div class="progress-bar" style="width:50%"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mt-3">
 
+                        <div class="col-12 col-lg-6 col-xl-3">
+                            <div class="card gradient-yoda">
+                                <div class="card-body">
+                                    <h5 class="text-white mb-0">
+                                        @if(count($vehicle) ==0)
+                                            0
+                                        @else
+                                            {{count($vehicle)}}
+                                        @endif
+                                        <span class="float-right"> &#8358;</span>
+                                    </h5>
+                                    <div class="progress my-3" style="height:3px;">
+                                        <div class="progress-bar" style="width:100%"></div>
+                                    </div>
+                                    <p class="mb-0 text-white small-font">{{$owner->owner_number}}
+                                    <span class="float-right"> <i class="fa fa-vcard"></i></span></p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-lg-6 col-xl-3">
+                            <div class="card gradient-orange">
+                                <div class="card-body">
+                                    <h5 class="text-white mb-0">
+                                        @if(count($vehicle) ==0)
+                                            0
+                                        @else
+                                            {{count($vehicle)}}
+                                        @endif
+                                        <span class="float-right"> &#8358;</span>
+                                    </h5>
+                                    <div class="progress my-3" style="height:3px;">
+                                        <div class="progress-bar" style="width:100%"></div>
+                                    </div>
+                                    <p class="mb-0 text-white small-font">{{$owner->owner_number}}
+                                    <span class="float-right"> <i class="fa fa-vcard"></i></span></p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-lg-6 col-xl-3">
+                            <div class="card gradient-ibiza">
+                                <div class="card-body">
+                                    <h5 class="text-white mb-0">
+                                        @if(count($vehicle) ==0)
+                                            0
+                                        @else
+                                            {{count($vehicle)}}
+                                        @endif
+                                        <span class="float-right"> &#8358;</span>
+                                    </h5>
+                                    <div class="progress my-3" style="height:3px;">
+                                        <div class="progress-bar" style="width:100%"></div>
+                                    </div>
+                                    <p class="mb-0 text-white small-font">{{$owner->owner_number}}
+                                    <span class="float-right"> <i class="fa fa-vcard"></i></span></p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-lg-6 col-xl-3">
+                            <div class="card gradient-army">
+                                <div class="card-body">
+                                    <h5 class="text-white mb-0">
+                                        @if(count($vehicle) ==0)
+                                            0
+                                        @else
+                                            {{count($vehicle)}}
+                                        @endif
+                                        <span class="float-right"> &#8358;</span>
+                                    </h5>
+                                    <div class="progress my-3" style="height:3px;">
+                                        <div class="progress-bar" style="width:100%"></div>
+                                    </div>
+                                    <p class="mb-0 text-white small-font">{{$owner->owner_number}}
+                                    <span class="float-right"> <i class="fa fa-vcard"></i></span></p>
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+                @elseif (auth()->user()->hasRole('Operator'))
+                    <div class="row mt-3">
+
+                        <div class="col-12 col-lg-6 col-xl-3">
+                            <div class="card gradient-yoda">
+                                <div class="card-body">
+                                    <h5 class="text-white mb-0">
+
+                                        <span class="float-right"> &#8358;</span>
+                                    </h5>
+                                    <div class="progress my-3" style="height:3px;">
+                                        <div class="progress-bar" style="width:100%"></div>
+                                    </div>
+                                    <p class="mb-0 text-white small-font">
+
+                                    <span class="float-right"> <i class="fa fa-vcard"></i></span></p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-lg-6 col-xl-3">
+                            <div class="card gradient-orange">
+                                <div class="card-body">
+                                    <h5 class="text-white mb-0">
+
+                                        <span class="float-right"> &#8358;</span>
+                                    </h5>
+                                    <div class="progress my-3" style="height:3px;">
+                                        <div class="progress-bar" style="width:100%"></div>
+                                    </div>
+                                    <p class="mb-0 text-white small-font">
+
+                                    <span class="float-right"> <i class="fa fa-vcard"></i></span></p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-lg-6 col-xl-3">
+                            <div class="card gradient-ibiza">
+                                <div class="card-body">
+                                    <h5 class="text-white mb-0">
+
+                                        <span class="float-right"> &#8358;</span>
+                                    </h5>
+                                    <div class="progress my-3" style="height:3px;">
+                                        <div class="progress-bar" style="width:100%"></div>
+                                    </div>
+                                    <p class="mb-0 text-white small-font">
+                                    <span class="float-right"> <i class="fa fa-vcard"></i></span></p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-lg-6 col-xl-3">
+                            <div class="card gradient-army">
+                                <div class="card-body">
+                                    <h5 class="text-white mb-0">
+
+                                        <span class="float-right"> &#8358;</span>
+                                    </h5>
+                                    <div class="progress my-3" style="height:3px;">
+                                        <div class="progress-bar" style="width:100%"></div>
+                                    </div>
+                                    <p class="mb-0 text-white small-font">
+
+                                    <span class="float-right"> <i class="fa fa-vcard"></i></span></p>
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
                 @endif
             @endif
         </div>

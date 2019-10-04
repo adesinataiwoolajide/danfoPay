@@ -6,8 +6,9 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Repositories\VehicleRepository;
 use DB;
-use App\{VehicleOwner, Vehicle, VehicleType};
+use App\{VehicleOwner, Vehicle, VehicleType, User};
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Auth;
 
 class VehicleController extends Controller
 {
@@ -24,12 +25,30 @@ class VehicleController extends Controller
      */
     public function index()
     {
+        if (Gate::allows('Administrator', auth()->user())) {
+            $car = Vehicle::orderBy('vehicle_id', 'desc')->get();
+            return view('administrator.vehicles.index')->with([
 
-        $car = Vehicle::orderBy('vehicle_id', 'desc')->get();
-        return view('administrator.vehicles.index')->with([
+                'car' => $car
+            ]);
+        }elseif(auth()->user()->hasRole('Owner')){
 
-            'car' => $car
-        ]);
+            $user = User::where('user_id', Auth::user()->user_id)->first();
+            $own = VehicleOwner::where('email', Auth::user()->email)->first();
+            $type = VehicleType::orderBy('type_name', 'asc')->get();
+            $car = Vehicle::where('owner_id', $own->owner_id)->orderBy('vehicle_id', 'desc')->get();
+            return view('administrator.vehicles.index')->with([
+                "own" => $own,
+                'car' => $car,
+                'type' => $type,
+            ]);
+
+        } else{
+            return redirect()->back()->with([
+                'error' => "You Dont have Access To View The Owners List",
+            ]);
+        }
+
     }
 
     public function bin()
@@ -74,7 +93,7 @@ class VehicleController extends Controller
                 return redirect()->back()->with("error", "The Plate Number is in use by Another Vehicle");
             }
 
-            $details = VehicleOwner::where('owner_number', $request->input("owner_id"))->first();
+            $details = VehicleOwner::where('owner_id', $request->input("owner_id"))->first();
 
             $data = ([
                 "vehicle" => new Vehicle,
@@ -86,7 +105,7 @@ class VehicleController extends Controller
 
             if($this->model->create($data)){
                 return redirect()->back()->with("success", "You Have Added "
-                .$request->input("plate_number"). " To The Owner Successfully");
+                .$request->input("plate_number"). " To The Vehicle List Successfully");
             }
         } else{
             return redirect()->back()->with([

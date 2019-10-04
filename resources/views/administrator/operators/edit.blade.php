@@ -94,8 +94,16 @@
 
                                 </div>
 
+                                <div class="col-sm-4">
+                                    <label>Operator E-Mail</label>
+                                    <input class="form-control form-control-rounded"
+                                    value="{{$details->email}}"" name="email" required>
+                                    <span style="color: green">** This Field is Readonly **</span>
 
-                                <div class="col-sm-6">
+                                </div>
+
+
+                                <div class="col-sm-4">
                                     <label>Car Owner</label>
                                     <input class="form-control form-control-rounded"
                                     value="{{$own->name}}"" readonly>
@@ -103,7 +111,7 @@
 
                                 </div>
 
-                                <div class="col-sm-6">
+                                <div class="col-sm-4">
                                     <label>Car Details</label>
                                     <input name="brand" class="form-control form-control-rounded"
                                     value="{{$vehicle->plate_number . " ". $vehicle->brand . ", ". $vehicle->type->type_name}}" readonly>
@@ -113,6 +121,7 @@
 
                                 <input type="hidden" name="owner_id" value="{{$own->owner_id}}">
                                 <input type="hidden" name="vehicle_id" value="{{$vehicle->vehicle_id}}">
+                                <input type="hidden" name="operator_id" value="{{$own->operator_id}}">
 
 
 
@@ -144,6 +153,7 @@
                                         <tr>
                                             <th>S/N</th>
                                             <th>Name</th>
+                                            <th>E-Mail</th>
                                             <th>Phone Number</th>
                                             <th>Route</th>
                                             <th>Plate Number</th>
@@ -154,6 +164,7 @@
                                         <tr>
                                             <th>S/N</th>
                                             <th>Name</th>
+                                            <th>E-Mail</th>
                                             <th>Phone Number</th>
                                             <th>Route</th>
                                             <th>Plate Number</th>
@@ -173,11 +184,14 @@
                                                 <a href="{{route('operator.edit',$operators->operator_id)}}" class="btn btn-primary">
                                                     <i class="fa fa-edit"></i>
                                                 </a>
-                                                <a href="{{route('operator.delete',$operators->operator_id)}}" class="btn btn-danger">
-                                                    <i class="fa fa-trash-o"></i>
-                                                </a>
+                                                @if(auth()->user()->hasRole('Administrator'))
+                                                    <a href="{{route('operator.delete',$operators->operator_id)}}" class="btn btn-danger">
+                                                        <i class="fa fa-trash-o"></i>
+                                                    </a>
+                                                @endif
                                             </td>
                                             <td>{{$operators->name}}</td>
+                                            <td>{{$operators->email}}</td>
                                             <td>{{$operators->phone_number}}</td>
                                             <td>{{$operators->route}}</td>
                                             <td>{{$operators->cars->plate_number}}</td>

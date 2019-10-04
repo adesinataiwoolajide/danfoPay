@@ -26,8 +26,20 @@ class VehicleOperatorController extends Controller
      */
     public function index()
     {
-        if (Gate::allows('Administrator', auth()->user())) {
+        if(Gate::allows('Administrator', auth()->user())){
             $operator = VehicleOperator::orderBy('name', 'asc')->get();
+            return view("administrator.operators.index")->with([
+                'operator' => $operator,
+            ]);
+        }elseif(auth()->user()->hasRole('Owner')){
+            $own = VehicleOwner::where('email', Auth::user()->email)->first();
+            $operator = VehicleOperator::where('owner_id', $own->owner_id)->get();
+            return view("administrator.operators.index")->with([
+                'operator' => $operator,
+            ]);
+        }elseif(auth()->user()->hasRole('Operator')){
+            $own = VehicleOperator::where('email', Auth::user()->email)->first();
+            $operator = VehicleOperator::where('email', Auth::user()->email)->get();
             return view("administrator.operators.index")->with([
                 'operator' => $operator,
             ]);
@@ -116,6 +128,7 @@ class VehicleOperatorController extends Controller
             $vehicle_id = $details->vehicle_id;
             $car = Vehicle::where('owner_id', $owner_id)->get();
 
+
             return view('administrator.operators.create')->with([
                 'details' => $details,
                 'car' => $car
@@ -135,12 +148,11 @@ class VehicleOperatorController extends Controller
      */
     public function store(Request $request)
     {
-        if(auth()->user()->hasPermissionTo('Add Operator')
-            OR (Gate::allows('Administrator', auth()->user()))){
+        if(auth()->user()->hasRole('Owner') OR (Gate::allows('Administrator', auth()->user()))){
             $this->validate($request, [
                 'name' =>'required|min:1|max:255',
-                'phone_number' =>'required|min:1|max:255|unique:vehicle_operators',
-                'email' =>'required|min:1|max:255|unique:vehicle_operators',
+                'phone_number' =>'required|min:1|max:255',
+                'email' =>'required|min:1|max:255',
                 'route' =>'required|min:1',
                 'password' =>'required|min:1',
                 'repeat' =>'required|min:1',
@@ -170,6 +182,7 @@ class VehicleOperatorController extends Controller
                     "route" => $request->input("route"),
                     "owner_id" => $request->input("owner_id"),
                     "vehicle_id" => $request->input("vehicle_id"),
+                    "email" => $request->input("email"),
                 ]);
                 $role = 'Operator';
 
@@ -185,6 +198,10 @@ class VehicleOperatorController extends Controller
                     $addRoles = $use->assignRole($role);
                     return redirect()->route("operator.index")->with("success", "You Have Added "
                     .$request->input("name"). " To The Operators List Successfully");
+                } else{
+                    return redirect()->back()->with([
+                        'error' => "Network Failure, Please try again later",
+                    ]);
                 }
             }
 
@@ -227,6 +244,20 @@ class VehicleOperatorController extends Controller
                 'own' => $own,
                 'vehicle' => $vehicle
             ]);
+        }elseif(auth()->user()->hasRole('Owner')){
+            $own = VehicleOwner::where('email', Auth::user()->email)->first();
+            $operator = VehicleOperator::where('owner_id', $own->owner_id)->get();
+            $details = VehicleOperator::where('operator_id', $operator_id)->first();
+            $owner_id = $details->owner_id;
+            $own = VehicleOwner::where('owner_id', $owner_id)->first();
+
+            $vehicle = Vehicle::where('owner_id', $owner_id)->first();
+            return view("administrator.operators.edit")->with([
+                'operator' => $operator,
+                'details' => $details,
+                'own' => $own,
+                'vehicle' => $vehicle
+            ]);
         } else{
             return redirect()->back()->with([
                 'error' => "You Dont have Access To Edit An Operator",
@@ -249,9 +280,14 @@ class VehicleOperatorController extends Controller
                 'name' =>'required|min:1|max:255',
                 'phone_number' =>'required|min:1|max:255',
                 'route' =>'required|min:1',
+                'email' => 'required'
 
             ]);
             $details = VehicleOperator::where('operator_id', $operator_id)->first();
+            $email = $details->email;
+            $user = User::where('email', $email)->first();
+            $owner_id = $details->owner_id;
+            $user_id = $user->user_id;
 
             $data = ([
                 "operator" => $this->model->show($operator_id),
@@ -260,7 +296,19 @@ class VehicleOperatorController extends Controller
                 "route" => $request->input("route"),
                 "owner_id" => $request->input("owner_id"),
                 "vehicle_id" => $request->input("vehicle_id"),
+                "email" => $request->input("email"),
                 "password" => $details->password,
+            ]);
+
+            $role = 'Owner';
+
+            $use = User::where('user_id', $user_id)
+            ->update([
+                "email" => $request->input("email"),
+                "name" => $request->input("name"),
+                "password" => $user->password,
+                "role" => $role,
+                "status" => 1,
             ]);
 
             if($this->model->update($data, $operator_id)){

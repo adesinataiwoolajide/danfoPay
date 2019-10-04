@@ -9,16 +9,33 @@
             <div class="col-sm-12">
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="{{route('administrator.dashboard')}}">Home</a></li>
+
                     <li class="breadcrumb-item">
-                        <a href="{{route('owner.create')}}">View Owners</a>
+                        <a href="{{route('owner.create')}}">
+                            @if(auth()->user()->hasRole('Administrator'))
+                                View Owners
+                            @else
+                                My Details
+                            @endif
+
+                        </a>
                     </li>
+
                     @if(auth()->user()->hasRole('Administrator'))
                         <li class="breadcrumb-item"><a href="{{route('owner.restore')}}">Recycle Bin</a></li>
                     @endif
-                    <li class="breadcrumb-item active" aria-current="page">List of Saved Owners </li>
+                    <li class="breadcrumb-item active" aria-current="page">
+
+                         @if(auth()->user()->hasRole('Administrator'))
+                            List of Saved Owners
+                        @else
+                            My Details
+                        @endif
+                    </li>
                 </ol>
             </div>
         </div>
+        @if(auth()->user()->hasRole('Administrator'))
         <div class="row">
             <div class="col-lg-12">
 
@@ -105,14 +122,14 @@
                                     <input type="password" name="repeat" class="form-control form-control-rounded" required
                                     placeholder="Repeat The Password">
                                     <span style="color: red">** This Field is Required **</span>
-                                    @if ($errors->has('password'))
+                                    @if ($errors->has('repeat'))
                                         <div class="alert alert-danger alert-dismissible" role="alert">
                                             <button type="button" class="close" data-dismiss="alert">&times;</button>
                                             <div class="alert-icon contrast-alert">
                                                 <i class="fa fa-check"></i>
                                             </div>
                                             <div class="alert-message">
-                                                <span><strong>Error!</strong> {{ $errors->first('password') }} !</span>
+                                                <span><strong>Error!</strong> {{ $errors->first('repeat') }} !</span>
                                             </div>
                                         </div>
                                     @endif
@@ -135,7 +152,7 @@
                                         </div>
                                     @endif
                                 </div>
-                                <input type="hidden" name="role" value="{{'Owner'}}">
+                                <input type="hidden" name="role" value="{{"Owner"}}">
 
 
 
@@ -150,16 +167,80 @@
                 </div>
             </div>
         </div>
+        @endif
         <div class="row">
             <div class="col-lg-12">
                 <div class="card">
-                    @if(count($owner) ==0)
-                        <div class="card-header" align="center" style="color: red"><i class="fa fa-table"></i>
-                            The List is Empty
-                        </div>
+                    @if(auth()->user()->hasRole('Administrator'))
+                        @if(count($owner) ==0)
+                            <div class="card-header" align="center" style="color: red"><i class="fa fa-table"></i>
+                                The List is Empty
+                            </div>
 
+                        @else
+                            <div class="card-header"><i class="fa fa-table"></i> List of Saved Owners</div>
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table id="default-datatable" class="table table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th>S/N</th>
+                                                <th>Owner Name</th>
+                                                <th>E-Mail</th>
+                                                <th>Phone Number</th>
+                                                <th>Address</th>
+                                            </tr>
+                                        </thead>
+                                        <tfoot>
+                                            <tr>
+                                                <th>S/N</th>
+                                                <th>Owner Name</th>
+                                                <th>E-Mail</th>
+                                                <th>Phone Number</th>
+                                                <th>Address</th>
+                                            </tr>
+                                        </tfoot>
+                                        <tbody><?php
+                                            $y=1; ?>
+                                            @foreach($owner as $owners)
+                                            <tr>
+
+                                                <td>{{$y}}
+                                                    <a href="{{route('owner.delete',$owners->owner_id)}}"
+                                                        onclick="return(confirmToDelete());" class="btn btn-danger">
+                                                    <i class="fa fa-trash-o"></i>
+                                                    </a>
+                                                    <a href="{{route('owner.edit',$owners->owner_id)}}"
+                                                        onclick="return(confirmToEdit());" class="btn btn-success">
+                                                        <i class="fa fa-pencil"></i>
+                                                    </a>
+                                                    <a href="{{route('owner.vehicle',$owners->owner_number)}}" class="btn btn-primary">
+                                                        <i class="fa fa-car"></i>
+                                                    </a>
+                                                    <a href="{{route('owner.details',$owners->owner_number)}}" class="btn btn-default">
+                                                        <i class="fa fa-list"></i>
+                                                    </a>
+                                                    {{-- <a href="{{route('operator.create',$owners->owner_number)}}"
+                                                        onclick="">
+                                                        <i class="fa fa-user"></i>
+                                                    </a> --}}
+                                                </td>
+                                                <td>{{$owners->name}}</td>
+                                                <td>{{$owners->email}}</td>
+                                                <td>{{$owners->phone_number}}</td>
+                                                <td>{{$owners->address}}</td>
+
+                                            </tr><?php $y++; ?>
+                                        @endforeach
+                                        </tbody>
+
+                                    </table>
+                                </div>
+                            </div>
+                        @endif
                     @else
-                        <div class="card-header"><i class="fa fa-table"></i> List of Saved Owners</div>
+
+                        <div class="card-header"><i class="fa fa-table"></i> MY DETAILS</div>
                         <div class="card-body">
                             <div class="table-responsive">
                                 <table id="default-datatable" class="table table-bordered">
@@ -183,22 +264,19 @@
                                     </tfoot>
                                     <tbody><?php
                                         $y=1; ?>
-                                        @foreach($owner as $owners)
+                                        @foreach($own as $owns)
                                         <tr>
 
                                             <td>{{$y}}
-                                                <a href="{{route('owner.delete',$owners->owner_id)}}"
-                                                     onclick="return(confirmToDelete());" class="btn btn-danger">
-                                                <i class="fa fa-trash-o"></i>
-                                                </a>
-                                                <a href="{{route('owner.edit',$owners->owner_id)}}"
+
+                                                <a href="{{route('owner.edit',$owns->owner_id)}}"
                                                     onclick="return(confirmToEdit());" class="btn btn-success">
                                                     <i class="fa fa-pencil"></i>
                                                 </a>
-                                                <a href="{{route('owner.vehicle',$owners->owner_number)}}" class="btn btn-primary">
+                                                <a href="{{route('owner.vehicle',$owns->owner_number)}}" class="btn btn-primary">
                                                     <i class="fa fa-car"></i>
                                                 </a>
-                                                <a href="{{route('owner.details',$owners->owner_number)}}" class="btn btn-default">
+                                                <a href="{{route('owner.details',$owns->owner_number)}}" class="btn btn-default">
                                                     <i class="fa fa-list"></i>
                                                 </a>
                                                 {{-- <a href="{{route('operator.create',$owners->owner_number)}}"
@@ -206,10 +284,10 @@
                                                     <i class="fa fa-user"></i>
                                                 </a> --}}
                                             </td>
-                                            <td>{{$owners->name}}</td>
-                                            <td>{{$owners->email}}</td>
-                                            <td>{{$owners->phone_number}}</td>
-                                            <td>{{$owners->address}}</td>
+                                            <td>{{$owns->name}}</td>
+                                            <td>{{$owns->email}}</td>
+                                            <td>{{$owns->phone_number}}</td>
+                                            <td>{{$owns->address}}</td>
 
                                         </tr><?php $y++; ?>
                                     @endforeach
@@ -218,6 +296,7 @@
                                 </table>
                             </div>
                         </div>
+
                     @endif
 
                 </div>

@@ -30,6 +30,14 @@ class VehicleOwnerController extends Controller
             return view("administrator.owners.create")->with([
                 'owner' => $owner,
             ]);
+        }elseif(auth()->user()->hasRole('Owner')){
+
+            $user = User::where('user_id', Auth::user()->user_id)->first();
+            $own = VehicleOwner::where('email', Auth::user()->email)->get();
+            return view("administrator.owners.create")->with([
+                'own' => $own,
+            ]);
+
         } else{
             return redirect()->back()->with([
                 'error' => "You Dont have Access To View The Owners List",
@@ -124,11 +132,11 @@ class VehicleOwnerController extends Controller
         if(auth()->user()->hasPermissionTo('Add Owner') OR (Gate::allows('Administrator', auth()->user()))){
             $this->validate($request, [
                 'name' =>'required|min:1|max:255',
-                'phone_number' =>'required|min:1|max:255|unique:vehicle_owner',
-                'email' =>'required|min:1|max:255|unique:vehicle_owner',
-                'address' =>'required|min:1',
-                'password' =>'required|min:1',
-                'repeat' =>'required|min:1',
+                'phone_number' => 'required|min:1|max:255',
+                'email' => 'required|min:1|max:255',
+                'address' => 'required|min:1',
+                'password' => 'required|min:1',
+                'repeat' => 'required|min:1',
             ]);
 
             if($request->input("password") != $request->input('repeat')){
@@ -166,12 +174,14 @@ class VehicleOwnerController extends Controller
                 "email" => $request->input("email"),
                 "name" => $request->input("name"),
                 "password" => Hash::make($request->input("password")),
-                "role" => $role,
+                "role" => $request->input("role"),
                 "status" => 1,
             ]);
-            $addRoles = $use->assignRole($role);
+
 
             if($this->model->create($data) AND ($use->save())){
+
+                $addRoles = $use->assignRole($role);
 
                 return redirect()->route("owner.create")->with("success", "You Have Added "
                 .$request->input("name"). " To The Owners List Successfully");

@@ -45,7 +45,7 @@
                 <div class="col-lg-4">
 
                     <div class="card">
-                        <div class="card-header"><i class="fa fa-table"></i> Please Fill The Below Form To Fund Your Wallet Throught ATM</div>
+                        <div class="card-header"><i class="fa fa-table"></i> Please Fund Your Wallet Throught ATM</div>
                         <div class="card-body">
 
                             <form action="{{route('fund.pay')}}" method="POST" enctype="multipart/form-data">

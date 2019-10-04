@@ -123,11 +123,30 @@
                     </li>
                 @elseif (auth()->user()->hasRole('Owner'))
                     <li class="">
-                        <a href="{{route('customer.index')}}" class="waves-effect">
+                        <a href="{{route('owner.create')}}" class="waves-effect">
                             <i class="fa fa-user text-success"></i> <span>My Details</span>
                             <small class="badge float-right badge-light">
                                 <i class="fa fa-address-card-o"></i>
                             </small>
+                        </a>
+                    </li>
+
+                    <li class="">
+                        <a href="{{ route('vehicle.index') }}" class="waves-effect">
+                            <i class="fa fa-car text-success"></i> <span>Vehicles</span>
+                            <small class="badge float-right badge-success">0</small>
+                        </a>
+                    </li>
+                    <li class="">
+                        <a href="{{ route('operator.index') }}" class="waves-effect">
+                            <i class="fa fa-user text-success"></i> <span>Operators</span>
+                            <small class="badge float-right badge-success">0</small>
+                        </a>
+                    </li>
+                    <li class="">
+                        <a href="{{ route('bulk-sms-index') }}" class="waves-effect">
+                            <i class="fa fa-money text-success"></i> <span>Revenue</span>
+                            <small class="badge float-right badge-success">0</small>
                         </a>
                     </li>
 
@@ -137,18 +156,8 @@
                             <small class="badge float-right badge-success">0</small>
                         </a>
                     </li>
-                    <li class="">
-                        <a href="{{ route('bulk-sms-index') }}" class="waves-effect">
-                            <i class="fa fa-envelope text-success"></i> <span>Vehicles</span>
-                            <small class="badge float-right badge-success">0</small>
-                        </a>
-                    </li>
-                    <li class="">
-                        <a href="{{ route('bulk-sms-index') }}" class="waves-effect">
-                            <i class="fa fa-envelope text-success"></i> <span>Operators</span>
-                            <small class="badge float-right badge-success">0</small>
-                        </a>
-                    </li>
+
+
 
                 @elseif (auth()->user()->hasRole('Customer'))
                     <li class="">
@@ -198,9 +207,33 @@
                         </a>
                     </li>
 
+                @elseif (auth()->user()->hasRole('Operator'))
 
+                    <li class="">
+                        <a href="{{ route('operator.index') }}" class="waves-effect">
+                            <i class="fa fa-user text-success"></i> <span>My Details</span>
+                            <small class="badge float-right badge-success">0</small>
+                        </a>
+                    </li>
+                    <li class="">
+                        <a href="" class="waves-effect">
+                            <i class="fa fa-car text-success"></i> <span>Vehicles</span>
+                            <small class="badge float-right badge-success">0</small>
+                        </a>
+                    </li>
+                    <li class="">
+                        <a href="{{ route('bulk-sms-index') }}" class="waves-effect">
+                            <i class="fa fa-map text-success"></i> <span>Trip</span>
+                            <small class="badge float-right badge-success">0</small>
+                        </a>
+                    </li>
 
-
+                    <li class="">
+                        <a href="{{ route('bulk-sms-index') }}" class="waves-effect">
+                            <i class="fa fa-envelope text-success"></i> <span>Messages</span>
+                            <small class="badge float-right badge-success">0</small>
+                        </a>
+                    </li>
 
                 @else
                     <li class="">

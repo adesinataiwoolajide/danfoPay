@@ -37,7 +37,7 @@ class AdministratorController extends Controller
                         $message = "Admin";
                     }
 
-                    
+
                 break;
 
                 case (auth()->user()->hasRole('Customer'));
@@ -55,6 +55,15 @@ class AdministratorController extends Controller
                     auth()->user()->givePermissionTo([
                         'Add Vehicle', 'Edit Vehicle', 'Update Vehicle',
                         'Add Operator', 'Edit Operator', 'Update Operator'
+
+                    ]);
+
+                break;
+                case (auth()->user()->hasRole('Operator'));
+                    $message = "Operator";
+
+                    auth()->user()->givePermissionTo([
+                        'Edit Operator', 'Update Operator'
 
                     ]);
 
@@ -132,6 +141,27 @@ class AdministratorController extends Controller
                 "fundTransfer" => $fundTransfer,
                 "payment" => $payment,
                 "user" => $user,
+            ]);
+
+        }elseif(auth()->user()->hasRole('Owner')){
+            $user = User::where('user_id', Auth::user()->user_id)->first();
+            $owner = VehicleOwner::where('email', Auth::user()->email)->first();
+            $own = VehicleOwner::where('email', Auth::user()->email)->get();
+            $vehicle = Vehicle::where('owner_id', $owner->owner_id)->get();
+            return view("administrator.dashboard")->with([
+                "user" => $user,
+                "owner" => $owner,
+                "vehicle" => $vehicle,
+                "own" => $own,
+            ]);
+        }elseif(auth()->user()->hasRole('Operator')){
+            $user = User::where('user_id', Auth::user()->user_id)->first();
+            $operator = VehicleOperator::where('email', Auth::user()->email)->first();
+
+            return view("administrator.dashboard")->with([
+                "user" => $user,
+                "operator" => $operator,
+
             ]);
         }else{
             return redirect()->back()->with([
