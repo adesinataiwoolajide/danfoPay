@@ -160,6 +160,7 @@
                                             <tr>
                                                 <th>S/N</th>
                                                 <th>Plate Number</th>
+                                                <th>Vehicle Number</th>
                                                 <th>Brand</th>
                                                 <th>Owner</th>
                                                 <th>Type</th>
@@ -169,6 +170,7 @@
                                             <tr>
                                                 <th>S/N</th>
                                                 <th>Plate Number</th>
+                                                <th>Vehicle Number</th>
                                                 <th>Brand</th>
                                                 <th>Owner</th>
                                                 <th>Type</th>
@@ -195,6 +197,7 @@
                                                     </a>
                                                 </td>
                                                 <td>{{$cars->plate_number}}</td>
+                                                <td>{{$cars->vehicle_number}}</td>
                                                 <td>{{$cars->brand}}</td>
                                                 <td>{{$cars->owner->name}}</td>
                                                 <td>{{$cars->type->type_name}}</td>
@@ -225,6 +228,7 @@
                                             <tr>
                                                 <th>S/N</th>
                                                 <th>Plate Number</th>
+                                                <th>Vehicle Number</th>
                                                 <th>Brand</th>
                                                 <th>Owner</th>
                                                 <th>Type</th>
@@ -234,6 +238,7 @@
                                             <tr>
                                                 <th>S/N</th>
                                                 <th>Plate Number</th>
+                                                <th>Vehicle Number</th>
                                                 <th>Brand</th>
                                                 <th>Owner</th>
                                                 <th>Type</th>
@@ -260,6 +265,7 @@
                                                     </a>
                                                 </td>
                                                 <td>{{$cars->plate_number}}</td>
+                                                <td>{{$cars->vehicle_number}}</td>
                                                 <td>{{$cars->brand}}</td>
                                                 <td>{{$cars->owner->name}}</td>
                                                 <td>{{$cars->type->type_name}}</td>

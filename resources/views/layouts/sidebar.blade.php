@@ -113,6 +113,19 @@
 
                         </ul>
                     </li>
+                    <li class="">
+                        <a href="{{route('negotiation.index')}}" class="waves-effect">
+                            <i class="fa fa-list text-success"></i> <span>Negotiation</span>
+                            <small class="badge float-right badge-success">0</small>
+                        </a>
+                    </li>
+
+                    <li class="">
+                        <a href="{{route('manifest.index')}}" class="waves-effect">
+                            <i class="fa fa-blind text-success"></i> <span>Manifests</span>
+                            <small class="badge float-right badge-success">0</small>
+                        </a>
+                    </li>
 
 
                     <li class="">
@@ -144,8 +157,15 @@
                         </a>
                     </li>
                     <li class="">
-                        <a href="{{ route('bulk-sms-index') }}" class="waves-effect">
-                            <i class="fa fa-money text-success"></i> <span>Revenue</span>
+                        <a href="{{route('negotiation.index')}}" class="waves-effect">
+                            <i class="fa fa-handshake-o text-success"></i> <span>Negotiation</span>
+                            <small class="badge float-right badge-success">0</small>
+                        </a>
+                    </li>
+
+                    <li class="">
+                        <a href="{{route('manifest.index')}}" class="waves-effect">
+                            <i class="fa fa-blind text-success"></i> <span>Manifests</span>
                             <small class="badge float-right badge-success">0</small>
                         </a>
                     </li>
@@ -193,10 +213,15 @@
                         </a>
                     </li>
 
-
                     <li class="">
-                        <a href="{{route('customer.index')}}" class="waves-effect">
-                            <i class="fa fa-car text-success"></i> <span>My Trip</span>
+                        <a href="{{route('negotiation.index')}}" class="waves-effect">
+                            <i class="fa fa-handshake-o text-success"></i> <span>Negotiation</span>
+                            <small class="badge float-right badge-success">0</small>
+                        </a>
+                    </li>
+                    <li class="">
+                        <a href="{{route('manifest.index')}}" class="waves-effect">
+                            <i class="fa fa-blind text-success"></i> <span>Manifests</span>
                             <small class="badge float-right badge-success">0</small>
                         </a>
                     </li>
@@ -216,6 +241,18 @@
                         </a>
                     </li>
                     <li class="">
+                        <a href="{{route('negotiation.index')}}" class="waves-effect">
+                            <i class="fa fa-handshake-o text-success"></i> <span>Negotiation</span>
+                            <small class="badge float-right badge-success">0</small>
+                        </a>
+                    </li>
+                    <li class="">
+                        <a href="{{route('manifest.index')}}" class="waves-effect">
+                            <i class="fa fa-blind text-success"></i> <span>Manifests</span>
+                            <small class="badge float-right badge-success">0</small>
+                        </a>
+                    </li>
+                    <li class="">
                         <a href="" class="waves-effect">
                             <i class="fa fa-car text-success"></i> <span>Vehicles</span>
                             <small class="badge float-right badge-success">0</small>
@@ -223,7 +260,7 @@
                     </li>
                     <li class="">
                         <a href="{{ route('bulk-sms-index') }}" class="waves-effect">
-                            <i class="fa fa-map text-success"></i> <span>Trip</span>
+                            <i class="fa fa-map text-success"></i> <span>Rounds</span>
                             <small class="badge float-right badge-success">0</small>
                         </a>
                     </li>

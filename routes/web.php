@@ -131,4 +131,23 @@ Route::group(["prefix" => "administrator", "middleware" => "verified"], function
         Route::post('/send-bulksms/', 'BulkSmsController@save')->name('send-sms');
         Route::post('/bulksms/', 'BulkSmsController@save')->name('send-sms-restore');
     });
+    Route::group(["prefix" => "negotiations"], function(){
+
+        Route::get('/index/', 'NegotiationController@index')->name('negotiation.index');
+        Route::post('/save', 'NegotiationController@store')->name('negotiation.save');
+        Route::get("/edit/{negotiation_id}", "NegotiationController@edit")->name("negotiation.edit");
+        Route::post("/update/{negotiation_id}", "NegotiationController@update")->name("negotiation.update");
+        Route::get("/accept/{negotiation_id}", "NegotiationController@accept")->name("negotiation.accept");
+        Route::get("/decline/{negotiation_id}", "NegotiationController@decline")->name("negotiation.decline");
+        Route::get("/renegotiate/{negotiation_id}", "NegotiationController@renogotiate")->name("negotiation.renogotiate");
+
+        Route::get("/pay/{negotiation_id}", "NegotiationController@pay")->name("negotiation.pay");
+
+    });
+
+    Route::group(["prefix" => "manifests"], function(){
+
+        Route::get('/index/', 'ManifestController@index')->name('manifest.index');
+
+    });
 });

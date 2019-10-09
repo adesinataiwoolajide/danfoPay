@@ -11,7 +11,7 @@ class Vehicle extends Model
     protected $table = 'vehicles';
     protected $primaryKey = 'vehicle_id';
     protected $fillable = [
-        'plate_number', 'brand', 'type_id', 'owner_id'
+        'plate_number', 'brand', 'type_id', 'owner_id', 'vehicle_number'
     ];
 
     public function getBrandAttribute($value){
@@ -20,6 +20,13 @@ class Vehicle extends Model
 
     public function setBrandAttribute($value){
         return $this->attributes['brand'] = strtoupper($value);
+    }
+    public function getVehicleNumberAttribute($value){
+        return strtoupper($value);
+    }
+
+    public function setVehicleNumberAttribute($value){
+        return $this->attributes['vehicle_number'] = strtoupper($value);
     }
 
     public function getPlateNumberAttribute($value){
@@ -66,6 +73,14 @@ class Vehicle extends Model
 
     public function operator(){
         return $this->hasMany('App\VehicleOperator', 'operator_id', 'vehicle_id');
+    }
+    public function negotiate(){
+        return $this->hasMany('App\Negotiation', 'negotiation_id', 'vehicle_id');
+    }
+
+
+    public function mani(){
+        return $this->hasMany('App\Manivest', 'manifest_id', 'vehicle_id');
     }
     // public function operator(){
     //     return $this->hasMany('App\VehicleOperator', 'operator_id', 'vehicle_id');

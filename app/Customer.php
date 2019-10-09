@@ -59,4 +59,8 @@ class Customer extends Model
         return \Carbon\Carbon::parse($value)->format('d-m-Y');
     }
 
+    public function negotiation(){
+        return $this->hasMany('App\Negotiation', 'negotiation_id', 'customer_id');
+    }
+
 }

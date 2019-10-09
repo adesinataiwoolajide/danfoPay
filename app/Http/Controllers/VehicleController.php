@@ -79,6 +79,11 @@ class VehicleController extends Controller
 
     }
 
+    public function generateRandomHash($length)
+    {
+        return strtoupper(substr(md5(uniqid(rand())), 0, (-32 + $length)));
+    }
+
 
     public function store(Request $request)
     {
@@ -101,6 +106,7 @@ class VehicleController extends Controller
                 "brand" => $request->input("brand"),
                 "type_id" => $request->input("type_id"),
                 "owner_id" => $request->input("owner_id"),
+                "vehicle_number" => $this->generateRandomHash(6),
             ]);
 
             if($this->model->create($data)){
@@ -197,6 +203,13 @@ class VehicleController extends Controller
             ]);
 
             $details = VehicleOwner::where('owner_number', $request->input("owner_id"))->first();
+            $car = Vehicle::where('vehicle_id', $request->input("vehicle_id"))->first();
+
+            if(empty($car->vehicle_number)){
+                $vehicle_number = $this->generateRandomHash(6);
+            }else{
+                $vehicle_number = $car->vehicle_number;
+            }
 
             $data = ([
                 "vehicle" => $this->model->show($vehicle_id),
@@ -204,6 +217,8 @@ class VehicleController extends Controller
                 "brand" => $request->input("brand"),
                 "type_id" => $request->input("type_id"),
                 "owner_id" => $request->input("owner_id"),
+                "vehicle_number" => $vehicle_number,
+
             ]);
 
             if($this->model->update($data, $vehicle_id)){
