@@ -150,4 +150,9 @@ Route::group(["prefix" => "administrator", "middleware" => "verified"], function
         Route::get('/index/', 'ManifestController@index')->name('manifest.index');
 
     });
+    Route::group(["prefix" => "rounds"], function(){
+
+        Route::get('/index/', 'RoundController@index')->name('round.index');
+
+    });
 });

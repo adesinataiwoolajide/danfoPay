@@ -20,4 +20,35 @@
             "vehicle_id" => $vehicle_id
         ])->get();
     }
+
+
+    function dOwnnerRounds($vehicle_id){
+        return \DB::table('rounds')->where([
+            "vehicle_id" => $vehicle_id
+        ])->get();
+    }
+    function dOwnnerMoto($vehicle_id){
+        return \DB::table('vehicles')->where([
+            "vehicle_id" => $vehicle_id
+        ])->get();
+    }
+
+    function dOwnnerNego($vehicle_id){
+        return \DB::table('negotiations')->where([
+            "vehicle_id" => $vehicle_id
+        ])->get();
+    }
+
+    function negoCustomer($customer_id){
+        return \DB::table('customers')->where([
+            "customer_id" => $customer_id
+        ])->get();
+    }
+    function negoMani($vehicle_id){
+        return \DB::table('manifests')->where([
+            "vehicle_id" => $vehicle_id
+        ])->get();
+    }
+
+
 ?>

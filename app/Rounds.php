@@ -31,4 +31,8 @@ class Rounds extends Model
         return $this->attributes['current_balance'] = ($value);
     }
 
+    public function motto(){
+        return $this->belongsTo('App\Vehicle','vehicle_id');
+    }
+
 }

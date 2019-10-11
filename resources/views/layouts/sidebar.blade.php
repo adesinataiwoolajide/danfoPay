@@ -127,6 +127,13 @@
                         </a>
                     </li>
 
+                    <li class="">
+                        <a href="{{ route('round.index') }}" class="waves-effect">
+                            <i class="fa fa-map text-success"></i> <span>Rounds</span>
+                            <small class="badge float-right badge-success">0</small>
+                        </a>
+                    </li>
+
 
                     <li class="">
                         <a href="{{ route('bulk-sms-index') }}" class="waves-effect">
@@ -166,6 +173,13 @@
                     <li class="">
                         <a href="{{route('manifest.index')}}" class="waves-effect">
                             <i class="fa fa-blind text-success"></i> <span>Manifests</span>
+                            <small class="badge float-right badge-success">0</small>
+                        </a>
+                    </li>
+
+                    <li class="">
+                        <a href="{{ route('round.index') }}" class="waves-effect">
+                            <i class="fa fa-map text-success"></i> <span>Rounds</span>
                             <small class="badge float-right badge-success">0</small>
                         </a>
                     </li>
@@ -253,13 +267,13 @@
                         </a>
                     </li>
                     <li class="">
-                        <a href="" class="waves-effect">
+                        <a href="{{ route('vehicle.index') }}" class="waves-effect">
                             <i class="fa fa-car text-success"></i> <span>Vehicles</span>
                             <small class="badge float-right badge-success">0</small>
                         </a>
                     </li>
                     <li class="">
-                        <a href="{{ route('bulk-sms-index') }}" class="waves-effect">
+                        <a href="{{ route('round.index') }}" class="waves-effect">
                             <i class="fa fa-map text-success"></i> <span>Rounds</span>
                             <small class="badge float-right badge-success">0</small>
                         </a>

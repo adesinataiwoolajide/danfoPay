@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Repositories\VehicleRepository;
 use DB;
-use App\{VehicleOwner, Vehicle, VehicleType, User};
+use App\{VehicleOwner, Vehicle, VehicleType, User, VehicleOperator};
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Auth;
 
@@ -41,6 +41,18 @@ class VehicleController extends Controller
                 "own" => $own,
                 'car' => $car,
                 'type' => $type,
+            ]);
+        }elseif(auth()->user()->hasRole('Operator')){
+
+            $user = User::where('user_id', Auth::user()->email)->first();
+            $operator = VehicleOperator::where('email', Auth::user()->email)->first();
+            $car = Vehicle::where('vehicle_id', $operator->vehicle_id)->orderBy('vehicle_id', 'desc')->get();
+
+            return view('administrator.vehicles.index')->with([
+                "operator" => $operator,
+                'user' => $user,
+                'car' => $car,
+
             ]);
 
         } else{

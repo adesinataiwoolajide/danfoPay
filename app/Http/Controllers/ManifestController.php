@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\{User, Customer, Vehicle, Negotiation, VehicleOperator, Balances, Manifest, Rounds};
+use App\{User, Customer, Vehicle, Negotiation, VehicleOperator, Balances, Manifest, Rounds, VehicleOwner};
 use Spatie\Permission\Models\Role;
 use DB;
 use Illuminate\Support\Facades\Auth;
@@ -27,7 +27,7 @@ class ManifestController extends Controller
     public function index()
     {
         if(Gate::allows('Administrator', auth()->user())){
-            $manifest =$this->model->all();
+            $manifest =Manifest::orderBy('manifest_id','desc')->get();;;
             return view("administrator.manifests.index")->with([
                 'manifest' => $manifest,
             ]);
@@ -35,7 +35,7 @@ class ManifestController extends Controller
         }elseif(auth()->user()->hasRole('Customer')){
             $email = Auth::user()->email;
             $customer =Customer::where('email', $email)->first();
-            $manifest =Manifest::where('customer_id', $customer->customer_id)->get();
+            $manifest =Manifest::where('customer_id', $customer->customer_id)->orderBy('manifest_id','desc')->get();;
 
             return view("administrator.manifests.index")->with([
                 'manifest' => $manifest,
@@ -45,12 +45,21 @@ class ManifestController extends Controller
 
             $own = VehicleOperator::where('email', Auth::user()->email)->first();
             $vehicle_id = $own->vehicle_id;
-            $manifest =Manifest::where('vehicle_id', $vehicle_id)->get();
+            $manifest =Manifest::where('vehicle_id', $vehicle_id)->orderBy('manifest_id','desc')->get();;
             return view("administrator.manifests.index")->with([
                 'manifest' => $manifest,
                 'own' => $own,
             ]);
         }elseif(auth()->user()->hasRole('Owner')){
+
+            $own = VehicleOwner::where('email', Auth::user()->email)->first();
+            $owner_id = $own->owner_id;
+            $car = Vehicle::where('owner_id', $owner_id)->orderBy('vehicle_id', 'desc')->get();
+
+            return view("administrator.manifests.index")->with([
+                'car' => $car,
+                'own' => $own,
+            ]);
 
 
         } else{

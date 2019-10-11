@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\{User, Customer, Vehicle, Negotiation, VehicleOperator, Balances, Manifest, Rounds};
+use App\{User, Customer, Vehicle, Negotiation, VehicleOperator, Balances, Manifest, Rounds, VehicleOwner};
 use Spatie\Permission\Models\Role;
 use DB;
 use Illuminate\Support\Facades\Auth;
@@ -27,7 +27,7 @@ class NegotiationController extends Controller
     public function index()
     {
         if(Gate::allows('Administrator', auth()->user())){
-            $negotiation =$this->model->all();
+            $negotiation =Negotiation::orderBy('negotiation_id','desc')->get();
             return view("administrator.negotiations.index")->with([
                 'negotiation' => $negotiation,
             ]);
@@ -35,7 +35,7 @@ class NegotiationController extends Controller
         }elseif(auth()->user()->hasRole('Customer')){
             $email = Auth::user()->email;
             $customer =Customer::where('email', $email)->first();
-            $negotiation =Negotiation::where('customer_id', $customer->customer_id)->get();
+            $negotiation =Negotiation::where('customer_id', $customer->customer_id)->orderBy('negotiation_id','desc')->get();
 
             return view("administrator.negotiations.index")->with([
                 'negotiation' => $negotiation,
@@ -45,18 +45,20 @@ class NegotiationController extends Controller
 
             $own = VehicleOperator::where('email', Auth::user()->email)->first();
             $vehicle_id = $own->vehicle_id;
-            $negotiation =Negotiation::where('vehicle_id', $vehicle_id)->get();
+            $negotiation =Negotiation::where('vehicle_id', $vehicle_id)->orderBy('negotiation_id','desc')->get();
             return view("administrator.negotiations.index")->with([
                 'negotiation' => $negotiation,
                 'own' => $own,
             ]);
         }elseif(auth()->user()->hasRole('Owner')){
-            // $user_id = Auth::user()->user_id;
-            // $balance =Balances::where('user_id', $user_id)->get();
 
-            // return view("administrator.negotiations.index")->with([
-            //     'negotiation' => $negotiation,
-            // ]);
+            $own = VehicleOwner::where('email', Auth::user()->email)->first();
+            $owner_id = $own->owner_id;
+            $car = Vehicle::where('owner_id', $owner_id)->orderBy('vehicle_id', 'desc')->get();
+            return view("administrator.negotiations.index")->with([
+                'car' => $car,
+                'own' => $own,
+            ]);
 
         } else{
             return redirect()->back()->with([
@@ -298,6 +300,7 @@ class NegotiationController extends Controller
         if(auth()->user()->hasRole('Customer')){
 
             $nego = $this->model->show($negotiation_id);
+            //dd($nego);
             $email = Auth::user()->email;
             $customer =Customer::where('email', $email)->first();
             $deed = Negotiation::where([
@@ -348,7 +351,7 @@ class NegotiationController extends Controller
                             "vehicle_id" => $nego->vehicle_id,
                             "amount" => $pay,
                             "customer_id" => $customer->customer_id,
-                            "negotiation_id" => $nego->negotiation_id,
+                            "negotiation_id" => $negotiation_id,
                         ]);
                     }else{
 

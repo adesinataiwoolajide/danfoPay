@@ -286,8 +286,9 @@ class VehicleOperatorController extends Controller
             $details = VehicleOperator::where('operator_id', $operator_id)->first();
             $email = $details->email;
             $user = User::where('email', $email)->first();
+
             $owner_id = $details->owner_id;
-            $user_id = $user->user_id;
+            //$user_id = $user->user_id;
 
             $data = ([
                 "operator" => $this->model->show($operator_id),
@@ -302,11 +303,11 @@ class VehicleOperatorController extends Controller
 
             $role = 'Owner';
 
-            $use = User::where('user_id', $user_id)
+            $use = User::where('email',  $request->input("email"))
             ->update([
                 "email" => $request->input("email"),
                 "name" => $request->input("name"),
-                "password" => $user->password,
+                "password" => Hash::make($request->input("email")),
                 "role" => $role,
                 "status" => 1,
             ]);

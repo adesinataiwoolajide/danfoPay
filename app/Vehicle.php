@@ -82,6 +82,9 @@ class Vehicle extends Model
     public function mani(){
         return $this->hasMany('App\Manivest', 'manifest_id', 'vehicle_id');
     }
+    public function rounds(){
+        return $this->hasOne('App\Rounds', 'round_id', 'vehicle_id');
+    }
     // public function operator(){
     //     return $this->hasMany('App\VehicleOperator', 'operator_id', 'vehicle_id');
     // }

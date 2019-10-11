@@ -19,7 +19,7 @@
                     <li class="breadcrumb-item active" aria-current="page">List of Saved Cars </li>
                 </ol>
             </div>
-        </div>
+        </div>@include('partials._message')
         @if(auth()->user()->hasRole('Owner'))
             <div class="row">
                 <div class="col-lg-12">
@@ -143,8 +143,8 @@
         @endif
         <div class="row">
             <div class="col-lg-12">
-                 @include('partials._message')
-                 @if(auth()->user()->hasRole('Administrator'))
+
+                @if(auth()->user()->hasRole('Administrator'))
                     <div class="card">
                         @if(count($car) ==0)
                             <div class="card-header" align="center" style="color: red"><i class="fa fa-table"></i>
@@ -212,7 +212,7 @@
                         @endif
 
                     </div>
-                @else
+                @elseif(auth()->user()->hasRole('Owner'))
                     <div class="card">
                         @if(count($car) ==0)
                             <div class="card-header" align="center" style="color: red"><i class="fa fa-table"></i>
@@ -264,6 +264,60 @@
                                                         <i class="fa fa-user"></i>
                                                     </a>
                                                 </td>
+                                                <td>{{$cars->plate_number}}</td>
+                                                <td>{{$cars->vehicle_number}}</td>
+                                                <td>{{$cars->brand}}</td>
+                                                <td>{{$cars->owner->name}}</td>
+                                                <td>{{$cars->type->type_name}}</td>
+
+                                            </tr><?php $y++; ?>
+                                        @endforeach
+                                        </tbody>
+
+                                    </table>
+                                </div>
+                            </div>
+                        @endif
+
+                    </div>
+                @else
+                    <div class="card">
+                        @if(count($car) ==0)
+                            <div class="card-header" align="center" style="color: red"><i class="fa fa-table"></i>
+                                {{$operator->name}} No Car Was Found You
+                            </div>
+
+                        @else
+                            <div class="card-header"><i class="fa fa-table"></i>{{$operator->name}} Allocated Vehicle  </div>
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table id="default-datatable" class="table table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th>S/N</th>
+                                                <th>Plate Number</th>
+                                                <th>Vehicle Number</th>
+                                                <th>Brand</th>
+                                                <th>Owner</th>
+                                                <th>Type</th>
+                                            </tr>
+                                        </thead>
+                                        <tfoot>
+                                            <tr>
+                                                <th>S/N</th>
+                                                <th>Plate Number</th>
+                                                <th>Vehicle Number</th>
+                                                <th>Brand</th>
+                                                <th>Owner</th>
+                                                <th>Type</th>
+                                            </tr>
+                                        </tfoot>
+                                        <tbody><?php
+                                            $y=1; ?>
+                                            @foreach($car as $cars)
+                                            <tr>
+
+                                                <td>{{$y}}</td>
                                                 <td>{{$cars->plate_number}}</td>
                                                 <td>{{$cars->vehicle_number}}</td>
                                                 <td>{{$cars->brand}}</td>
