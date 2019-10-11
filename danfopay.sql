@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 09, 2019 at 04:34 PM
+-- Generation Time: Oct 11, 2019 at 02:16 PM
 -- Server version: 10.1.38-MariaDB
 -- PHP Version: 7.2.17
 
@@ -60,7 +60,9 @@ INSERT INTO `activity_log` (`id`, `log_name`, `description`, `subject_id`, `subj
 (12, 'default', 'updated', 24, 'App\\User', 24, 'App\\User', '[]', '2019-10-04 08:41:40', '2019-10-04 08:41:40'),
 (13, 'default', 'updated', 25, 'App\\User', 25, 'App\\User', '[]', '2019-10-04 09:29:10', '2019-10-04 09:29:10'),
 (14, 'default', 'deleted', 18, 'App\\User', 1, 'App\\User', '[]', '2019-10-04 11:00:20', '2019-10-04 11:00:20'),
-(15, 'default', 'restored', 18, 'App\\User', 1, 'App\\User', '{\"name\":\"Testing\",\"email\":\"testing@gmail.com\"}', '2019-10-04 11:00:30', '2019-10-04 11:00:30');
+(15, 'default', 'restored', 18, 'App\\User', 1, 'App\\User', '{\"name\":\"Testing\",\"email\":\"testing@gmail.com\"}', '2019-10-04 11:00:30', '2019-10-04 11:00:30'),
+(16, 'default', 'updated', 28, 'App\\User', 28, 'App\\User', '[]', '2019-10-11 08:25:04', '2019-10-11 08:25:04'),
+(17, 'default', 'created', 30, 'App\\User', 15, 'App\\User', '[]', '2019-10-11 10:42:56', '2019-10-11 10:42:56');
 
 -- --------------------------------------------------------
 
@@ -83,9 +85,9 @@ CREATE TABLE `balances` (
 --
 
 INSERT INTO `balances` (`balance_id`, `total_amount`, `user_id`, `customer_code`, `updated_at`, `created_at`, `deleted_at`) VALUES
-(1, '24900', 4, 'CUS_2g3d67ut0hylj52', '2019-10-09 13:27:29', '2019-09-30 07:33:32', NULL),
-(2, '90700', 2, 'CUS_hmo71l43bg2o7lh', '2019-10-04 11:08:05', '2019-09-30 07:37:16', NULL),
-(3, '8000', 5, 'CUS_ob7kyookercytfv', '2019-10-02 12:15:43', '2019-10-02 12:15:04', NULL),
+(1, '38160', 4, 'CUS_2g3d67ut0hylj52', '2019-10-11 10:27:53', '2019-09-30 07:33:32', NULL),
+(2, '97200', 2, 'CUS_hmo71l43bg2o7lh', '2019-10-11 10:27:54', '2019-09-30 07:37:16', NULL),
+(3, '7800', 5, 'CUS_ob7kyookercytfv', '2019-10-11 08:30:22', '2019-10-02 12:15:04', NULL),
 (4, '1000', 3, '612D75EE82', '2019-10-02 12:15:43', '2019-10-02 12:15:43', NULL),
 (5, '2500', 29, 'CUS_nn38qrbedfr5xle', '2019-10-04 08:22:24', '2019-10-04 08:22:00', NULL);
 
@@ -161,7 +163,8 @@ INSERT INTO `fund_transfers` (`fund_id`, `sender`, `reciever`, `amount`, `update
 (3, '09072281207', '09072281204', 1000, '2019-10-02 12:15:43', '2019-10-02 12:15:43', NULL),
 (4, '08138139333', '09072281201', 200, '2019-10-02 12:19:57', '2019-10-02 12:19:57', NULL),
 (5, '08138139339', '08138139333', 500, '2019-10-04 08:22:24', '2019-10-04 08:22:24', NULL),
-(6, '09072281201', '08138139333', 200, '2019-10-04 11:08:05', '2019-10-04 11:08:05', NULL);
+(6, '09072281201', '08138139333', 200, '2019-10-04 11:08:05', '2019-10-04 11:08:05', NULL),
+(7, '09072281201', '08138139333', 6500, '2019-10-11 10:27:54', '2019-10-11 10:27:54', NULL);
 
 -- --------------------------------------------------------
 
@@ -185,7 +188,9 @@ CREATE TABLE `manifests` (
 --
 
 INSERT INTO `manifests` (`manifest_id`, `vehicle_id`, `amount`, `customer_id`, `updated_at`, `created_at`, `deleted_at`, `negotiation_id`) VALUES
-(4, 7, '300', 3, '2019-10-09 13:27:29', '2019-10-09 13:27:29', NULL, 4);
+(4, 7, '300', 3, '2019-10-09 13:27:29', '2019-10-09 13:27:29', NULL, 4),
+(5, 4, '120', 3, '2019-10-11 08:28:33', '2019-10-11 08:28:33', NULL, 7),
+(6, 9, '200', 4, '2019-10-11 08:30:22', '2019-10-11 08:30:22', NULL, 8);
 
 -- --------------------------------------------------------
 
@@ -308,6 +313,7 @@ INSERT INTO `model_has_permissions` (`permission_id`, `model_type`, `model_id`) 
 (17, 'App\\User', 23),
 (17, 'App\\User', 24),
 (17, 'App\\User', 25),
+(17, 'App\\User', 28),
 (18, 'App\\User', 9),
 (18, 'App\\User', 10),
 (18, 'App\\User', 11),
@@ -323,6 +329,7 @@ INSERT INTO `model_has_permissions` (`permission_id`, `model_type`, `model_id`) 
 (18, 'App\\User', 23),
 (18, 'App\\User', 24),
 (18, 'App\\User', 25),
+(18, 'App\\User', 28),
 (21, 'App\\User', 2),
 (21, 'App\\User', 3),
 (21, 'App\\User', 4),
@@ -388,7 +395,8 @@ INSERT INTO `model_has_roles` (`role_id`, `model_type`, `model_id`) VALUES
 (4, 'App\\User', '24'),
 (4, 'App\\User', '25'),
 (4, 'App\\User', '26'),
-(4, 'App\\User', '28');
+(4, 'App\\User', '28'),
+(4, 'App\\User', '30');
 
 -- --------------------------------------------------------
 
@@ -415,10 +423,14 @@ CREATE TABLE `negotiations` (
 
 INSERT INTO `negotiations` (`negotiation_id`, `vehicle_id`, `from_destination`, `to_destination`, `amount`, `status`, `customer_id`, `updated_at`, `created_at`, `deleted_at`) VALUES
 (1, 1, 'Dugbe', 'Samonda Mobil', '200', 0, 3, '2019-10-09 11:47:39', '2019-10-09 10:33:00', NULL),
-(2, 5, 'Bodija Favors', 'Sango poly junction', '150', 2, 4, '2019-10-09 11:23:05', '2019-10-09 10:39:19', NULL),
+(2, 5, 'Bodija Favors', 'Sango poly junction', '150', 0, 4, '2019-10-11 08:20:49', '2019-10-09 10:39:19', NULL),
 (3, 4, 'Nysc Secretariat Gate', 'Oja Oba', '300', 0, 1, '2019-10-09 10:40:54', '2019-10-09 10:40:54', NULL),
 (4, 7, 'Iwo Road', 'Olodo Market', '300', 3, 3, '2019-10-09 13:25:49', '2019-10-09 11:25:09', NULL),
-(5, 7, 'Ojoo Market', 'Fijabi', '50', 1, 1, '2019-10-09 11:28:06', '2019-10-09 11:26:07', NULL);
+(5, 7, 'Ojoo Market', 'Fijabi', '50', 1, 1, '2019-10-09 11:28:06', '2019-10-09 11:26:07', NULL),
+(6, 1, 'Nysc Secretariat Gate', 'Ojoo Roundabout', '200', 0, 3, '2019-10-11 08:18:17', '2019-10-11 08:18:17', NULL),
+(7, 9, 'Iwo Road', 'Olodo Market', '120', 1, 3, '2019-10-11 10:37:21', '2019-10-11 08:19:48', NULL),
+(8, 9, 'Ologun Eru', 'Oke Itunu', '200', 1, 4, '2019-10-11 10:37:16', '2019-10-11 08:21:12', NULL),
+(9, 4, 'Bodija Favors', 'Olodo Market', '50', 0, 3, '2019-10-11 10:28:32', '2019-10-11 10:28:32', NULL);
 
 -- --------------------------------------------------------
 
@@ -472,7 +484,8 @@ INSERT INTO `payments` (`payment_id`, `reference`, `amount`, `currency`, `user_i
 (4, 'UgQhUUWUxhJV0CoSodro4cJAb', '900000', 'NGN', 5, 'success', '2019-10-02 12:15:04', '2019-10-02 12:15:04', NULL),
 (5, 'WzsUjo6d2io29Ee1WG5Vscu0P', '9000000', 'NGN', 2, 'success', '2019-10-02 12:17:27', '2019-10-02 12:17:27', NULL),
 (6, 't5Q0YJoGcrJm2XPXvhCnX1fFF', '300000', 'NGN', 29, 'success', '2019-10-04 08:22:00', '2019-10-04 08:22:00', NULL),
-(7, 'puA12lo70ClmdXUxyo99BZq5X', '500000', 'NGN', 4, 'success', '2019-10-04 11:06:41', '2019-10-04 11:06:41', NULL);
+(7, 'puA12lo70ClmdXUxyo99BZq5X', '500000', 'NGN', 4, 'success', '2019-10-04 11:06:41', '2019-10-04 11:06:41', NULL),
+(8, 'Uv67yP2mezrJSYw6nRKGSYHlk', '2000000', 'NGN', 4, 'success', '2019-10-11 10:27:13', '2019-10-11 10:27:13', NULL);
 
 -- --------------------------------------------------------
 
@@ -575,7 +588,8 @@ CREATE TABLE `rounds` (
 --
 
 INSERT INTO `rounds` (`round_id`, `vehicle_id`, `current_balance`, `updated_at`, `created_at`, `deleted_at`) VALUES
-(2, 7, '300', '2019-10-09 13:27:29', '2019-10-09 13:25:49', NULL);
+(2, 7, '300', '2019-10-09 13:27:29', '2019-10-09 13:25:49', NULL),
+(3, 9, '440', '2019-10-11 08:30:22', '2019-10-11 08:25:59', NULL);
 
 -- --------------------------------------------------------
 
@@ -619,10 +633,11 @@ INSERT INTO `users` (`user_id`, `name`, `email`, `email_verified_at`, `password`
 (23, 'Operator 1', 'operator1@gmail.com', '2019-10-04 08:27:34', '$2y$10$lzZynDuk9/7mBHRZHOZGN.Knua424NM4Jbfygs..7p4KaIUPZySOW', 'Owner', '1', NULL, '2019-10-04 08:27:34', '2019-10-04 07:26:16', NULL),
 (24, 'Operator 2', 'operator2@gmail.com', '2019-10-04 08:41:40', '$2y$10$tm9G1GbpZoUHuWpI9HVOAOTpFLgxmpc4lAYevj0lZhV7KHb4SIYKi', 'Operator', '1', NULL, '2019-10-04 08:41:40', '2019-10-04 07:30:06', NULL),
 (25, 'Olamide Fola', 'operator3@gmail.com', '2019-10-04 09:29:10', '$2y$10$91vErqGG.kyafBltlJ07ZuQU/ivHMcgvzHFNbiyc9JDuE45ZV4bIe', 'Operator', '1', NULL, '2019-10-04 09:29:10', '2019-10-04 07:34:45', NULL),
-(26, 'New Operator', 'operator4gmail.com', NULL, '$2y$10$v3KUaGnb6wR6pt0mF49OhuT74qafPxexfr9Fc2fHLUs0R3Vu.lW.u', 'Operator', '1', NULL, '2019-10-04 08:04:47', '2019-10-04 07:48:32', NULL),
+(26, 'New Operator', 'operator4gmail.com', '2019-10-14 23:00:00', '$2y$10$v3KUaGnb6wR6pt0mF49OhuT74qafPxexfr9Fc2fHLUs0R3Vu.lW.u', 'Operator', '1', NULL, '2019-10-04 08:04:47', '2019-10-04 07:48:32', NULL),
 (27, 'Owner 2', 'owner2@gmail.com', NULL, '$2y$10$aOW9jkbioF05HZ68MUNr.O7IFSRRLycWfNNsmyowUrHTMJWZw3AKG', 'Owner', '1', NULL, '2019-10-04 08:16:27', '2019-10-04 08:16:27', NULL),
-(28, 'Operator 6', 'operator6@gmail.com', NULL, '$2y$10$Nxz6BytY8bWFm/h4SAx38edsZosrcXfx2fcaDtAniyTBK3ydXc0h6', 'Operator', '1', NULL, '2019-10-04 08:17:50', '2019-10-04 08:17:50', NULL),
-(29, 'Testing Customer', 'customer7@gmail.com', '2019-10-04 08:20:17', '$2y$10$6eTYlYEzNNoORXtb2fPv0.LMQrPn.WIgshGtxLbh7Ca20jZoJkI6O', 'Customer', '1', NULL, '2019-10-04 08:20:17', '2019-10-04 08:19:02', NULL);
+(28, 'Operator 6', 'operator6@gmail.com', '2019-10-11 08:25:03', '$2y$10$Nxz6BytY8bWFm/h4SAx38edsZosrcXfx2fcaDtAniyTBK3ydXc0h6', 'Operator', '1', NULL, '2019-10-11 08:25:03', '2019-10-04 08:17:50', NULL),
+(29, 'Testing Customer', 'customer7@gmail.com', '2019-10-04 08:20:17', '$2y$10$6eTYlYEzNNoORXtb2fPv0.LMQrPn.WIgshGtxLbh7Ca20jZoJkI6O', 'Customer', '1', NULL, '2019-10-04 08:20:17', '2019-10-04 08:19:02', NULL),
+(30, 'Babajide Hamid', 'babajide@gmail.com', NULL, '$2y$10$ENvyBnkyz0Bf4SvOaiefjuGn7DkFGxRhmIjqSmzyCUcLl0Sc09jpG', 'Owner', '1', NULL, '2019-10-11 11:06:24', '2019-10-11 10:42:56', NULL);
 
 -- --------------------------------------------------------
 
@@ -657,7 +672,8 @@ INSERT INTO `vehicles` (`vehicle_id`, `plate_number`, `vehicle_number`, `brand`,
 (8, 'DE 355 EET', 'AF71D4', 'HONDA', 2, 3, '2019-10-09 07:53:41', '2019-10-04 07:47:40', NULL),
 (9, 'GG 394 JJJ', 'FE7058', 'HYUNDAI', 7, 3, '2019-10-09 07:53:22', '2019-10-04 08:17:05', NULL),
 (10, 'FF 349 KLU', '02215G', 'MAZDA', 4, 2, '2019-10-09 07:53:11', '2019-10-04 11:01:54', NULL),
-(11, 'SS 237 KKK', '43327F', 'HONDA', 2, 2, '2019-10-09 07:49:51', '2019-10-04 11:11:30', NULL);
+(11, 'SS 237 KKK', '43327F', 'HONDA', 2, 2, '2019-10-09 07:49:51', '2019-10-04 11:11:30', NULL),
+(12, 'AW 31 SDS', '675E1F', 'LEXUS', 2, 1, '2019-10-11 10:39:33', '2019-10-11 10:39:33', NULL);
 
 -- --------------------------------------------------------
 
@@ -685,8 +701,9 @@ CREATE TABLE `vehicle_operators` (
 INSERT INTO `vehicle_operators` (`operator_id`, `name`, `email`, `phone_number`, `route`, `vehicle_id`, `owner_id`, `updated_at`, `created_at`, `deleted_at`) VALUES
 (1, 'Operator 1', 'operator1@gmail.com', '09084746484', 'Oke Paadi, Awolowo, Apata Ibadan', 5, 5, '2019-10-04 08:12:51', '2019-10-04 07:26:16', NULL),
 (3, 'Olamide Fola', 'operator3@gmail.com', '08137438222', 'Oke Itunu, Eleyele, Ashi', 7, 5, '2019-10-04 07:34:44', '2019-10-04 07:34:44', NULL),
-(4, 'New Operator', 'operator4@gmail.com', '08173843322', 'Ladoke, Makola, Bodija', 8, 2, '2019-10-04 08:04:47', '2019-10-04 07:48:31', NULL),
-(5, 'Operator 6', 'operator6@gmail.com', '08134933322', 'Oke Paadi, Awolowo, Apata', 9, 7, '2019-10-04 08:17:50', '2019-10-04 08:17:50', NULL);
+(4, 'New Operator S', 'operator4@gmail.com', '08173843322', 'Ladoke, Makola, Bodija', 8, 2, '2019-10-11 11:02:39', '2019-10-04 07:48:31', NULL),
+(5, 'Operator 6', 'operator6@gmail.com', '08134933322', 'Oke Paadi, Awolowo, Apata', 9, 7, '2019-10-04 08:17:50', '2019-10-04 08:17:50', NULL),
+(6, 'Babajide Hamid', 'babajide@gmail.com', '08083737383', 'Oke Paadi, Awolowo, Apata Ibadan', 8, 2, '2019-10-11 11:06:24', '2019-10-11 10:42:56', NULL);
 
 -- --------------------------------------------------------
 
@@ -885,7 +902,7 @@ ALTER TABLE `vehicle_types`
 -- AUTO_INCREMENT for table `activity_log`
 --
 ALTER TABLE `activity_log`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT for table `balances`
@@ -909,13 +926,13 @@ ALTER TABLE `customers`
 -- AUTO_INCREMENT for table `fund_transfers`
 --
 ALTER TABLE `fund_transfers`
-  MODIFY `fund_id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `fund_id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `manifests`
 --
 ALTER TABLE `manifests`
-  MODIFY `manifest_id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `manifest_id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `migrations`
@@ -927,13 +944,13 @@ ALTER TABLE `migrations`
 -- AUTO_INCREMENT for table `negotiations`
 --
 ALTER TABLE `negotiations`
-  MODIFY `negotiation_id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `negotiation_id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `payments`
 --
 ALTER TABLE `payments`
-  MODIFY `payment_id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `payment_id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `permissions`
@@ -951,25 +968,25 @@ ALTER TABLE `roles`
 -- AUTO_INCREMENT for table `rounds`
 --
 ALTER TABLE `rounds`
-  MODIFY `round_id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `round_id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `user_id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
+  MODIFY `user_id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
 
 --
 -- AUTO_INCREMENT for table `vehicles`
 --
 ALTER TABLE `vehicles`
-  MODIFY `vehicle_id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `vehicle_id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `vehicle_operators`
 --
 ALTER TABLE `vehicle_operators`
-  MODIFY `operator_id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `operator_id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `vehicle_owner`
