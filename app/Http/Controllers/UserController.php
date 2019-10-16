@@ -44,7 +44,7 @@ class UserController extends Controller
 
     public function restore($user_id)
     {
-        if (Gate::allows('Administrator', auth()->user())) {
+        if (Gate::allows('Administrator', auth()->user())) {//this can only be access by an admin
             User::withTrashed()
             ->where('user_id', $user_id)
             ->restore();

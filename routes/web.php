@@ -61,6 +61,7 @@ Route::group(["prefix" => "administrator", "middleware" => "verified"], function
         Route::post("/update_profile/{user_id}", "UserController@updateprofile")->name("profile.update");
     });
 
+    //the above route will work, only admin an access d routec
 
     Route::group(["prefix" => "vehicle_types"], function(){
         Route::get("/index", "VehicleTypeController@index")->name("vehicle.type.create");

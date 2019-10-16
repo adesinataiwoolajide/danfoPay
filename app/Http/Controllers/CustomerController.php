@@ -99,6 +99,10 @@ class CustomerController extends Controller
     public function store(Request $request)
     {
         if (Gate::allows('Administrator', auth()->user()) OR (Auth::hasRole('Customer'))) {
+
+            //Accessed by CUstomer and Admin Alone
+            //did u get ?  i understan you.
+            // Sha note that accessing a route that has middleware constraint will need u to get tokens based on the role.
             $this->validate($request, [
                 'name' => 'required|min:1|max:255|',
                 'email' => 'required||min:1|max:255|unique:customers',
