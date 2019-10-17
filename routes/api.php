@@ -56,19 +56,19 @@ Route::group(["prefix" => "v1/"], function(){
             Route::get("/renegotiate/{negotiation_id}", "API\NegotiationAPIController@renogotiate")->name("api.negotiation.renogotiate");
             Route::get("/pay/{negotiation_id}", "API\NegotiationAPIController@pay")->name("api.negotiation.pay");
         });
-    
+
         Route::group(["prefix" => "manifest"], function(){
             Route::get('/', 'API\ManifestAPIController@index')->name('api.manifest.index');
         });
     });
     Route::group(['middleware' => ['auth:api', 'role:Customer']], function () {
-       
+
         Route::group(["prefix" => "customer"], function(){
             Route::post("/save", "API\CustomerAPIController@store")->name("api.customer.save");
             Route::get("/{customer_id}", "API\CustomerAPIController@show")->name("api.customer.show");
             Route::get("/edit/{email}", "API\CustomerAPIController@edit")->name("api.customer.edit");
            // Route::get("delete/{email}", "API\CustomerAPIController@destroy")->name("api.customer.delete");
-            Route::post("/update/{customer_id}", "API\CustomerAPIController@update")->name("api.customer.update");  
+            Route::post("/update/{customer_id}", "API\CustomerAPIController@update")->name("api.customer.update");
         });
 
         Route::group(["prefix" => "wallet"], function(){
@@ -93,14 +93,23 @@ Route::group(["prefix" => "v1/"], function(){
     });
     Route::group(['middleware' => ['auth:api', 'role:Owner']], function () {
 
-        Route::group(["prefix" => "owners"], function(){
+        Route::group(["prefix" => "owner"], function(){
             Route::get("/{email}", "API\OwnerAPIController@show")->name("api.owner.show");
             Route::get("edit/{email}", "API\OwnerAPIController@edit")->name("api.owner.edit");
             Route::get("delete/{email}", "API\OwnerAPIController@destroy")->name("api.owner.delete");
             Route::post("/update/{email}", "API\OwnerAPIController@update")->name("api.owner.update");
             Route::post("/save", "API\OwnerAPIController@store")->name("api.owner.save");
-            Route::get("/vehicle/{owner_number}", "VehicleController@create")->name("api.owner.vehicle");
-            Route::get("/operator/{owner_number}", "VehicleOperatorController@create")->name("api.operator.create");
+            Route::get("/vehicle/{owner_number}", "API\VehicleAPIController@create")->name("api.owner.vehicle");
+            Route::get("/operator/{owner_number}", "API\VehicleOperatorController@create")->name("api.operator.create");
+        });
+
+        Route::group(["prefix" => "vehicle"], function(){
+            Route::get("/{vehicle_id}", "API\VehicleAPIController@edit")->name("api.vehicle.edit");
+            Route::post("/save", "API\VehicleAPIController@store")->name("api.vehicle.save");
+            Route::get("/", "API\VehicleAPIController@index")->name("api.vehicle.index");
+            Route::get("/operator/{vehicle_id}", "API\OperatorAPIController@create")->name("api.add.operator");
+            Route::post("/update/{vehicle_id}", "API\VehicleAPIController@update")->name("api.vehicle.update");
+            Route::get("/delete/{vehicle_id}", "API\VehicleAPIController@destroy")->name("api.vehicle.delete");
         });
 
     });
@@ -115,7 +124,7 @@ Route::group(["prefix" => "v1/"], function(){
 
     });
 
-    
+
 });
 
 Route::fallback(function(){

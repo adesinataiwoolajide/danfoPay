@@ -11,6 +11,12 @@ use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Auth;
 class VehicleAPIController extends ApiController
 {
+    protected $model;
+    public function __construct(Vehicle $vehicle)
+    {
+       // set the model
+       $this->model = new VehicleRepository($vehicle);
+    }
     /**
      * Display a listing of the resource.
      *
@@ -99,6 +105,12 @@ class VehicleAPIController extends ApiController
         }
     }
 
+    public function generateRandomHash($length)
+    {
+        return strtoupper(substr(md5(uniqid(rand())), 0, (-32 + $length)));
+    }
+
+
     /**
      * Store a newly created resource in storage.
      *
@@ -178,19 +190,20 @@ class VehicleAPIController extends ApiController
             $owner = VehicleOwner::where('owner_id', $vehicle->owner_id)->first();
             $type = VehicleType::orderBy('type_name', 'asc')->get();
             $car = Vehicle::orderBy('vehicle_id', 'desc')->get();
-            return view('administrator.vehicles.edit')->with([
-                'type' => $type,
-                'vehicle' => $vehicle,
-                'owner' => $owner,
-                'car' => $car,
-            ]);
+            // return view('administrator.vehicles.edit')->with([
+            //     'type' => $type,
+            //     'vehicle' => $vehicle,
+            //     'owner' => $owner,
+            //     'car' => $car,
+            // ]);
 
             return response()->json([
                 'error' => true,
-                'message' => 'Edit Vehicle',
+                'message' => 'View Vehicle',
                 'data' => [
-                    'type' => $type,
                     'vehicle' => $vehicle,
+                    'type' => $type,
+
                     'owner' => $owner,
                     'car' => $car,
                 ],
@@ -264,7 +277,7 @@ class VehicleAPIController extends ApiController
      */
     public function destroy($vehicle_id)
     {
-        if(auth()->user()->hasPermissionTo('Delete Vehicle') OR
+        if(auth()->user()->hasRole('Owner') OR
             (Gate::allows('Administrator', auth()->user()))){
             $vehicle =  $this->model->show($vehicle_id);
 

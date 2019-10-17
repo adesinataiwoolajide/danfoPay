@@ -49,7 +49,7 @@ class NegotiationAPIController extends ApiController
             $own = VehicleOperator::where('email', Auth::user()->email)->first();
             $vehicle_id = $own->vehicle_id;
             $negotiation =Negotiation::where('vehicle_id', $vehicle_id)->orderBy('negotiation_id','desc')->get();
-            
+
             return response()->json([
                 'success' => true,
                 'message' => $email.' List of Negotiations',
@@ -64,10 +64,10 @@ class NegotiationAPIController extends ApiController
             $own = VehicleOwner::where('email', Auth::user()->email)->first();
             $owner_id = $own->owner_id;
             $car = Vehicle::where('owner_id', $owner_id)->orderBy('vehicle_id', 'desc')->get();
-            return view("administrator.negotiations.index")->with([
-                'car' => $car,
-                'own' => $own,
-            ]);
+            // return view("administrator.negotiations.index")->with([
+            //     'car' => $car,
+            //     'own' => $own,
+            // ]);
 
             return response()->json([
                 'success' => true,
@@ -143,15 +143,15 @@ class NegotiationAPIController extends ApiController
 
                     return response()->json([
                         'success' => true,
-                        'message' => "You Have Added Your Negotiation For ".$request->input("vehicle_number"). 
+                        'message' => "You Have Added Your Negotiation For ".$request->input("vehicle_number").
                         " Successfully, Please Kindle Tell the Operator to confirm your negotiation",
                         'data' => [
-                            
+
                         ],
-        
+
                     ], 200);
                 }else{
-                   
+
                     return response()->json([
                         'error' => true,
                         'message' => 'Network Failure, Please Try Again Later',
@@ -269,14 +269,14 @@ class NegotiationAPIController extends ApiController
                 ]);
 
                 if($this->model->update($data, $negotiation_id)){
-                   
+
                     return response()->json([
                         'success' => true,
                         'message' => 'You Have Updated The Nogotiation Successfully',
                         'data' => [],
                     ], 400);
                 }else{
-                    
+
                     return response()->json([
                         'error' => true,
                         'message' => 'Network Failure, Please Try Again Later',

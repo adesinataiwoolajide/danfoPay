@@ -51,10 +51,10 @@ class ManifestAPIController extends ApiController
             $own = VehicleOperator::where('email', Auth::user()->email)->first();
             $vehicle_id = $own->vehicle_id;
             $manifest =Manifest::where('vehicle_id', $vehicle_id)->orderBy('manifest_id','desc')->get();;
-            
+
             return response()->json([
                 'success' => true,
-                'message' => $email.' List of Manifests',
+                'message' => Auth::user()->email.' List of Manifests',
                 'data' => [
                     'manifest' => $manifest,
                     'own' => $own
@@ -69,14 +69,14 @@ class ManifestAPIController extends ApiController
 
             return response()->json([
                 'success' => true,
-                'message' => $email.' List of Manifests',
+                'message' => Auth::user()->email.' List of Manifests',
                 'data' => [
                     'car' => $car,
                     'own' => $own,
                 ],
 
             ], 200);
-            
+
         }else{
             return response()->json([
                 'error' => true,
