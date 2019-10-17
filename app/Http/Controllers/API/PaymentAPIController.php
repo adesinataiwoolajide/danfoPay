@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Unicodeveloper\Paystack\Paystack;
 use App\{User, Payments, Balances, CheetahPay};
 use DB;
 use Illuminate\Support\Facades\Auth;

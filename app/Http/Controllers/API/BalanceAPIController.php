@@ -35,7 +35,6 @@ class BalanceAPIController extends ApiController
                 'message' => Auth::user()->name. ' Customer Balance',
                 'data' => [
                     'balance' => $balance,
-                    'user_id' => $user_id,
                 ],
             ], 200);
         }else{
@@ -63,7 +62,6 @@ class BalanceAPIController extends ApiController
                 'message' => Auth::user()->name. ' Customer Single Balance',
                 'data' => [
                     'list' => $list,
-                    'user_id' => $user_id,
                 ],
             ], 200);
         }else{

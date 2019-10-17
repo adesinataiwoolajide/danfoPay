@@ -39,7 +39,7 @@ class ManifestAPIController extends ApiController
 
             return response()->json([
                 'success' => true,
-                'message' => $request->input("email").' List of Manifests',
+                'message' => $email.' List of Manifests',
                 'data' => [
                     'manifest' => $manifest,
                     'customer' => $customer
@@ -54,7 +54,7 @@ class ManifestAPIController extends ApiController
             
             return response()->json([
                 'success' => true,
-                'message' => $request->input("email").' List of Manifests',
+                'message' => $email.' List of Manifests',
                 'data' => [
                     'manifest' => $manifest,
                     'own' => $own
@@ -69,7 +69,7 @@ class ManifestAPIController extends ApiController
 
             return response()->json([
                 'success' => true,
-                'message' => $request->input("email").' List of Manifests',
+                'message' => $email.' List of Manifests',
                 'data' => [
                     'car' => $car,
                     'own' => $own,

@@ -187,9 +187,18 @@ class OwnerAPIController extends ApiController
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($email)
     {
-        //
+        $user = User::where('user_id', Auth::user()->user_id)->first();
+        $own = VehicleOwner::where('email', Auth::user()->email)->get();
+        return response()->json([
+            'success' => true,
+            'message' => 'Owner Details',
+            'data' => [
+                'own' => $own
+            ],
+        ], 200);
+    
     }
 
     /**

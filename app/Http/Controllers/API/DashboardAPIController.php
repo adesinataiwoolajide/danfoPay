@@ -4,8 +4,13 @@ namespace App\Http\Controllers\API;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-
-class DashboardAPIController extends Controller
+use Illuminate\Support\Facades\Auth;
+use Spatie\Permission\Models\Role;
+use Spatie\Permission\Models\Permission;
+use App\{User, Balances, Customer, FundTransfer,Payments, Vehicle, VehicleOperator, VehicleOwner, VehicleType, BulkSms};
+use Spatie\Activitylog\Models\Activity;
+use Illuminate\Support\Facades\Gate;
+class DashboardAPIController extends ApiController
 {
     /**
      * Display a listing of the resource.

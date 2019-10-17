@@ -31,7 +31,7 @@ class FundTransferAPIController extends ApiController
             $customer =Customer::where('email', Auth::user()->email)->first();
             $phone_number = $customer->phone_number;
             $transfer = FundTransfer::where('sender', $phone_number)->orWhere('reciever', $phone_number)->get();
-            $single =Balances::where('user_id', Auth::user()->user_id)->first();
+            $single_balance =Balances::where('user_id', Auth::user()->user_id)->first();
         
             return response()->json([
                 'success' => true,
@@ -39,7 +39,7 @@ class FundTransferAPIController extends ApiController
                 'data' => [
                     "balance" => $balance,
                     "transfer" => $transfer,
-                    "single" => $single,
+                    "single_balance" => $single_balance,
                     "customer" => $customer,
                 ],
             ], 200);
@@ -163,9 +163,20 @@ class FundTransferAPIController extends ApiController
                             'customer_code' => $number,
                         ]);
                         if($adding->save() AND ($fund->save())){
-                            return redirect()->route("fund.transfer.index")->with("success", "You Have Credited $recipient Wallet  with $debit Successfully");
+                            return response()->json([
+                                'success' => true,
+                                'message' => "ou Have Credited $recipient Wallet  with $debit Successfully",
+                                'data' => [],
+                            ], 200);
+                            //return redirect()->route("fund.transfer.index")->with("success", "You Have Credited $recipient Wallet  with $debit Successfully");
                         }else{
-                            return redirect()->back()->with("error", "Network Failure, Please Try Again Later");
+                           // return redirect()->back()->with("error", "Network Failure, Please Try Again Later");
+
+                            return response()->json([
+                                'error' => true,
+                                'message' => "Network Failure",
+                                'data' => [],
+                            ], 400);
                         }
                     }
                 }else {

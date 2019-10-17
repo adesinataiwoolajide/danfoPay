@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Repositories\NegotiationRepository;
 use Illuminate\Support\Facades\Gate;
-class NegotiationAPIController extends Controller
+class NegotiationAPIController extends ApiController
 {
     protected $model;
     public function __construct(Negotiation $negotiation)
@@ -37,7 +37,7 @@ class NegotiationAPIController extends Controller
 
             return response()->json([
                 'success' => true,
-                'message' => $request->input("email").' List of Negotiationa',
+                'message' => $email.' List of Negotiationa',
                 'data' => [
                     'negotiation' => $negotiation,
                     'customer' => $customer
@@ -52,7 +52,7 @@ class NegotiationAPIController extends Controller
             
             return response()->json([
                 'success' => true,
-                'message' => $request->input("email").' List of Negotiations',
+                'message' => $email.' List of Negotiations',
                 'data' => [
                     'negotiation' => $negotiation,
                     'own' => $own,
@@ -71,7 +71,7 @@ class NegotiationAPIController extends Controller
 
             return response()->json([
                 'success' => true,
-                'message' => $request->input("email").' List of Negotiations',
+                'message' => Auth::user()->email.' List of Negotiations',
                 'data' => [
                     'car' => $car,
                     'own' => $own,
@@ -138,8 +138,8 @@ class NegotiationAPIController extends Controller
                 ]);
 
                 if($this->model->create($data)){
-                    return redirect()->back()->with("success", "You Have Added Your Negotiation For "
-                    .$request->input("vehicle_number"). " Successfully, Please Kindle Tell the Operator to confirm your negotiation");
+                    // return redirect()->back()->with("success", "You Have Added Your Negotiation For "
+                    // .$request->input("vehicle_number"). " Successfully, Please Kindle Tell the Operator to confirm your negotiation");
 
                     return response()->json([
                         'success' => true,

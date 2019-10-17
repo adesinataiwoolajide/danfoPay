@@ -4,7 +4,11 @@ namespace App\Exceptions;
 
 use Exception;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
-
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
+use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
+use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
 class Handler extends ExceptionHandler
 {
     /**
@@ -46,6 +50,64 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $exception)
     {
+        if ($exception instanceof ModelNotFoundException) {
+            return response()->json([
+                'error' => [
+                    'status' =>  404,
+                    'message' =>  'Item not found.'
+                ]
+            ], 404);
+        }
+    
+        if ($exception instanceof NotFoundHttpException) {
+            return response()->json([
+                'error' => [
+                    'status' =>  404,
+                    'message' =>  'Resource not found.'
+                ]
+            ], 404);
+        }
+    
+        if ($exception instanceof MethodNotAllowedHttpException) {
+            return response()->json([
+                'error' => [
+                    'status' =>  405,
+                    'message' =>  'Method not allowed.'
+                ]
+            ], 405);
+        }
+
+        if ($exception instanceof UnauthorizedHttpException) {
+            return response()->json([
+                'error' => [
+                    'status' =>  401,
+                    'message' =>  'Unauthorized. Full authentication is required to access this resource.'
+                ]
+            ], 401);
+        }
+
+        if ($exception instanceof AccessDeniedHttpException) {
+            return response()->json([
+                'error' => [
+                    'status' =>  403,
+                    'message' =>  'Forbidden, Access Denied.'
+                ]                
+            ], 403);
+        }
+
+        if ($exception instanceof HttpException) {
+            return response()->json([
+                'error' => 500,
+                'message' => 'Internal Server error.'
+            ], 500);
+        }
+
+        if ($exception instanceof \Spatie\Permission\Exceptions\UnauthorizedException) {
+            return response()->json([
+                'responseMessage' => 'You do not have the required authorization.',
+                'responseStatus'  => 403,
+            ]);
+        }
         return parent::render($request, $exception);
     }
 }

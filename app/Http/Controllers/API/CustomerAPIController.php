@@ -194,11 +194,11 @@ class CustomerAPIController extends ApiController
      *     @OA\Response(response="401", description="Unauthenticated. Token needed"),
      * )
      */
-    public function show($email)
+    public function show($customer_id)
     {
-        $customer = Customer::where('email', $email)->first();
+        $customer = Customer::where('customer_id', $customer_id)->first();
 
-        $customer_id = $customer->customer_id;
+        $email = $customer->email;
         $cust= $this->model->show($customer_id);
         $user_roles = Role::all();
         if(!empty($customer)){
@@ -321,7 +321,7 @@ class CustomerAPIController extends ApiController
      *     @OA\Response(response="400", description="Bad Request"),
      * )
      */
-    public function update(Request $request, $email)
+    public function update(Request $request, $customer_id)
     {
         $this->validate($request, [
             'name' => 'required|min:1|max:255|',
@@ -329,9 +329,11 @@ class CustomerAPIController extends ApiController
             'phone_number' => 'required|min:1|max:255'
         ]);
 
-        $customer = Customer::where('email', $email)->first();
+        $customer = Customer::where('customer_id', $customer_id)->first();
+        $email = $customer->email;
         $user = User::where('email', $email)->first();
         $customer_id = $customer->customer_id;
+        
         $user_id = $user->user_id;
 
         $customer_number = $request->input("customer_number");

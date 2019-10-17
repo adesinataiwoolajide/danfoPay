@@ -30,39 +30,68 @@ Route::get('/test', function(){
 Route::group(["prefix" => "v1/"], function(){
 
     Route::group(["prefix" => "auth"], function(){
-        Route::post('/login', 'API\AuthAPIController@login');
+        Route::post('/signin', 'API\AuthAPIController@login');
         Route::post('password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail');
         Route::post('password/reset', 'Auth\ResetPasswordController@reset');
     });
-    Route::group(['middleware' => ['auth:api', 'role:customer']], function () {
-        Route::group(["prefix" => "customers"], function(){
-            Route::get("/{email}", "API\CustomerAPIController@show")->name("api.customer.show");
-            Route::get("/edit/{email}", "API\CustomerAPIController@edit")->name("api.customer.edit");
-            Route::get("delete/{email}", "API\CustomerAPIController@destroy")->name("api.customer.delete");
-            Route::post("/update/{email}", "API\CustomerAPIController@update")->name("api.customer.update");
+
+    Route::group(['middleware' => ['auth:api']], function() {
+        Route::group(["prefix" => "auth"], function(){
+            Route::get('/signout', 'API\AuthAPIController@logout');
+        });
+    });
+
+    Route::group(['middleware' => ['auth:api', 'role:Customer|Owner|Operator']], function () {
+        Route::group(["prefix" => "dashboard"], function(){
+            Route::get("/", "API\DashboardAPIController@index")->name("api.dashboard.index");
+        });
+
+        Route::group(["prefix" => "negotiation"], function(){
+            Route::get('/', 'API\NegotiationAPIController@index')->name('api.negotiation.index');
+            Route::post('/save', 'API\NegotiationAPIController@store')->name('api.negotiation.save');
+            Route::get("/edit/{negotiation_id}", "API\NegotiationAPIController@edit")->name("api.negotiation.edit");
+            Route::post("/update/{negotiation_id}", "API\NegotiationAPIController@update")->name("api.negotiation.update");
+            Route::get("/accept/{negotiation_id}", "API\NegotiationAPIController@accept")->name("api.negotiation.accept");
+            Route::get("/decline/{negotiation_id}", "API\NegotiationAPIController@decline")->name("api.negotiation.decline");
+            Route::get("/renegotiate/{negotiation_id}", "API\NegotiationAPIController@renogotiate")->name("api.negotiation.renogotiate");
+            Route::get("/pay/{negotiation_id}", "API\NegotiationAPIController@pay")->name("api.negotiation.pay");
+        });
+    
+        Route::group(["prefix" => "manifest"], function(){
+            Route::get('/', 'API\ManifestAPIController@index')->name('api.manifest.index');
+        });
+    });
+    Route::group(['middleware' => ['auth:api', 'role:Customer']], function () {
+       
+        Route::group(["prefix" => "customer"], function(){
             Route::post("/save", "API\CustomerAPIController@store")->name("api.customer.save");
-
+            Route::get("/{customer_id}", "API\CustomerAPIController@show")->name("api.customer.show");
+            Route::get("/edit/{email}", "API\CustomerAPIController@edit")->name("api.customer.edit");
+           // Route::get("delete/{email}", "API\CustomerAPIController@destroy")->name("api.customer.delete");
+            Route::post("/update/{customer_id}", "API\CustomerAPIController@update")->name("api.customer.update");  
         });
+
         Route::group(["prefix" => "wallet"], function(){
-            Route::post('/fund', 'PaymentController@redirectToGateway')->name('api.fund.pay');
+            Route::post('/fund', 'API\PaymentAPIController@redirectToGateway')->name('api.fund.pay');
         });
-        Route::group(["prefix" => "balances"], function(){
-            Route::get('/index', 'BalanceController@index')->name('balance.index');
-            Route::get('/payment/callback', 'PaymentController@handleGatewayCallback')->name('api.fund.wallet');
-            Route::post('/card/callback', 'PaymentController@card')->name('api.fund.card');
-        });
-        Route::group(["prefix" => "transactions"], function(){
-            Route::get('/index', 'BalanceController@singleTransaction')->name('api.payment.index');
 
+        Route::group(["prefix" => "balance"], function(){
+            Route::get('/', 'API\BalanceAPIController@index')->name('api.balance.index');
+            Route::get('/payment/callback', 'API\PaymentAPIController@handleGatewayCallback')->name('api.fund.wallet');
+            Route::post('/card/callback', 'API\PaymentAPIController@card')->name('api.fund.card');
         });
+
+        Route::group(["prefix" => "transaction"], function(){
+            Route::get('/', 'API\BalanceAPIController@singleTransaction')->name('api.payment.index');
+        });
+
         Route::group(["prefix" => "fund_transfer"], function(){
-            Route::get('/create/', 'FundTransferController@create')->name('api.fund.transfer.create');
-            Route::get('/initiate', 'FundTransferController@index')->name('api.fund.transfer.index');
-            Route::post('/save', 'FundTransferController@store')->name('api.fund.transfer.save');
+            Route::get('/', 'API\FundTransferAPIController@index')->name('api.fund.transfer.index');
+            Route::post('/save', 'API\FundTransferAPIController@store')->name('api.fund.transfer.save');
 
         });
     });
-    Route::group(['middleware' => ['auth:api', 'role:owner']], function () {
+    Route::group(['middleware' => ['auth:api', 'role:Owner']], function () {
 
         Route::group(["prefix" => "owners"], function(){
             Route::get("/{email}", "API\OwnerAPIController@show")->name("api.owner.show");
@@ -75,7 +104,7 @@ Route::group(["prefix" => "v1/"], function(){
         });
 
     });
-    Route::group(['middleware' => ['auth:api', 'role:operator']], function () {
+    Route::group(['middleware' => ['auth:api', 'role:Operator']], function () {
 
         Route::post("/save", "API\OperatorAPIController@store")->name("api.operator.save");
         Route::get("/index", "API\OperatorAPIController@index")->name("api.operator.index");
@@ -86,54 +115,10 @@ Route::group(["prefix" => "v1/"], function(){
 
     });
 
-    Route::group(['middleware' => ['auth:api']], function() {
-        Route::group(["prefix" => "auth"], function(){
-            Route::get('/logout', 'API\AuthAPIController@logout');
-        });
-    });
+    
 });
 
 Route::fallback(function(){
     return response()->json([
-        'message' => 'Requested Resource Not Found. Contact tadesina@jethroltd.com for more info'], 404);
+        'message' => 'Requested Resource Not Found. Please Contact tadesina@jethroltd.com for more info'], 404);
 });
-
-
-// Route::group(["prefix" => "v1/"], function(){
-
-//     Route::group(["prefix" => "customers"], function(){
-//         Route::get("/", "API\CustomerAPIController@index")->name("api.customer.index");
-//         Route::get("/{email}", "API\CustomerAPIController@show")->name("api.customer.show");
-//         Route::get("/edit/{email}", "API\CustomerAPIController@edit")->name("api.customer.edit");
-//         Route::get("delete/{email}", "API\CustomerAPIController@destroy")->name("api.customer.delete");
-//         Route::post("/update/{email}", "API\CustomerAPIController@update")->name("api.customer.update");
-//         Route::post("/save", "API\CustomerAPIController@store")->name("api.customer.save");
-
-//     });
-//     Route::group(["prefix" => "owners"], function(){
-//         Route::get("/", "API\OwnerAPIController@index")->name("api.owner.index");
-//         Route::get("/{email}", "API\OwnerAPIController@show")->name("api.owner.show");
-//         Route::get("edit/{email}", "API\OwnerAPIController@edit")->name("api.owner.edit");
-//         Route::get("delete/{email}", "API\OwnerAPIController@destroy")->name("api.owner.delete");
-//         Route::post("/update/{email}", "API\OwnerAPIController@update")->name("api.owner.update");
-//         Route::post("/save", "API\OwnerAPIController@store")->name("api.owner.save");
-//     });
-
-//     Route::group(["prefix" => "auth"], function(){
-//         Route::post("/custromer_reg", "API\CustomerAPIController@store")->name("api.customer.reg");
-//         Route::post("/owner_reg", "API\OwnerAPIController@store")->name("api.owner.reg");
-//         Route::post('/login', 'API\AuthAPIController@login');
-//         //Route::get('/logout', 'API\AuthAPIController@logout');
-//         Route::post('password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail');
-//         Route::post('password/reset', 'Auth\ResetPasswordController@reset');
-//     });
-
-//     Route::group(['middleware' => ['auth:api']], function() {
-//         Route::group(["prefix" => "auth"], function(){
-//             Route::get('/logout', 'API\AuthAPIController@logout');
-//         });
-//     });
-
-// });
-
-

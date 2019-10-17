@@ -173,6 +173,7 @@ class AuthAPIController extends Controller
 
     public function logout(Request $request)
     {
+        //this is logout
         $request->user()->token()->revoke();
         return response()->json([
             'message' => 'User logged out successfully.'
