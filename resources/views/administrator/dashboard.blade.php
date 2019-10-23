@@ -239,6 +239,80 @@
                             </div>
                         </div>
                     </div>
+                    <div class="card mt-3 gradient-forest">
+                        <div class="card-content">
+                            <div class="row row-group m-0"  style="cursor: pointer">
+                                <div class="col-12 col-lg-6 col-xl-3 border-white-2" onclick="location.href='{{route('manifest.index')}}'">
+                                    <div class="card-body">
+                                        <div class="media align-items-center">
+                                            <div class="media-body text-left">
+                                                <h4 class="mb-0 text-white">{{count($manifest) }}</h4>
+                                                <span class="text-white">Customer <br>Manifest</span>
+                                            </div>
+                                            <div class="align-self-center w-icon">
+                                                <i class="icon-basket-loaded text-white"></i></div>
+                                        </div>
+                                        <div class="progress-wrapper mt-3">
+                                            <div class="progress" style="height:5px;">
+                                                <div class="progress-bar" style="width:50%"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-lg-6 col-xl-3 border-white-2" onclick="location.href='negotiation.index'">
+                                    <div class="card-body">
+                                        <div class="media align-items-center">
+                                            <div class="media-body text-left">
+                                                <h4 class="mb-0 text-white">{{count($negotiation) }}</h4>
+                                                <span class="text-white">Customer<br> Negotiation</span>
+                                            </div>
+                                            <div class="align-self-center w-icon">
+                                                <i class="icon-user text-white"></i></div>
+                                        </div>
+                                        <div class="progress-wrapper mt-3">
+                                            <div class="progress" style="height:5px;">
+                                                <div class="progress-bar" style="width:50%"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-lg-6 col-xl-3 border-white-2" onclick="">
+                                    <div class="card-body">
+                                        <div class="media align-items-center">
+                                            <div class="media-body text-left">
+                                                <h4 class="mb-0 text-white">0</h4>
+                                                <span class="text-white"> Fare  <br>Payment</span>
+                                            </div>
+                                            <div class="align-self-center w-icon">
+                                                <i class="icon-pie-chart text-white"></i></div>
+                                        </div>
+                                        <div class="progress-wrapper mt-3">
+                                            <div class="progress" style="height:5px;">
+                                                <div class="progress-bar" style="width:50%"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-lg-6 col-xl-3 border-white-2" onclick="location.href='round.index'">
+                                    <div class="card-body">
+                                        <div class="media align-items-center">
+                                            <div class="media-body text-left">
+                                                <h4 class="mb-0 text-white">{{count($round) }}</h4>
+                                                <span class="text-white">Vehicle <br> Rounds </span>
+                                            </div>
+                                            <div class="align-self-center w-icon">
+                                                <i class="icon-bell text-white"></i></div>
+                                        </div>
+                                        <div class="progress-wrapper mt-3">
+                                            <div class="progress" style="height:5px;">
+                                                <div class="progress-bar" style="width:50%"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 @elseif (auth()->user()->hasRole('Customer'))
                     <div class="row mt-3">
 
@@ -302,15 +376,15 @@
                     <div class="card mt-3 gradient-forest">
                         <div class="card-content">
                             <div class="row row-group m-0"  style="cursor: pointer">
-                                <div class="col-12 col-lg-6 col-xl-3 border-white-2" onclick="location.href=''">
+                                <div class="col-12 col-lg-6 col-xl-3 border-white-2" onclick="location.href='{{route('negotiation.index')}}'">
                                     <div class="card-body">
                                         <div class="media align-items-center">
                                             <div class="media-body text-left">
-                                                <h4 class="mb-0 text-white">0</h4>
-                                                <span class="text-white">Total Money</span>
+                                                <h4 class="mb-0 text-white">{{count($negotiation)}}</h4>
+                                                <span class="text-white">Negotiation</span>
                                             </div>
                                             <div class="align-self-center w-icon">
-                                                <i class="icon-user text-white"></i></div>
+                                                <i class="fa fa-handshake-o text-white"></i></div>
                                         </div>
                                         <div class="progress-wrapper mt-3">
                                             <div class="progress" style="height:5px;">
@@ -319,15 +393,15 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-12 col-lg-6 col-xl-3 border-white-2" onclick="location.href=''">
+                                <div class="col-12 col-lg-6 col-xl-3 border-white-2" onclick="location.href='{{route('manifest.index')}}'">
                                     <div class="card-body">
                                         <div class="media align-items-center">
                                             <div class="media-body text-left">
-                                                <h4 class="mb-0 text-white">0</h4>
-                                                <span class="text-white">My Wallet</span>
+                                                <h4 class="mb-0 text-white">{{count($manifest)}}</h4>
+                                                <span class="text-white">Manifest</span>
                                             </div>
                                             <div class="align-self-center w-icon">
-                                                <i class="icon-basket-loaded text-white"></i></div>
+                                                <i class="icon-list text-white"></i></div>
                                         </div>
                                         <div class="progress-wrapper mt-3">
                                             <div class="progress" style="height:5px;">
@@ -336,15 +410,15 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-12 col-lg-6 col-xl-3 border-white-2" onclick="location.href=''">
+                                <div class="col-12 col-lg-6 col-xl-3 border-white-2" onclick="location.href='{{route('bulk-sms-index')}}'">
                                     <div class="card-body">
                                         <div class="media align-items-center">
                                             <div class="media-body text-left">
                                                 <h4 class="mb-0 text-white">0</h4>
-                                                <span class="text-white">My Transactions</span>
+                                                <span class="text-white">Messages</span>
                                             </div>
                                             <div class="align-self-center w-icon">
-                                                <i class="icon-pie-chart text-white"></i></div>
+                                                <i class="icon-envelope text-white"></i></div>
                                         </div>
                                         <div class="progress-wrapper mt-3">
                                             <div class="progress" style="height:5px;">

@@ -53,12 +53,12 @@
 
                                             <td>{{$y}}
                                                 @if (auth()->user()->hasPermissionTo('Restore Vehicle Type') OR
-                                                (Gate::allows('Administrator', auth()->user())))
-                                                <a href="{{route('vehicle.type.undelete', $types->type_id)}}"
-                                                    class="btn btn-danger"
-                                                    onclick="return(confirmToRestore());" >
-                                                <i class="fa fa-trash-o"></i></a>
-                                            @endif
+                                                    (Gate::allows('Administrator', auth()->user())))
+                                                    <a href="{{route('vehicle.type.undelete', $types->type_id)}}"
+                                                        class="btn btn-danger"
+                                                        onclick="return(confirmToRestore());" >
+                                                    <i class="fa fa-trash-o"></i></a>
+                                                @endif
                                             </td>
                                             <td>{{$types->type_name}}</td>
 

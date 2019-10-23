@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    
+
 <div class="clearfix"></div>
 <div class="content-wrapper">
     <div class="container-fluid">
@@ -23,7 +23,7 @@
                 @include('partials._message')
                 <div class="card">
                     @if(count($user) ==0)
-                        <div class="card-header" align="center" style="color: red"><i class="fa fa-table"></i> 
+                        <div class="card-header" align="center" style="color: red"><i class="fa fa-table"></i>
                             The List is Empty
                         </div>
 
@@ -52,26 +52,26 @@
                                         $y=1; ?>
                                         @foreach($user as $users)
                                         <tr>
-                                        
+
                                             <td>{{$y}}
                                                 <a href="{{route('user.undelete', $users->user_id)}}"
                                                     onclick="return(confirmToRestore());" class="btn btn-success">
                                                     <i class="fa fa-trash-o"></i>Restore
-                                                </a> 
+                                                </a>
                                             </td>
-                                            <td>{{$users->name}}</td> 
-                                            <td>{{$users->email}}</td> 
-                                            <td>{{$users->role}}</td> 
-                                            
+                                            <td>{{$users->name}}</td>
+                                            <td>{{$users->email}}</td>
+                                            <td>{{$users->role}}</td>
+
                                         </tr><?php $y++; ?>
                                     @endforeach
                                     </tbody>
-                                    
+
                                 </table>
                             </div>
                         </div>
                     @endif
-                    
+
                 </div>
             </div>
         </div>

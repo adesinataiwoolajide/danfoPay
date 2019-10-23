@@ -22,22 +22,22 @@ Route::get("/logout", "AdministratorController@logout")->name("admin.logout");
 Route::get('/password/reset/{token}', 'Auth\ResetPasswordController@showResetFor');
 
 
-Route::group(["prefix" => "api/v1/"], function(){
+// Route::group(["prefix" => "api/v1/"], function(){
 
-    Route::group(["prefix" => "users"], function(){
-        Route::get("/", "APIUserController@index")->name("user.all.api");
-        Route::get("/{user_id}", "APIUserController@show")->name("user.single.api");
-        Route::get("/{role}", "APIUserController@userCategory")->name("user.category.api");
-    });
+//     Route::group(["prefix" => "users"], function(){
+//         Route::get("/", "APIUserController@index")->name("user.all.api");
+//         Route::get("/{user_id}", "APIUserController@show")->name("user.single.api");
+//         Route::get("/{role}", "APIUserController@userCategory")->name("user.category.api");
+//     });
 
-    Route::group(["prefix" => "vehicle_types"], function(){
-        Route::get("/", "APIVehicleTypeController@index")->name("vehicle..all.api");
-        Route::post("/create", "APIVehicleTypeController@store")->name("vehicle..store.api");
-        Route::get("/{user_id}", "APIVehicleTypeController@show")->name("vehicle.type.single.api");
-        Route::get("delete/{user_id}", "APIVehicleTypeController@destroy")->name("vehicle.type.delete.api");
+//     Route::group(["prefix" => "vehicle_types"], function(){
+//         Route::get("/", "APIVehicleTypeController@index")->name("vehicle..all.api");
+//         Route::post("/create", "APIVehicleTypeController@store")->name("vehicle..store.api");
+//         Route::get("/{user_id}", "APIVehicleTypeController@show")->name("vehicle.type.single.api");
+//         Route::get("delete/{user_id}", "APIVehicleTypeController@destroy")->name("vehicle.type.delete.api");
 
-    });
-});
+//     });
+// });
 
 
 

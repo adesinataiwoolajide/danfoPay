@@ -32,10 +32,7 @@ class RoundAPIController extends ApiController
             $own = VehicleOperator::where('email', Auth::user()->email)->first();
             $vehicle_id = $own->vehicle_id;
             $round =Rounds::where('vehicle_id', $vehicle_id)->get();
-            // return view("administrator.rounds.index")->with([
-            //     'round' => $round,
-            //     'own' => $own,
-            // ]);
+
             return response()->json([
                 'success' => true,
                 'message' => "List of Rounds",
@@ -45,20 +42,23 @@ class RoundAPIController extends ApiController
                 ],
             ], 200);
         }elseif(auth()->user()->hasRole('Owner')){
-            $own = VehicleOwner::where('email', Auth::user()->email)->first();
-            $owner_id = $own->owner_id;
-            $car = Vehicle::where('owner_id', $owner_id)->orderBy('vehicle_id', 'desc')->get();
-            // return view("administrator.rounds.index")->with([
-            //     'car' => $car,
-            //     'own' => $own,
-            // ]);
+            $owner = VehicleOwner::where('email', Auth::user()->email)->first();
+            $owner_id = $owner->owner_id;
+            $owner_car = Vehicle::where('owner_id', $owner_id)->orderBy('vehicle_id', 'desc')->get();
+            foreach($owner_car as $rounds){
+                $rounds->plate_number;
+                $rounds->vehicle_number;
+                $rounds->current_balance;
+            }
 
             return response()->json([
                 'success' => true,
                 'message' => "List of Round",
                 'data' => [
-                    'car' => $car,
-                    'own' => $own,
+                    'rounds' => $rounds,
+                    'owner_car' => $owner_car,
+                    'owner' => $owner,
+
                 ],
             ], 200);
 
@@ -70,7 +70,7 @@ class RoundAPIController extends ApiController
                 'data' => [],
             ], 400);
         }
-        
+
     }
 
     /**

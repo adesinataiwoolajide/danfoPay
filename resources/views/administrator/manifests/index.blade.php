@@ -150,8 +150,8 @@
                                                         @foreach (negoCustomer($manifests->customer_id) as $items)
                                                             <td>{{$items->email}}</td>
                                                         @endforeach
-                                                        @foreach (dOwnnerMoto($manifests->vehicle_id) as $item)
-                                                            <td>{{$item->plate_number}}</td>
+                                                        @foreach (dOwnnerMoto($manifests->vehicle_id) as $list)
+                                                            <td>{{$list->plate_number}}</td>
 
                                                         @endforeach
 

@@ -300,12 +300,12 @@ class NegotiationController extends Controller
         if(auth()->user()->hasRole('Customer')){
 
             $nego = $this->model->show($negotiation_id);
-            //dd($nego);
+
             $email = Auth::user()->email;
             $customer =Customer::where('email', $email)->first();
             $deed = Negotiation::where([
                 'customer_id' => $customer->customer_id,
-                'negotiation_id' => $negotiation_id,
+                'negotiation_id' => $nego->negotiation_id,
             ])->first();
 
             if(Balances::where('user_id', Auth::user()->user_id)->exists()){

@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
-use App\{User, Balances, Customer, FundTransfer,Payments, Vehicle, VehicleOperator, VehicleOwner, VehicleType, BulkSms};
+use App\{User, Balances, Customer, FundTransfer,Payments, Vehicle, VehicleOperator, VehicleOwner, VehicleType, BulkSms, Manifest, Negotiation, Rounds};
 use Spatie\Activitylog\Models\Activity;
 use Illuminate\Support\Facades\Gate;
 class AdministratorController extends Controller
@@ -112,7 +112,9 @@ class AdministratorController extends Controller
             $type = Vehicletype::orderBy('type_id', 'asc')->get();
             $owner = VehicleOwner::all();
             $bulksms = BulkSms::all();
-
+            $manifest = Manifest::all();
+            $negotiation = Negotiation::all();
+            $round = Rounds::all();
             return view("administrator.dashboard")->with([
                 "balance" => $balance,
                 "customer" => $customer,
@@ -123,7 +125,10 @@ class AdministratorController extends Controller
                 "operator" => $operator,
                 "type" => $type,
                 "owner" => $owner,
-                "bulksms" => $bulksms
+                "bulksms" => $bulksms,
+                "negotiation" => $negotiation,
+                "manifest" => $manifest,
+                "round" => $round
 
             ]);
         }elseif(auth()->user()->hasRole('Customer')){
@@ -134,6 +139,8 @@ class AdministratorController extends Controller
             $payment = Payments::where('user_id', Auth::user()->user_id)->get();
             $user = User::where('user_id', Auth::user()->user_id)->first();
             $single =Balances::where('user_id', Auth::user()->user_id)->first();
+            $manifest = Manifest::where('customer_id', $customer->customer_id)->get();
+            $negotiation = Negotiation::where('customer_id', $customer->customer_id)->get();
             return view("administrator.dashboard")->with([
                 "single" => $single,
                 "balance" => $balance,
@@ -141,6 +148,8 @@ class AdministratorController extends Controller
                 "fundTransfer" => $fundTransfer,
                 "payment" => $payment,
                 "user" => $user,
+                "manifest" => $manifest,
+                "negotiation" => $negotiation,
             ]);
 
         }elseif(auth()->user()->hasRole('Owner')){

@@ -31,12 +31,6 @@ class ManifestAPIController extends ApiController
             $email = Auth::user()->email;
             $customer =Customer::where('email', $email)->first();
             $manifest =Manifest::where('customer_id', $customer->customer_id)->orderBy('manifest_id','desc')->get();;
-
-            // return view("administrator.manifests.index")->with([
-            //     'manifest' => $manifest,
-            //     'customer' => $customer
-            // ]);
-
             return response()->json([
                 'success' => true,
                 'message' => $email.' List of Manifests',
@@ -48,31 +42,37 @@ class ManifestAPIController extends ApiController
             ], 200);
         }elseif(auth()->user()->hasRole('Operator')){
 
-            $own = VehicleOperator::where('email', Auth::user()->email)->first();
-            $vehicle_id = $own->vehicle_id;
-            $manifest =Manifest::where('vehicle_id', $vehicle_id)->orderBy('manifest_id','desc')->get();;
+            $operator = VehicleOperator::where('email', Auth::user()->email)->first();
+            $vehicle_id = $operator->vehicle_id;
+            $manifest =Manifest::where('vehicle_id', $vehicle_id)->orderBy('manifest_id','desc')->get();
 
             return response()->json([
                 'success' => true,
                 'message' => Auth::user()->email.' List of Manifests',
                 'data' => [
                     'manifest' => $manifest,
-                    'own' => $own
+                    'operator' => $operator
                 ],
 
             ], 200);
         }elseif(auth()->user()->hasRole('Owner')){
 
-            $own = VehicleOwner::where('email', Auth::user()->email)->first();
-            $owner_id = $own->owner_id;
-            $car = Vehicle::where('owner_id', $owner_id)->orderBy('vehicle_id', 'desc')->get();
+            $owner = VehicleOwner::where('email', Auth::user()->email)->first();
+            $owner_id = $owner->owner_id;
+            $owner_car = Vehicle::where('owner_id', $owner_id)->orderBy('vehicle_id', 'desc')->get();
+
+            foreach($owner_car as $items){
+                $manifests =Manifest::where('vehicle_id', $items->vehicle_id)->orderBy('manifest_id','desc')->get();
+            }
 
             return response()->json([
                 'success' => true,
                 'message' => Auth::user()->email.' List of Manifests',
                 'data' => [
-                    'car' => $car,
-                    'own' => $own,
+                    'manifests' => $manifests,
+                    'owner_car' => $owner_car,
+                    'owner' => $owner,
+
                 ],
 
             ], 200);

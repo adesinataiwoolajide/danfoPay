@@ -164,7 +164,6 @@
                                             <th>Full Name</th>
                                             <th>Email</th>
                                             <th>Role</th>
-
                                         </tr>
                                     </thead>
                                     <tfoot>
@@ -173,29 +172,27 @@
                                             <th>Full Name</th>
                                             <th>Email</th>
                                             <th>Role</th>
-
-
                                         </tr>
                                     </tfoot>
                                     <tbody><?php
                                         $y=1; ?>
                                         @foreach($user as $users)
-                                        <tr>
+                                            <tr>
 
-                                            <td>{{$y}}
-                                                <a href="{{route('user.delete', $users->user_id)}}" class="btn btn-danger" onclick="return(confirmToDelete());">
-                                                <i class="fa fa-trash-o"></i>
-                                                </a>
-                                                <a href="{{route('user.edit', $users->user_id)}}" class="btn btn-success" onclick="return(confirmToEdit());">
-                                                    <i class="fa fa-pencil"></i>
-                                                </a>
-                                            </td>
-                                            <td>{{$users->name}}</td>
-                                            <td>{{$users->email}}</td>
-                                            <td>{{$users->role}}</td>
+                                                <td>{{$y}}
+                                                    <a href="{{route('user.delete', $users->user_id)}}" class="btn btn-danger" onclick="return(confirmToDelete());">
+                                                    <i class="fa fa-trash-o"></i>
+                                                    </a>
+                                                    <a href="{{route('user.edit', $users->user_id)}}" class="btn btn-success" onclick="return(confirmToEdit());">
+                                                        <i class="fa fa-pencil"></i>
+                                                    </a>
+                                                </td>
+                                                <td>{{$users->name}}</td>
+                                                <td>{{$users->email}}</td>
+                                                <td>{{$users->role}}</td>
 
-                                        </tr><?php $y++; ?>
-                                    @endforeach
+                                            </tr><?php $y++; ?>
+                                        @endforeach
                                     </tbody>
 
                                 </table>

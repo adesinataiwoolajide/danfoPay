@@ -107,21 +107,30 @@ Route::group(["prefix" => "v1/"], function(){
             Route::get("/{vehicle_id}", "API\VehicleAPIController@edit")->name("api.vehicle.edit");
             Route::post("/save", "API\VehicleAPIController@store")->name("api.vehicle.save");
             Route::get("/", "API\VehicleAPIController@index")->name("api.vehicle.index");
-            Route::get("/operator/{vehicle_id}", "API\OperatorAPIController@create")->name("api.add.operator");
+            // Route::get("/operator/{vehicle_id}", "API\OperatorAPIController@create")->name("api.add.operator");
+            Route::get("/operator/{vehicle_id}", "API\OperatorAPIController@show")->name("api.add.operator");
             Route::post("/update/{vehicle_id}", "API\VehicleAPIController@update")->name("api.vehicle.update");
             Route::get("/delete/{vehicle_id}", "API\VehicleAPIController@destroy")->name("api.vehicle.delete");
         });
 
     });
-    Route::group(['middleware' => ['auth:api', 'role:Operator']], function () {
+    Route::group(['middleware' => ['auth:api', 'role:Operator|Owner']], function () {
 
-        Route::post("/save", "API\OperatorAPIController@store")->name("api.operator.save");
-        Route::get("/index", "API\OperatorAPIController@index")->name("api.operator.index");
-        Route::get("/edit/{operator_id}", "API\OperatorAPIController@edit")->name("api.operator.edit");
-        Route::post("/update/{operator_id}", "API\OperatorAPIController@update")->name("api.operator.update");
-        Route::get("/delete/{operator_id}", "API\OperatorAPIController@destroy")->name("api.operator.delete");
-        Route::get("/details/{operator_id}", "API\OperatorAPIController@details")->name("api.operator.details");
+        Route::group(["prefix" => "operator"], function(){
 
+            Route::get("/", "API\OperatorAPIController@index")->name("api.operator.index");
+            Route::post("/save", "API\OperatorAPIController@store")->name("api.operator.save");
+            Route::get("/edit/{operator_id}", "API\OperatorAPIController@edit")->name("api.operator.edit");
+            Route::post("/update/{operator_id}", "API\OperatorAPIController@update")->name("api.operator.update");
+            Route::get("/delete/{operator_id}", "API\OperatorAPIController@destroy")->name("api.operator.delete");
+            Route::get("/details/{operator_id}", "API\OperatorAPIController@details")->name("api.operator.details");
+        });
+
+        Route::group(["prefix" => "round"], function(){
+
+            Route::get('/', 'API\RoundAPIController@index')->name('api.round.index');
+
+        });
     });
 
 

@@ -84,4 +84,5 @@ class Negotiation extends Model
     public function man(){
         return $this->hasMany('App\Manifest', 'manifest_id', 'negotiation_id');
     }
+
 }

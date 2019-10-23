@@ -26,16 +26,15 @@ class OperatorAPIController extends ApiController
     public function index()
     {
         if(auth()->user()->hasRole('Owner')){
-            $own = VehicleOwner::where('email', Auth::user()->email)->first();
-            $operator = VehicleOperator::where('owner_id', $own->owner_id)->get();
-            // return view("administrator.operators.index")->with([
-            //     'operator' => $operator,
-            // ]);
+            $owner = VehicleOwner::where('email', Auth::user()->email)->first();
+            $my_operator = VehicleOperator::where('owner_id', $owner->owner_id)->get();
+
             return response()->json([
                 'error' => true,
                 'message' => '',
                 'data' => [
-                    'operator' => $operator,
+                    'my_operator' => $my_operator,
+                    'owner' => $owner,
                 ],
             ], 200);
         }elseif(auth()->user()->hasRole('Operator')){
@@ -247,9 +246,38 @@ class OperatorAPIController extends ApiController
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($vehicle_id)
     {
-        //
+        if(auth()->user()->hasRole('Owner')){
+            $own = VehicleOwner::where('email', Auth::user()->email)->first();
+            $details = VehicleOperator::where('vehicle_id', $vehicle_id)->get();
+
+            if(count($details) == 0){
+                return response()->json([
+                    'error' => true,
+                    'message' => 'No Operator was found for $vehicle_id',
+                    'data' => [],
+                ], 400);
+            }else{
+                $owner_id = $own->owner_id;
+                $vehicle_id = $details->vehicle_id;
+                return response()->json([
+                    'success' => true,
+                    'message' => '',
+                    'data' => [
+                        'details' => $details,
+                        'own' => $own
+                    ],
+                ], 200);
+            }
+
+        } else{
+            return response()->json([
+                'error' => true,
+                'message' => 'You dont have access to this page',
+                'data' => [],
+            ], 400);
+        }
     }
 
     /**

@@ -57,5 +57,4 @@ class Manifest extends Model
         return $this->belongsTo('App\Vehicle', 'owner_id');
     }
 
-
 }

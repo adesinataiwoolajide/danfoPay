@@ -240,7 +240,7 @@
                         </a>
                     </li>
                     <li class="">
-                        <a href="{{ route('bulk-sms-index') }}" class="waves-effect">
+                        <a href="{{route('bulk-sms-index')}}" class="waves-effect">
                             <i class="fa fa-envelope text-success"></i> <span>Messages</span>
                             <small class="badge float-right badge-success">0</small>
                         </a>

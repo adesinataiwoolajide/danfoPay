@@ -58,7 +58,7 @@ class Handler extends ExceptionHandler
                 ]
             ], 404);
         }
-    
+
         if ($exception instanceof NotFoundHttpException) {
             return response()->json([
                 'error' => [
@@ -67,7 +67,7 @@ class Handler extends ExceptionHandler
                 ]
             ], 404);
         }
-    
+
         if ($exception instanceof MethodNotAllowedHttpException) {
             return response()->json([
                 'error' => [
@@ -91,7 +91,7 @@ class Handler extends ExceptionHandler
                 'error' => [
                     'status' =>  403,
                     'message' =>  'Forbidden, Access Denied.'
-                ]                
+                ]
             ], 403);
         }
 

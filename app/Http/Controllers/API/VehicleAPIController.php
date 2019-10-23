@@ -27,28 +27,24 @@ class VehicleAPIController extends ApiController
         if(auth()->user()->hasRole('Owner')){
 
             $user = User::where('user_id', Auth::user()->user_id)->first();
-            $own = VehicleOwner::where('email', Auth::user()->email)->first();
-            $type = VehicleType::orderBy('type_name', 'asc')->get();
-            $car = Vehicle::where('owner_id', $own->owner_id)->orderBy('vehicle_id', 'desc')->get();
-            // return view('administrator.vehicles.index')->with([
-            //     "own" => $own,
-            //     'car' => $car,
-            //     'type' => $type,
-            // ]);
+            $owner = VehicleOwner::where('email', Auth::user()->email)->first();
+            $car_type = VehicleType::orderBy('type_name', 'asc')->get();
+            $owner_car = Vehicle::where('owner_id', $owner->owner_id)->orderBy('vehicle_id', 'desc')->get();
+
             return response()->json([
                 'success' => true,
                 'message' => "List of Vehicles",
                 'data' => [
-                    "own" => $own,
-                    'car' => $car,
-                    'type' => $type,
+                    "owner" => $owner,
+                    'owner_car' => $owner_car,
+                    'car_type' => $car_type,
                 ],
             ], 200);
         }elseif(auth()->user()->hasRole('Operator')){
 
             $user = User::where('user_id', Auth::user()->email)->first();
             $operator = VehicleOperator::where('email', Auth::user()->email)->first();
-            $car = Vehicle::where('vehicle_id', $operator->vehicle_id)->orderBy('vehicle_id', 'desc')->get();
+            $operator_car = Vehicle::where('vehicle_id', $operator->vehicle_id)->orderBy('vehicle_id', 'desc')->get();
 
             return response()->json([
                 'success' => true,
@@ -56,7 +52,7 @@ class VehicleAPIController extends ApiController
                 'data' => [
                     "operator" => $operator,
                     'user' => $user,
-                    'car' => $car,
+                    'operator_car' => $operator_car,
 
                 ],
             ], 200);
@@ -80,8 +76,8 @@ class VehicleAPIController extends ApiController
         if(auth()->user()->hasPermissionTo('Add Vehicle') OR (Gate::allows('Administrator', auth()->user()))){
             $details = VehicleOwner::where('owner_number', $owner_number)->first();
             $owner_id = $details->owner_id;
-            $car = Vehicle::where('owner_id', $owner_id)->get();
-            $type = VehicleType::orderBy('type_name', 'asc')->get();
+            $owner_car = Vehicle::where('owner_id', $owner_id)->get();
+            $car_type = VehicleType::orderBy('type_name', 'asc')->get();
             // return view('administrator.vehicles.create')->with([
             //     'details' => $details,
             //     'type' => $type,
@@ -92,8 +88,8 @@ class VehicleAPIController extends ApiController
                 'message' => '',
                 'data' => [
                     'details' => $details,
-                    'type' => $type,
-                    'car' => $car
+                    'car_type' => $car_type,
+                    'owner_car' => $owner_car
                 ],
             ], 400);
         } else{
@@ -188,24 +184,15 @@ class VehicleAPIController extends ApiController
             $vehicle = Vehicle::where('vehicle_id', $vehicle_id)->first();
             $owner_id = $vehicle->owner_id;
             $owner = VehicleOwner::where('owner_id', $vehicle->owner_id)->first();
-            $type = VehicleType::orderBy('type_name', 'asc')->get();
-            $car = Vehicle::orderBy('vehicle_id', 'desc')->get();
-            // return view('administrator.vehicles.edit')->with([
-            //     'type' => $type,
-            //     'vehicle' => $vehicle,
-            //     'owner' => $owner,
-            //     'car' => $car,
-            // ]);
+            $car_type = VehicleType::orderBy('type_name', 'asc')->get();
 
             return response()->json([
                 'error' => true,
                 'message' => 'View Vehicle',
                 'data' => [
                     'vehicle' => $vehicle,
-                    'type' => $type,
-
+                    'car_type' => $car_type,
                     'owner' => $owner,
-                    'car' => $car,
                 ],
             ], 200);
         } else{
@@ -282,9 +269,6 @@ class VehicleAPIController extends ApiController
             $vehicle =  $this->model->show($vehicle_id);
 
             if (($vehicle->delete($vehicle_id))AND ($vehicle->trashed())) {
-                // return redirect()->back()->with([
-                //     'success' => "You Have Deleted The Vehicle with the plate number $vehicle->plate_number Successfully",
-                // ]);
 
                 return response()->json([
                     'success' => true,

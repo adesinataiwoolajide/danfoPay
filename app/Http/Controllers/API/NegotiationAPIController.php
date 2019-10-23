@@ -30,10 +30,6 @@ class NegotiationAPIController extends ApiController
             $email = Auth::user()->email;
             $customer =Customer::where('email', $email)->first();
             $negotiation =Negotiation::where('customer_id', $customer->customer_id)->orderBy('negotiation_id','desc')->get();
-            // return view("administrator.negotiations.index")->with([
-            //     'negotiation' => $negotiation,
-            //     'customer' => $customer
-            // ]);
 
             return response()->json([
                 'success' => true,
@@ -46,7 +42,7 @@ class NegotiationAPIController extends ApiController
             ], 200);
         }elseif(auth()->user()->hasRole('Operator')){
 
-            $own = VehicleOperator::where('email', Auth::user()->email)->first();
+            $operator = VehicleOperator::where('email', Auth::user()->email)->first();
             $vehicle_id = $own->vehicle_id;
             $negotiation =Negotiation::where('vehicle_id', $vehicle_id)->orderBy('negotiation_id','desc')->get();
 
@@ -55,26 +51,28 @@ class NegotiationAPIController extends ApiController
                 'message' => $email.' List of Negotiations',
                 'data' => [
                     'negotiation' => $negotiation,
-                    'own' => $own,
+                    'operator' => $operator,
                 ],
 
             ], 200);
         }elseif(auth()->user()->hasRole('Owner')){
 
-            $own = VehicleOwner::where('email', Auth::user()->email)->first();
-            $owner_id = $own->owner_id;
-            $car = Vehicle::where('owner_id', $owner_id)->orderBy('vehicle_id', 'desc')->get();
-            // return view("administrator.negotiations.index")->with([
-            //     'car' => $car,
-            //     'own' => $own,
-            // ]);
+            $owner = VehicleOwner::where('email', Auth::user()->email)->first();
+            $owner_id = $owner->owner_id;
+            $owner_car = Vehicle::where('owner_id', $owner_id)->orderBy('vehicle_id', 'desc')->get();
+
+            foreach($owner_car as $items){
+                $negotiation =Negotiation::where('vehicle_id', $items->vehicle_id)->orderBy('negotiation_id','desc')->get();
+            }
 
             return response()->json([
                 'success' => true,
                 'message' => Auth::user()->email.' List of Negotiations',
                 'data' => [
-                    'car' => $car,
-                    'own' => $own,
+                    'negotiation' => $negotiation,
+                    'owner_car' => $owner_car,
+                    'owner' => $owner,
+
                 ],
 
             ], 200);
@@ -138,8 +136,6 @@ class NegotiationAPIController extends ApiController
                 ]);
 
                 if($this->model->create($data)){
-                    // return redirect()->back()->with("success", "You Have Added Your Negotiation For "
-                    // .$request->input("vehicle_number"). " Successfully, Please Kindle Tell the Operator to confirm your negotiation");
 
                     return response()->json([
                         'success' => true,
@@ -160,7 +156,6 @@ class NegotiationAPIController extends ApiController
                 }
 
             }else{
-                //return redirect()->back()->with("error", $request->input("vehicle_number"). " Does Not Found for any Vehicle");
 
                 return response()->json([
                     'error' => true,
@@ -203,13 +198,6 @@ class NegotiationAPIController extends ApiController
             $nego = $this->model->show($negotiation_id);
             $negotiation =Negotiation::where('customer_id', $customer->customer_id)->get();
             $car = Vehicle::where('vehicle_id', $nego->vehicle_id)->first();
-
-            // return view("administrator.negotiations.edit")->with([
-            //     'negotiation' => $negotiation,
-            //     'customer' => $customer,
-            //     'nego' => $nego,
-            //     'car' => $car,
-            // ]);
             return response()->json([
                 'error' => true,
                 'message' => 'Edit Your Negotiation',
@@ -290,7 +278,6 @@ class NegotiationAPIController extends ApiController
                     'message' => $request->input("vehicle_number"). " Does Not Found for any Vehicle",
                     'data' => [],
                 ], 400);
-                //return redirect()->back()->with("error", $request->input("vehicle_number"). " Does Not Found for any Vehicle");
             }
         }else{
             return response()->json([
@@ -319,7 +306,7 @@ class NegotiationAPIController extends ApiController
             ]);
 
             if($this->model->update($data, $negotiation_id)){
-               // return redirect()->route("negotiation.index")->with("success", "You Have Accepted The Negotiation Successfully");
+
                 return response()->json([
                     'success' => true,
                     'message' => 'You Have Accepted The Negotiation Successfully',
@@ -358,7 +345,7 @@ class NegotiationAPIController extends ApiController
             ]);
 
             if($this->model->update($data, $negotiation_id)){
-                //return redirect()->route("negotiation.index")->with("success", "You Have Declined The Negotiation Successfully");
+
                 return response()->json([
                     'success' => true,
                     'message' => 'You Have Declined The Negotiation Successfully',
@@ -395,9 +382,6 @@ class NegotiationAPIController extends ApiController
                 $pay = $nego->amount;
 
                 if($pay > $total){
-                    // return redirect()->back()->with([
-                    //     'error' => "Insufficient Fund, Please Fund Your Wallet",
-                    // ]);
 
                     return response()->json([
                         'error' => true,
@@ -459,7 +443,7 @@ class NegotiationAPIController extends ApiController
 
 
                     if($this->model->update($data, $negotiation_id) AND (!empty($updat)) AND($manifest->save()) ){
-                        //return redirect()->route("negotiation.index")->with("success", "You Have Paid $pay Successfully, Your Balance is $lo");
+
                         return response()->json([
                             'success' => true,
                             'message' => "You Have Paid $pay Successfully, Your Balance is $lo",
@@ -515,7 +499,7 @@ class NegotiationAPIController extends ApiController
                     'message' => "You Have nitiated The Re Negotiation Successfully",
                     'data' => [],
                 ], 200);
-                //return redirect()->route("negotiation.index")->with("success", "You Have Initiated The Re Negotiation Successfully");
+
             }else{
                 return response()->json([
                     'error' => true,
