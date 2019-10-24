@@ -35,9 +35,10 @@
                                         <tr>
                                             <th>S/N</th>
                                             <th>Action</th>
-                                                @if(auth()->user()->hasRole('Administrator'))
-                                                    <th>Email</th>
-                                                @endif
+                                            @if(auth()->user()->hasRole('Administrator'))
+                                                <th>Email</th>
+                                            @endif
+                                            <th>Subject</th>
                                             <th>Properties</th>
                                         </tr>
                                     </thead>
@@ -45,9 +46,10 @@
                                         <tr>
                                             <th>S/N</th>
                                             <th>Action</th>
-                                                @if(auth()->user()->hasRole('Administrator'))
-                                                    <th>Email</th>
-                                                @endif
+                                            @if(auth()->user()->hasRole('Administrator'))
+                                                <th>Email</th>
+                                            @endif
+                                            <th>Subject</th>
                                             <th>Properties</th>
                                         </tr>
                                     </tfoot>
@@ -65,8 +67,8 @@
                                                         @endforeach
                                                     </td>
                                                 @endif
+                                                <td>{{substr($log->subject_type, 4)}}</td>
                                                 <td>{{$log->properties}}</td>
-
                                             </tr><?php $y++; ?>
                                         @endforeach
                                     </tbody>
