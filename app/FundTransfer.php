@@ -4,9 +4,11 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Spatie\Activitylog\Traits\LogsActivity;
 class FundTransfer extends Model
 {
     use SoftDeletes;
+    use LogsActivity;
 
     protected $table = 'fund_transfers';
     public $primaryKey = 'fund_id';
@@ -14,6 +16,8 @@ class FundTransfer extends Model
     protected $fillable = [
         'sender', 'reciever', 'amount'
     ];
+
+    protected static $logAttributes = ['sender', 'reciever', 'amount'];
 
     public function getTotalAttribute($value){
         return ($value);

@@ -4,9 +4,11 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Spatie\Activitylog\Traits\LogsActivity;
 class BulkSms extends Model
 {
     use SoftDeletes;
+    use LogsActivity;
 
     protected $table = 'bulk_sms';
     public $primaryKey = 'sms_id';
@@ -14,6 +16,8 @@ class BulkSms extends Model
     protected $fillable = [
         'message', 'phone_number', 'subject'
     ];
+
+    protected static $logAttributes = ['message', 'phone_number', 'subject'];
 
     public function getMessageAttribute($value){
         return ($value);

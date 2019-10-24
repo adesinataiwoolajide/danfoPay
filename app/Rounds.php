@@ -4,9 +4,11 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Spatie\Activitylog\Traits\LogsActivity;
 class Rounds extends Model
 {
     use SoftDeletes;
+    use LogsActivity;
 
     protected $table = 'rounds';
     protected $primaryKey = 'round_id';
@@ -14,6 +16,8 @@ class Rounds extends Model
     protected $fillable = [
         'vehicle_id', 'current_balance',
     ];
+
+    protected static $logAttributes = ['vehicle_id', 'current_balance'];
 
     public function getVehicleIdAttribute($value){
         return ($value);

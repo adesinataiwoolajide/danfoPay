@@ -4,9 +4,11 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Spatie\Activitylog\Traits\LogsActivity;
 class Customer extends Model
 {
     use SoftDeletes;
+    use LogsActivity;
 
     protected $table = 'customers';
     protected $primaryKey = 'customer_id';
@@ -14,6 +16,7 @@ class Customer extends Model
     protected $fillable = [
         'name', 'email', 'phone_number', 'customer_number',
     ];
+    protected static $logAttributes = ['name', 'email', 'customer_number'];
 
     public function getNameAttribute($value){
         return ucwords($value);

@@ -18,6 +18,7 @@ class UserController extends Controller
     {
        // set the model
        $this->model = new UserRepository($user);
+       $this->middleware(['role:Administrator']);
     }
     /**
      * Display a listing of the resource.

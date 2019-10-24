@@ -18,6 +18,7 @@ class RoundController extends Controller
     {
        // set the model
        $this->model = new RoundRepository($round);
+       $this->middleware(['role:Administrator|Owner|Operator']);
     }
     /**
      * Display a listing of the resource.

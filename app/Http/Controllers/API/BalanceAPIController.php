@@ -19,6 +19,7 @@ class BalanceAPIController extends ApiController
     {
        // set the model
        $this->model = new BalanceRepository($balance);
+       $this->middleware(['role:Administrator|Customer|Owner|Operator']);
     }
     /**
      * Display a listing of the resource.
@@ -44,7 +45,7 @@ class BalanceAPIController extends ApiController
                 'data' => [],
             ], 400);
         }
-        
+
     }
 
     /**

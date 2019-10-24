@@ -17,6 +17,7 @@ class VehicleController extends Controller
     {
        // set the model
        $this->model = new VehicleRepository($vehicle);
+       $this->middleware(['role:Administrator|Owner|Operator']);
     }
     /**
      * Display a listing of the resource.

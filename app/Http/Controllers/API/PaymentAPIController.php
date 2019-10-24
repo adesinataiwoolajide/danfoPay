@@ -20,6 +20,7 @@ class PaymentAPIController extends ApiController
        $this->paystack = new Paystack();
        $this->model = new PaymentRepository($pay);
        //$this->cheetahPay = new CheetahPay(XQKWNGWKFKhKfUAtgZIU, 5710139023);
+       $this->middleware(['role:Customer']);
     }
 
     public function redirectToGateway()

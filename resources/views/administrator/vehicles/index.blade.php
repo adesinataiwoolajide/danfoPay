@@ -10,13 +10,30 @@
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="{{route('administrator.dashboard')}}">Home</a></li>
                     <li class="breadcrumb-item">
-                        <a href="{{route('vehicle.index')}}">All Vehicle</a>
+                        <a href="{{route('vehicle.index')}}">
+
+                            @if(auth()->user()->hasRole('Administrator'))
+                                All Vehicles
+                            @elseif(auth()->user()->hasRole('Owner'))
+                                My Vehicles
+                            @else
+                                My Allocated Vehicle
+                            @endif
+                        </a>
                     </li>
 
                     @if(auth()->user()->hasRole('Administrator'))
                         <li class="breadcrumb-item"><a href="{{route('vehicle.restore')}}">Recycle Bin</a></li>
                     @endif
-                    <li class="breadcrumb-item active" aria-current="page">List of Saved Cars </li>
+                    <li class="breadcrumb-item active" aria-current="page">
+                        @if(auth()->user()->hasRole('Administrator'))
+                                List of All Vehicles
+                            @elseif(auth()->user()->hasRole('Owner'))
+                                List of My Vehicles
+                            @else
+                               List of Allocated Vehicle
+                            @endif
+                    </li>
                 </ol>
             </div>
         </div>@include('partials._message')

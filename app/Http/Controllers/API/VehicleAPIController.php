@@ -16,6 +16,7 @@ class VehicleAPIController extends ApiController
     {
        // set the model
        $this->model = new VehicleRepository($vehicle);
+       $this->middleware(['role:Owner|Operator']);
     }
     /**
      * Display a listing of the resource.

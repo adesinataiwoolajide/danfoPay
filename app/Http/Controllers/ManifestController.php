@@ -18,6 +18,7 @@ class ManifestController extends Controller
     {
        // set the model
        $this->model = new manifestRepository($manifest);
+       $this->middleware(['role:Administrator|Customer|Owner|Operator']);
     }
     /**
      * Display a listing of the resource.

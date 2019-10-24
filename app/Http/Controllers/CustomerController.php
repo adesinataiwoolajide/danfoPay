@@ -19,6 +19,7 @@ class CustomerController extends Controller
     {
        // set the model
        $this->model = new CustomerRepository($customer);
+       $this->middleware(['role:Administrator|Customer']);
     }
     /**
      * Display a listing of the resource.

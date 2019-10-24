@@ -30,7 +30,7 @@ class User extends Authenticatable implements MustVerifyEmail
     protected $fillable = [
         'name', 'email', 'password', 'role', 'status'
     ];
-    //protected static $logAttributes = ['name', 'email', 'deleted_at'];
+    protected static $logAttributes = ['name', 'email', 'role'];
 
 
     public function getNameAttribute($value){

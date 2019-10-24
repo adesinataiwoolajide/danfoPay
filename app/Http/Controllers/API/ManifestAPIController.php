@@ -19,6 +19,7 @@ class ManifestAPIController extends ApiController
     {
        // set the model
        $this->model = new manifestRepository($manifest);
+       $this->middleware(['role:Customer|Owner|Operator']);
     }
     /**
      * Display a listing of the resource.

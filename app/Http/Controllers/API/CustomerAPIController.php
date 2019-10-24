@@ -19,6 +19,7 @@ class CustomerAPIController extends ApiController
 
        // set the model
        $this->model = new CustomerRepository($customers);
+       $this->middleware(['role:Administrator|Customer']);
     }
     /**
      * Display a listing of the resource.
@@ -333,7 +334,7 @@ class CustomerAPIController extends ApiController
         $email = $customer->email;
         $user = User::where('email', $email)->first();
         $customer_id = $customer->customer_id;
-        
+
         $user_id = $user->user_id;
 
         $customer_number = $request->input("customer_number");

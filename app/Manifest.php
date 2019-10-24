@@ -4,9 +4,11 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Spatie\Activitylog\Traits\LogsActivity;
 class Manifest extends Model
 {
     use SoftDeletes;
+    use LogsActivity;
 
     protected $table = 'manifests';
     protected $primaryKey = 'manifest_id';
@@ -14,6 +16,8 @@ class Manifest extends Model
     protected $fillable = [
         'vehicle_id', 'customer_id', 'amount','negotiation_id'
     ];
+
+    protected static $logAttributes = ['vehicle_id', 'customer_id', 'amount'];
 
     public function getVehicleIdAttribute($value){
         return ($value);

@@ -18,6 +18,7 @@ class NegotiationController extends Controller
     {
        // set the model
        $this->model = new NegotiationRepository($negotiation);
+       $this->middleware(['role:Administrator|Customer|Owner|Operator']);
     }
     /**
      * Display a listing of the resource.
@@ -321,7 +322,7 @@ class NegotiationController extends Controller
                 }else{
 
                     $data = ([
-                        "vehicle" => $this->model->show($negotiation_id),
+                        "vehicle" => $nego->negotiation_id,
                         "vehicle_id" => $nego->vehicle_id,
                         "from_destination" => $nego->from_destination,
                         "to_destination" => $nego->to_destination,
@@ -351,7 +352,7 @@ class NegotiationController extends Controller
                             "vehicle_id" => $nego->vehicle_id,
                             "amount" => $pay,
                             "customer_id" => $customer->customer_id,
-                            "negotiation_id" => $negotiation_id,
+                            "negotiation_id" => $nego->negotiation_id,
                         ]);
                     }else{
 
@@ -371,7 +372,7 @@ class NegotiationController extends Controller
                     }
 
 
-                    if($this->model->update($data, $negotiation_id) AND (!empty($updat)) AND($manifest->save()) ){
+                    if($this->model->update($data, $nego->negotiation_id) AND (!empty($updat)) AND($manifest->save()) ){
                         return redirect()->route("negotiation.index")->with("success", "You Have Paid $pay Successfully, Your Balance is $lo");
                     }else{
                         return redirect()->back()->with("error", " Network Failure, Please Try Again Later");

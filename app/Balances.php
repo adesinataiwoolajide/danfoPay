@@ -4,9 +4,11 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Spatie\Activitylog\Traits\LogsActivity;
 class Balances extends Model
 {
     use SoftDeletes;
+    use LogsActivity;
 
     protected $table = 'balances';
     public $primaryKey = 'balance_id';
@@ -15,7 +17,7 @@ class Balances extends Model
         'total_amount', 'user_id', 'customer_code'
     ];
 
-
+    protected static $logAttributes = ['total_amount', 'user_id', 'customer_code'];
 
     public function getTotalAmountAttribute($value){
         return ($value);

@@ -4,15 +4,18 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Spatie\Activitylog\Traits\LogsActivity;
 class VehicleOwner extends Model
 {
     use SoftDeletes;
-
+    use LogsActivity;
     protected $table = 'vehicle_owner';
     protected $primaryKey = 'owner_id';
     protected $fillable = [
         'name','phone_number', 'email', 'address', 'owner_number',
     ];
+
+    protected static $logAttributes = ['name', 'email', 'owner_number'];
 
     public function getEmailAttribute($value){
         return $value;

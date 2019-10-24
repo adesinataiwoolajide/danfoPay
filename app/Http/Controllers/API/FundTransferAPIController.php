@@ -18,6 +18,7 @@ class FundTransferAPIController extends ApiController
     {
        // set the model
        $this->model = new FundTransferRepository($transfer);
+       $this->middleware(['role:Administrator|Customer']);
     }
     /**
      * Display a listing of the resource.
@@ -32,7 +33,7 @@ class FundTransferAPIController extends ApiController
             $phone_number = $customer->phone_number;
             $transfer = FundTransfer::where('sender', $phone_number)->orWhere('reciever', $phone_number)->get();
             $single_balance =Balances::where('user_id', Auth::user()->user_id)->first();
-        
+
             return response()->json([
                 'success' => true,
                 'message' => Auth::user()->name. ' Customer Single Balance',
@@ -91,14 +92,14 @@ class FundTransferAPIController extends ApiController
             $number = strtoupper(generateCustomeNumber(10));
 
             if($debit > $credit){
-                
+
                 return response()->json([
                     'error' => true,
                     'message' => "Insufficient Fund",
                     'data' => [],
                 ], 400);
             }elseif($phone == $recipient){
-                
+
                 return response()->json([
                     'error' => true,
                     'message' => "You Cannot Transfer Fund To yourself",
@@ -180,7 +181,7 @@ class FundTransferAPIController extends ApiController
                         }
                     }
                 }else {
-                    
+
                     return response()->json([
                         'error' => true,
                         'message' => "$recipient Details Does Not Exist on This Platform",

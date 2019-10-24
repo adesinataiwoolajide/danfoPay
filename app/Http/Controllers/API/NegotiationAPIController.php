@@ -18,6 +18,7 @@ class NegotiationAPIController extends ApiController
     {
        // set the model
        $this->model = new NegotiationRepository($negotiation);
+       $this->middleware(['role:Customer|Owner|Operator']);
     }
     /**
      * Display a listing of the resource.

@@ -19,6 +19,7 @@ class PaymentController extends Controller
        $this->paystack = new Paystack();
        $this->model = new PaymentRepository($pay);
        //$this->cheetahPay = new CheetahPay(XQKWNGWKFKhKfUAtgZIU, 5710139023);
+       $this->middleware(['role:Administrator|Customer']);
     }
      /**
      * Redirect the User to Paystack Payment Page

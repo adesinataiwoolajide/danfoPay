@@ -4,11 +4,13 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Spatie\Activitylog\Traits\LogsActivity;
 class Payments extends Model
 {
     //
 
     use SoftDeletes;
+    use LogsActivity;
 
     protected $table = 'payments';
     protected $primaryKey = 'payment_id';
@@ -16,6 +18,8 @@ class Payments extends Model
     protected $fillable = [
         'reference', 'amount', 'user_id', 'status', 'currency'
     ];
+
+    protected static $logAttributes = ['refrence', 'amount', 'user_id', 'currency'];
 
     public function getRefrenceAttribute($value){
         return ($value);

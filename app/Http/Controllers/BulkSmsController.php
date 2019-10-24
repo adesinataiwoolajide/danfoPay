@@ -17,6 +17,7 @@ class BulkSmsController extends Controller
     {
        // set the model
        $this->model = new BulkSmsRepository($sms);
+       $this->middleware(['role:Administrator|Customer|Owner|Operator']);
     }
 
     public function index()

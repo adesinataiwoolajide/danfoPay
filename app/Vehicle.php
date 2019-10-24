@@ -4,15 +4,19 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Spatie\Activitylog\Traits\LogsActivity;
 class Vehicle extends Model
 {
     use SoftDeletes;
+    use LogsActivity;
 
     protected $table = 'vehicles';
     protected $primaryKey = 'vehicle_id';
     protected $fillable = [
         'plate_number', 'brand', 'type_id', 'owner_id', 'vehicle_number'
     ];
+
+    protected static $logAttributes = ['plate_number', 'owner_id', 'vehicle_number', 'type_id'];
 
     public function getBrandAttribute($value){
         return strtoupper($value);

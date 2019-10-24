@@ -19,6 +19,7 @@ class RoundAPIController extends ApiController
     {
        // set the model
        $this->model = new RoundRepository($round);
+       $this->middleware(['role:Customer|Owner|Operator']);
     }
     /**
      * Display a listing of the resource.

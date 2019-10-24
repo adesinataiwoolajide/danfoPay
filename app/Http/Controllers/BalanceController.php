@@ -19,6 +19,7 @@ class BalanceController extends Controller
     {
        // set the model
        $this->model = new BalanceRepository($balance);
+       $this->middleware(['role:Administrator|Customer']);
     }
     /**
      * Display a listing of the resource.

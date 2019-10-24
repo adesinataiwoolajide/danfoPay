@@ -4,9 +4,11 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Spatie\Activitylog\Traits\LogsActivity;
 class Negotiation extends Model
 {
     use SoftDeletes;
+    use LogsActivity;
 
     protected $table = 'negotiations';
     protected $primaryKey = 'negotiation_id';
@@ -14,6 +16,8 @@ class Negotiation extends Model
     protected $fillable = [
         'vehicle_id', 'from_destination', 'to_destination', 'amount', 'customer_id', 'status',
     ];
+
+    protected static $logAttributes = ['vehicle_id', 'from_destination', 'to_destination', 'amount', 'customer_id'];
 
     public function getVehicleIdAttribute($value){
         return ($value);

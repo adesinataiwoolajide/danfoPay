@@ -15,6 +15,7 @@ class VehicleTypeController extends Controller
     {
        // set the model
        $this->model = new TypeRepository($type);
+       $this->middleware(['role:Administrator']);
     }
     /**
      * Display a listing of the resource.

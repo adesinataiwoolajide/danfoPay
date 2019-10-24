@@ -4,15 +4,18 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Spatie\Activitylog\Traits\LogsActivity;
 class VehicleOperator extends Model
 {
     use SoftDeletes;
+    use LogsActivity;
 
     protected $table = 'vehicle_operators';
     protected $primaryKey = 'operator_id';
     protected $fillable = [
         'name', 'phone_number', 'email', 'route', 'owner_id', 'vehicle_id'
     ];
+    protected static $logAttributes = ['name', 'email', 'owner_id'];
 
     public function getNameAttribute($value){
         return ucwords($value);

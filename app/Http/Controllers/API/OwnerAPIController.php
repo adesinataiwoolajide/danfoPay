@@ -18,6 +18,7 @@ class OwnerAPIController extends ApiController
     {
        // set the model
        $this->model = new OwnerRepository($owner);
+       $this->middleware(['role:Administrator|Owner']);
     }
     /**
      * Display a listing of the resource.
@@ -198,7 +199,7 @@ class OwnerAPIController extends ApiController
                 'own' => $own
             ],
         ], 200);
-    
+
     }
 
     /**

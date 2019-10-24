@@ -17,6 +17,7 @@ class OperatorAPIController extends ApiController
     {
        // set the model
        $this->model = new OperatorRepository($operator);
+       $this->middleware(['role:Owner|Operator']);
     }
     /**
      * Display a listing of the resource.
