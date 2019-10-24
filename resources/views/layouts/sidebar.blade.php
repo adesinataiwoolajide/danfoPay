@@ -287,6 +287,7 @@
                     </li>
 
                 @else
+
                     <li class="">
                         <a href="{{ route('admin.logout') }}" class="waves-effect">
                             <i class="zmdi zmdi-lock text-danger"></i> <span>Log Out</span>
@@ -295,6 +296,13 @@
                     </li>
 
                 @endif
+                <li class="">
+                    <a href="{{ route('log.index') }}" class="waves-effect">
+                        <i class="zmdi zmdi-cloud text-danger"></i> <span>Activities</span>
+                        <small class="badge float-right badge-light"><i class="zmdi zmdi-long-arrow-right"></i></small>
+                    </a>
+                </li>
+
                 <li class="">
                     <a href="{{ route('admin.logout') }}" class="waves-effect">
                         <i class="zmdi zmdi-lock text-danger"></i> <span>Log Out</span>

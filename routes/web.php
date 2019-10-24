@@ -50,7 +50,7 @@ Route::group(["prefix" => "administrator", "middleware" => "verified"], function
         Route::get("/dashboard", "AdministratorController@index")->name("administrator.dashboard");
 
         Route::group(["prefix" => "users"], function(){
-            Route::get("/index", "UserController@index")->name("user.create");
+            Route::get("/", "UserController@index")->name("user.create");
             Route::post("/save", "UserController@store")->name("user.save");
             Route::get("/edit/{user_id}", "UserController@edit")->name("user.edit");
             Route::get("/delete/{user_id}", "UserController@destroy")->name("user.delete");
@@ -64,7 +64,7 @@ Route::group(["prefix" => "administrator", "middleware" => "verified"], function
         });
 
         Route::group(["prefix" => "vehicle_types"], function(){
-            Route::get("/index", "VehicleTypeController@index")->name("vehicle.type.create");
+            Route::get("/", "VehicleTypeController@index")->name("vehicle.type.create");
             Route::post("/save", "VehicleTypeController@store")->name("vehicle.type.save");
             Route::get("/edit/{type_id}", "VehicleTypeController@edit")->name("vehicle.type.edit");
             Route::get("/delete/{type_id}", "VehicleTypeController@destroy")->name("vehicle.type.delete");
@@ -74,7 +74,7 @@ Route::group(["prefix" => "administrator", "middleware" => "verified"], function
         });
 
         Route::group(["prefix" => "owners"], function(){
-            Route::get("/index", "VehicleOwnerController@index")->name("owner.create");
+            Route::get("/", "VehicleOwnerController@index")->name("owner.create");
             Route::post("/save", "VehicleOwnerController@store")->name("owner.save");
             Route::get("/edit/{owner_id}", "VehicleOwnerController@edit")->name("owner.edit");
             Route::get("/delete/{owner_id}", "VehicleOwnerController@destroy")->name("owner.delete");
@@ -89,7 +89,7 @@ Route::group(["prefix" => "administrator", "middleware" => "verified"], function
         Route::group(["prefix" => "vehicles"], function(){
             Route::get("/edit/{vehicle_id}", "VehicleController@edit")->name("vehicle.edit");
             Route::post("/save", "VehicleController@store")->name("vehicle.save");
-            Route::get("/index", "VehicleController@index")->name("vehicle.index");
+            Route::get("/", "VehicleController@index")->name("vehicle.index");
             Route::get("/operator/{vehicle_id}", "VehicleOperatorController@create")->name("add.operator");
             Route::post("/update/{vehicle_id}", "VehicleController@update")->name("vehicle.update");
             Route::get("/delete/{vehicle_id}", "VehicleController@destroy")->name("vehicle.delete");
@@ -101,7 +101,7 @@ Route::group(["prefix" => "administrator", "middleware" => "verified"], function
         Route::group(["prefix" => "operators"], function(){
 
             Route::post("/save", "VehicleOperatorController@store")->name("operator.save");
-            Route::get("/index", "VehicleOperatorController@index")->name("operator.index");
+            Route::get("/", "VehicleOperatorController@index")->name("operator.index");
             Route::get("/edit/{operator_id}", "VehicleOperatorController@edit")->name("operator.edit");
             Route::post("/update/{operator_id}", "VehicleOperatorController@update")->name("operator.update");
             Route::get("/delete/{operator_id}", "VehicleOperatorController@destroy")->name("operator.delete");
@@ -130,17 +130,17 @@ Route::group(["prefix" => "administrator", "middleware" => "verified"], function
         });
 
         Route::group(["prefix" => "balances"], function(){
-            Route::get('/index', 'BalanceController@index')->name('balance.index');
+            Route::get('/', 'BalanceController@index')->name('balance.index');
             Route::get('/payment/callback', 'PaymentController@handleGatewayCallback')->name('fund.wallet');
             Route::post('/card/callback', 'PaymentController@card')->name('fund.card');
         });
         Route::group(["prefix" => "transactions"], function(){
-            Route::get('/index', 'BalanceController@singleTransaction')->name('payment.index');
+            Route::get('/', 'BalanceController@singleTransaction')->name('payment.index');
 
         });
         Route::group(["prefix" => "fund_transfer"], function(){
             Route::get('/create/', 'FundTransferController@create')->name('fund.transfer.create');
-            Route::get('/initiate', 'FundTransferController@index')->name('fund.transfer.index');
+            Route::get('/', 'FundTransferController@index')->name('fund.transfer.index');
             Route::post('/save', 'FundTransferController@store')->name('fund.transfer.save');
 
         });
@@ -148,13 +148,13 @@ Route::group(["prefix" => "administrator", "middleware" => "verified"], function
         Route::group(["prefix" => "bulk_sms"], function(){
 
             Route::get('/create/', 'BulkSmsController@create')->name('bulk-sms');
-            Route::get('/index/', 'BulkSmsController@index')->name('bulk-sms-index');
+            Route::get('/', 'BulkSmsController@index')->name('bulk-sms-index');
             Route::post('/send-bulksms/', 'BulkSmsController@save')->name('send-sms');
             Route::post('/bulksms/', 'BulkSmsController@save')->name('send-sms-restore');
         });
         Route::group(["prefix" => "negotiations"], function(){
 
-            Route::get('/index/', 'NegotiationController@index')->name('negotiation.index');
+            Route::get('/', 'NegotiationController@index')->name('negotiation.index');
             Route::post('/save', 'NegotiationController@store')->name('negotiation.save');
             Route::get("/edit/{negotiation_id}", "NegotiationController@edit")->name("negotiation.edit");
             Route::post("/update/{negotiation_id}", "NegotiationController@update")->name("negotiation.update");
@@ -168,13 +168,15 @@ Route::group(["prefix" => "administrator", "middleware" => "verified"], function
 
         Route::group(["prefix" => "manifests"], function(){
 
-            Route::get('/index/', 'ManifestController@index')->name('manifest.index');
+            Route::get('/', 'ManifestController@index')->name('manifest.index');
 
         });
         Route::group(["prefix" => "rounds"], function(){
+            Route::get('/', 'RoundController@index')->name('round.index');
+        });
 
-            Route::get('/index/', 'RoundController@index')->name('round.index');
-
+        Route::group(["prefix" => "log"], function(){
+            Route::get('/', 'ActLogController@index')->name('log.index');
         });
     });
 });
